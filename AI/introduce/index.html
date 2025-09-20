@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>穗安巡视官 - 项目介绍导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 6%, #667eea 12%, #764ba2 18%, #9b59b6 24%, #8e44ad 30%, #667eea 36%, #764ba2 42%, #9b59b6 48%, #8e44ad 54%, #667eea 60%, #764ba2 66%, #9b59b6 72%, #8e44ad 78%, #667eea 84%, #764ba2 90%, #9b59b6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(155, 89, 182, 0.6) 0%, transparent 35%),
+                radial-gradient(circle at 75% 75%, rgba(142, 68, 173, 0.6) 0%, transparent 35%),
+                radial-gradient(circle at 50% 10%, rgba(116, 75, 162, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 50% 90%, rgba(155, 89, 182, 0.4) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(30deg, transparent 48%, rgba(255, 255, 255, 0.02) 50%, transparent 52%),
+                linear-gradient(150deg, transparent 48%, rgba(255, 255, 255, 0.02) 50%, transparent 52%);
+            background-size: 100px 100px;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .main-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+        
+        .slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .slide-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        
+        .slide-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .slide-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        
+        .slide-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .slide-desc {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+        
+        .quick-start {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .quick-start-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+        
+        .quick-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .quick-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .tips {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .tips-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .slides-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">穗安巡视官</h1>
+        <p class="subtitle">精准农业AI一体系统 - 项目介绍</p>
+        
+        <div class="quick-start">
+            <div class="quick-start-title">快速开始</div>
+            <div class="quick-buttons">
+                <a href="slide1-title.html" class="quick-btn">
+                    <i class="fas fa-play"></i> 开始演示
+                </a>
+                <a href="slide1-title.html" class="quick-btn" onclick="startFullscreen()">
+                    <i class="fas fa-expand"></i> 全屏演示
+                </a>
+                <a href="../index.html" class="quick-btn">
+                    <i class="fas fa-home"></i> 返回系统
+                </a>
+            </div>
+        </div>
+        
+        <div class="slides-grid">
+            <a href="slide1-title.html" class="slide-card">
+                <div class="slide-number">第1页</div>
+                <div class="slide-title">项目标题</div>
+                <div class="slide-desc">系统名称、核心特性概览，展示项目的整体形象和主要功能亮点</div>
+            </a>
+            
+            <a href="slide2-overview.html" class="slide-card">
+                <div class="slide-number">第2页</div>
+                <div class="slide-title">系统概览</div>
+                <div class="slide-desc">项目愿景、核心数据统计，展示系统的整体架构和发展目标</div>
+            </a>
+            
+            <a href="slide3-ai-tech.html" class="slide-card">
+                <div class="slide-number">第3页</div>
+                <div class="slide-title">AI技术架构</div>
+                <div class="slide-desc">详细介绍计算机视觉、NLP、机器学习等核心AI技术的应用</div>
+            </a>
+            
+            <a href="slide4-core-features.html" class="slide-card">
+                <div class="slide-number">第4页</div>
+                <div class="slide-title">核心功能</div>
+                <div class="slide-desc">病虫害检测、低代码开发、智能分析等主要功能的详细展示</div>
+            </a>
+            
+            <a href="slide5-innovation.html" class="slide-card">
+                <div class="slide-number">第5页</div>
+                <div class="slide-title">技术创新点</div>
+                <div class="slide-desc">个性化AI训练、多模态融合、多语言支持等创新技术突破</div>
+            </a>
+            
+            <a href="slide6-architecture.html" class="slide-card">
+                <div class="slide-number">第6页</div>
+                <div class="slide-title">系统架构</div>
+                <div class="slide-desc">从用户界面到数据存储的完整技术架构设计和技术栈介绍</div>
+            </a>
+            
+            <a href="slide7-demo.html" class="slide-card">
+                <div class="slide-number">第7页</div>
+                <div class="slide-title">功能演示</div>
+                <div class="slide-desc">核心功能的实际操作演示和典型使用流程展示</div>
+            </a>
+            
+            <a href="slide8-conclusion.html" class="slide-card">
+                <div class="slide-number">第8页</div>
+                <div class="slide-title">总结展望</div>
+                <div class="slide-desc">项目成果总结、技术成就统计和未来发展方向规划</div>
+            </a>
+        </div>
+        
+        <div class="tips">
+            <div class="tips-title"><i class="fas fa-lightbulb"></i> 演示提示</div>
+            <p>• 建议使用全屏模式进行演示，获得最佳视觉效果</p>
+            <p>• 每页右下角有导航按钮，可以前后翻页</p>
+            <p>• 支持键盘方向键导航（部分浏览器）</p>
+            <p>• 适合在1920x1080或更高分辨率下展示</p>
+        </div>
+    </div>
+    
+    <script>
+        function startFullscreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+            
+            setTimeout(() => {
+                window.location.href = 'slide1-title.html';
+            }, 500);
+        }
+        
+        // 键盘导航支持
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F11') {
+                event.preventDefault();
+                startFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据可视化统计报告</title>
+    <link rel="stylesheet" href="css/dashboard-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>📊 数据可视化统计报告</h1>
+                <div class="date-range">
+                    <span>统计周期：2024年1月 - 2024年12月</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="visualization-grid">
+                <!-- 诊断趋势板块 -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="icon">📈</span>
+                            <h3>诊断趋势</h3>
+                        </div>
+                        <div class="chart-controls">
+                            <button class="btn-toggle active" data-chart="line">线图</button>
+                            <button class="btn-toggle" data-chart="bar">柱图</button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="diagnosisChart"></canvas>
+                        <div class="chart-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">本月诊断</span>
+                                <span class="stat-value">1,247</span>
+                                <span class="stat-change positive">+12.5%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">平均每日</span>
+                                <span class="stat-value">41.6</span>
+                                <span class="stat-change positive">+8.3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 病虫害分布板块 -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="icon">🐛</span>
+                            <h3>病虫害分布</h3>
+                        </div>
+                        <div class="view-toggle">
+                            <button class="btn-view active">饼图</button>
+                            <button class="btn-view">列表</button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="pestChart"></canvas>
+                        <div class="legend-container">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #FF6B6B;"></span>
+                                <span class="legend-text">叶斑病 (32.5%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #4ECDC4;"></span>
+                                <span class="legend-text">蚜虫 (28.3%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #45B7D1;"></span>
+                                <span class="legend-text">白粉病 (21.7%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #96CEB4;"></span>
+                                <span class="legend-text">其他 (17.5%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 作物类型统计板块 -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="icon">🌾</span>
+                            <h3>作物类型统计</h3>
+                        </div>
+                        <div class="filter-dropdown">
+                            <select id="cropFilter">
+                                <option value="all">全部作物</option>
+                                <option value="grain">粮食作物</option>
+                                <option value="vegetable">蔬菜作物</option>
+                                <option value="fruit">果树作物</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="cropChart"></canvas>
+                        <div class="crop-stats">
+                            <div class="crop-item">
+                                <div class="crop-info">
+                                    <span class="crop-name">水稻</span>
+                                    <span class="crop-percentage">35.2%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 35.2%; background: #52C41A;"></div>
+                                </div>
+                            </div>
+                            <div class="crop-item">
+                                <div class="crop-info">
+                                    <span class="crop-name">小麦</span>
+                                    <span class="crop-percentage">28.7%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 28.7%; background: #1890FF;"></div>
+                                </div>
+                            </div>
+                            <div class="crop-item">
+                                <div class="crop-info">
+                                    <span class="crop-name">玉米</span>
+                                    <span class="crop-percentage">22.1%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 22.1%; background: #FAAD14;"></div>
+                                </div>
+                            </div>
+                            <div class="crop-item">
+                                <div class="crop-info">
+                                    <span class="crop-name">其他</span>
+                                    <span class="crop-percentage">14.0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 14.0%; background: #722ED1;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 准确率分析板块 -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="icon">🎯</span>
+                            <h3>准确率分析</h3>
+                        </div>
+                        <div class="accuracy-score">
+                            <span class="score-label">综合准确率</span>
+                            <span class="score-value">94.2%</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="accuracyChart"></canvas>
+                        <div class="accuracy-details">
+                            <div class="accuracy-item excellent">
+                                <div class="accuracy-label">
+                                    <span class="status-dot"></span>
+                                    <span>优秀 (≥95%)</span>
+                                </div>
+                                <span class="accuracy-count">156 项</span>
+                            </div>
+                            <div class="accuracy-item good">
+                                <div class="accuracy-label">
+                                    <span class="status-dot"></span>
+                                    <span>良好 (85-94%)</span>
+                                </div>
+                                <span class="accuracy-count">89 项</span>
+                            </div>
+                            <div class="accuracy-item average">
+                                <div class="accuracy-label">
+                                    <span class="status-dot"></span>
+                                    <span>一般 (75-84%)</span>
+                                </div>
+                                <span class="accuracy-count">23 项</span>
+                            </div>
+                            <div class="accuracy-item poor">
+                                <div class="accuracy-label">
+                                    <span class="status-dot"></span>
+                                    <span>待改进 (<75%)</span>
+                                </div>
+                                <span class="accuracy-count">8 项</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/dashboard-charts.js"></script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+/* 用户管理和系统设置模态框显示修复 */
+
+/* 用户管理模态框修复 */
+.user-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    display: none !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 1000 !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+}
+
+.user-modal.show {
+    display: flex !important;
+}
+
+.user-content {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+    border-radius: 15px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    position: relative !important;
+}
+
+.user-header {
+    padding: 20px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.user-header h2 {
+    color: white !important;
+    margin: 0 !important;
+    font-size: 1.3em !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.user-close {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+.user-close:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: scale(1.1) !important;
+}
+
+.user-body {
+    padding: 20px !important;
+    color: white !important;
+}
+
+.user-section {
+    margin-bottom: 20px !important;
+    padding: 15px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.user-section h3 {
+    color: #4CAF50 !important;
+    margin: 0 0 15px 0 !important;
+    font-size: 1.1em !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.user-section .form-group {
+    margin-bottom: 15px !important;
+}
+
+.user-section .form-group label {
+    display: block !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin-bottom: 5px !important;
+    font-weight: 500 !important;
+    font-size: 0.95em !important;
+}
+
+.user-section .form-group input,
+.user-section .form-group select,
+.user-section .form-group textarea {
+    width: 100% !important;
+    padding: 12px 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+    transition: all 0.3s ease !important;
+}
+
+.user-section .form-group input:focus,
+.user-section .form-group select:focus,
+.user-section .form-group textarea:focus {
+    outline: none !important;
+    border-color: #4CAF50 !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3) !important;
+}
+
+.user-section .form-group input::placeholder,
+.user-section .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-style: italic !important;
+}
+
+.user-section .form-group select option {
+    background: #2c3e50 !important;
+    color: white !important;
+    padding: 10px !important;
+}
+
+/* 系统设置模态框修复 */
+.settings-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.7) !important; /* 稍微透明一点 */
+    display: none !important;
+    justify-content: center !important;
+    align-items: flex-start !important; /* 靠上对齐 */
+    padding-top: 80px !important; /* 顶部内边距 */
+    z-index: 1000 !important;
+    backdrop-filter: blur(8px) !important; /* 增强模糊效果 */
+    -webkit-backdrop-filter: blur(8px) !important;
+    transition: all 0.3s ease !important; /* 添加过渡效果 */
+}
+
+.settings-modal.show {
+    display: flex !important;
+}
+
+.settings-content {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+    border-radius: 15px !important;
+    width: 90% !important;
+    max-width: 500px !important; /* 与用户管理界面保持一致 */
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    position: relative !important;
+}
+
+.settings-header {
+    padding: 20px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.settings-header h2 {
+    color: white !important;
+    margin: 0 !important;
+    font-size: 1.3em !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    display: flex !important; /* 与用户管理界面保持一致 */
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.settings-header h2 i {
+    color: #4CAF50 !important; /* 与用户管理界面保持一致 */
+}
+
+.settings-close {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+.settings-close:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: scale(1.1) !important;
+}
+
+.settings-body {
+    padding: 20px !important;
+    color: white !important;
+}
+
+.settings-section {
+    margin-bottom: 20px !important;
+    padding: 15px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s ease !important; /* 添加过渡效果 */
+}
+
+.settings-section:hover {
+    background: rgba(255, 255, 255, 0.08) !important; /* 悬停效果 */
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.settings-section h3 {
+    color: #4CAF50 !important;
+    margin: 0 0 15px 0 !important;
+    font-size: 1.1em !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important; /* 添加文字阴影 */
+}
+
+.settings-section .form-group {
+    margin-bottom: 15px !important;
+}
+
+.settings-section .form-group label {
+    display: block !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin-bottom: 5px !important;
+    font-weight: 500 !important;
+    font-size: 0.95em !important;
+}
+
+.settings-section .form-group input,
+.settings-section .form-group select,
+.settings-section .form-group textarea {
+    width: 100% !important;
+    padding: 12px 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+    transition: all 0.3s ease !important;
+}
+
+.settings-section .form-group input:hover,
+.settings-section .form-group select:hover,
+.settings-section .form-group textarea:hover {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.settings-section .form-group input:focus,
+.settings-section .form-group select:focus,
+.settings-section .form-group textarea:focus {
+    outline: none !important;
+    border-color: #4CAF50 !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3) !important;
+}
+
+.settings-section .form-group input::placeholder,
+.settings-section .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-style: italic !important;
+}
+
+.settings-section .form-group select option {
+    background: #2c3e50 !important;
+    color: white !important;
+    padding: 10px !important;
+}
+
+/* 背景控制按钮修复 */
+.background-control {
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+}
+
+.bg-btn {
+    padding: 10px 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+}
+
+.bg-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+.bg-btn.active {
+    background: #4CAF50 !important;
+    border-color: #4CAF50 !important;
+    color: white !important;
+}
+
+/* 设置操作按钮修复 */
+.settings-actions {
+    padding: 20px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: flex !important;
+    gap: 10px !important;
+    justify-content: flex-end !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 0 0 15px 15px !important;
+}
+
+.settings-btn-primary,
+.settings-btn-secondary {
+    padding: 12px 20px !important;
+    border: none !important;
+    border-radius: 30px !important; /* 更圆润的按钮 */
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* 居中对齐图标和文字 */
+    gap: 8px !important;
+    min-width: 120px !important; /* 确保按钮有足够的宽度 */
+}
+
+.settings-btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32) !important; /* 渐变背景 */
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important; /* 默认阴影 */
+}
+
+.settings-btn-primary:hover {
+    background: linear-gradient(135deg, #45a049, #388E3C) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important; /* 更强的阴影 */
+}
+
+.settings-btn-secondary {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.settings-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1) !important; /* 添加阴影 */
+}
+
+/* 添加按钮点击效果 */
+.settings-btn-primary:active,
+.settings-btn-secondary:active {
+    transform: translateY(1px) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .user-content,
+    .settings-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 5vh auto !important;
+        max-height: 90vh !important;
+    }
+    
+    .user-header,
+    .settings-header {
+        padding: 15px !important;
+    }
+    
+    .user-header h2,
+    .settings-header h2 {
+        font-size: 1.2em !important;
+    }
+    
+    .user-body,
+    .settings-body {
+        padding: 15px !important;
+    }
+    
+    .user-section,
+    .settings-section {
+        padding: 12px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .settings-actions {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .settings-btn-primary,
+    .settings-btn-secondary {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    
+    .background-control {
+        flex-direction: column !important;
+    }
+    
+    .bg-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* 复选框和单选框样式修复 */
+.settings-section input[type="checkbox"],
+.user-section input[type="checkbox"] {
+    width: auto !important;
+    margin-right: 8px !important;
+    transform: scale(1.2) !important;
+}
+
+.settings-section label:has(input[type="checkbox"]),
+.user-section label:has(input[type="checkbox"]) {
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    margin-bottom: 10px !important;
+}
+
+/* 滚动条样式 */
+.user-content::-webkit-scrollbar,
+.settings-content::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+.user-content::-webkit-scrollbar-track,
+.settings-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 3px !important;
+}
+
+.user-content::-webkit-scrollbar-thumb,
+.settings-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 3px !important;
+}
+
+.user-content::-webkit-scrollbar-thumb:hover,
+.settings-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5) !important;
+}

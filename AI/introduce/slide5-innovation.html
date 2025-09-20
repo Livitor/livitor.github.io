@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术创新点 - 穗安巡视官</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 15%, #667eea 30%, #764ba2 45%, #9b59b6 60%, #8e44ad 75%, #667eea 90%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(155, 89, 182, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 70% 30%, rgba(142, 68, 173, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(116, 75, 162, 0.4) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                conic-gradient(from 0deg at 20% 20%, transparent 0deg, rgba(255, 255, 255, 0.05) 60deg, transparent 120deg),
+                conic-gradient(from 180deg at 80% 80%, transparent 0deg, rgba(255, 255, 255, 0.05) 60deg, transparent 120deg);
+            pointer-events: none;
+        }
+        
+        .slide-container {
+            max-width: 1400px;
+            padding: 60px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .slide-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .innovation-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .innovation-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .innovation-card:hover::before {
+            transform: scale(1);
+        }
+        
+        .innovation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .innovation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .innovation-icon {
+            font-size: 3.5rem;
+            margin-right: 25px;
+            color: #FFD700;
+        }
+        
+        .innovation-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+        
+        .innovation-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .innovation-desc {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+        
+        .innovation-features {
+            list-style: none;
+        }
+        
+        .innovation-features li {
+            padding: 12px 0;
+            font-size: 1.2rem;
+            position: relative;
+            padding-left: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .innovation-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .innovation-features li::before {
+            content: '🚀';
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+        
+        .highlight-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+        
+        .highlight-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+        
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .highlight-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .highlight-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .highlight-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        
+        .highlight-label {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .highlight-desc {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-number {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="slide-number">5 / 8</div>
+    
+    <div class="slide-container">
+        <h1 class="slide-title">技术创新点</h1>
+        
+        <div class="innovation-grid">
+            <div class="innovation-card">
+                <div class="innovation-header">
+                    <i class="fas fa-magic innovation-icon"></i>
+                    <div class="innovation-title">个性化AI训练</div>
+                </div>
+                <div class="innovation-content">
+                    <div class="innovation-desc">
+                        用户可上传专业资料，系统自动训练专属AI助手，实现真正的个性化农业指导
+                    </div>
+                    <ul class="innovation-features">
+                        <li>自动知识提取与整理</li>
+                        <li>专属系统提示词生成</li>
+                        <li>基于实际资料的AI人格构建</li>
+                        <li>一键部署到生产环境</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="innovation-card">
+                <div class="innovation-header">
+                    <i class="fas fa-layer-group innovation-icon"></i>
+                    <div class="innovation-title">多模态融合技术</div>
+                </div>
+                <div class="innovation-content">
+                    <div class="innovation-desc">
+                        突破传统单一输入模式，实现图像、语音、文本的深度融合分析
+                    </div>
+                    <ul class="innovation-features">
+                        <li>图文结合智能诊断</li>
+                        <li>语音图像同步分析</li>
+                        <li>跨模态特征提取</li>
+                        <li>综合决策支持系统</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="innovation-card">
+                <div class="innovation-header">
+                    <i class="fas fa-globe innovation-icon"></i>
+                    <div class="innovation-title">多语言智能交互</div>
+                </div>
+                <div class="innovation-content">
+                    <div class="innovation-desc">
+                        支持30+种语言和中国各地方言，打破语言障碍，让AI服务更普惠
+                    </div>
+                    <ul class="innovation-features">
+                        <li>全国方言识别支持</li>
+                        <li>国际主流语言覆盖</li>
+                        <li>实时语音转文字</li>
+                        <li>智能语言适配</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="innovation-card">
+                <div class="innovation-header">
+                    <i class="fas fa-rocket innovation-icon"></i>
+                    <div class="innovation-title">零门槛低代码平台</div>
+                </div>
+                <div class="innovation-content">
+                    <div class="innovation-desc">
+                        无需编程基础，农户也能快速构建专属的智能农业应用系统
+                    </div>
+                    <ul class="innovation-features">
+                        <li>拖拽式可视化开发</li>
+                        <li>模板化快速部署</li>
+                        <li>自动化流程构建</li>
+                        <li>云端一键发布</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="highlight-section">
+            <div class="highlight-title">技术突破亮点</div>
+            <div class="highlight-grid">
+                <div class="highlight-item">
+                    <div class="highlight-number">100%</div>
+                    <div class="highlight-label">前端技术栈</div>
+                    <div class="highlight-desc">纯前端实现，无需复杂后端部署</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-number">4种</div>
+                    <div class="highlight-label">专家AI模型</div>
+                    <div class="highlight-desc">病害、虫害、生长、成熟度检测</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-number">30+</div>
+                    <div class="highlight-label">语言支持</div>
+                    <div class="highlight-desc">包含中国各地方言和国际语言</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" onclick="window.location.href='slide4-core-features.html'">
+            <i class="fas fa-arrow-left"></i> 上一页
+        </button>
+        <button class="nav-btn" onclick="window.location.href='slide6-architecture.html'">
+            <i class="fas fa-arrow-right"></i> 下一页
+        </button>
+    </div>
+</body>
+</html>

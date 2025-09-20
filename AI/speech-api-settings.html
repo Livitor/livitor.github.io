@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语音API设置</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* 强制磨砂板块样式 - 深灰色背景 */
+        section, .settings-panel, .config-section, .frosted-glass {
+            background: rgba(50, 50, 50, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+            color: white !important;
+        }
+        /* 确保标题区域透明 */
+        .header {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .settings-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .settings-header h2 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+        
+        .settings-section {
+            margin-bottom: 30px;
+        }
+        
+        .settings-section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+        
+        .provider-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .provider-card {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .provider-card.active {
+            border-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        .provider-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .provider-card h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .provider-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .provider-card .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-badge.available {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .status-badge.unavailable {
+            background-color: #F44336;
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+        
+        .btn-secondary {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-danger {
+            background-color: #F44336;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+        
+        .notification {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification.success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        
+        .notification.error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        
+        .notification.info {
+            background-color: #d9edf7;
+            color: #31708f;
+            border: 1px solid #bce8f1;
+        }
+        
+        .notification i {
+            font-size: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .device-compatibility {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .device-compatibility h4 {
+            margin-top: 0;
+            color: #2196F3;
+        }
+        
+        .compatibility-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .compatibility-table th, .compatibility-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .compatibility-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .support-level {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .support-level.good {
+            color: #4CAF50;
+        }
+        
+        .support-level.medium {
+            color: #FF9800;
+        }
+        
+        .support-level.poor {
+            color: #F44336;
+        }
+        
+        @media (max-width: 768px) {
+            .provider-selector {
+                flex-direction: column;
+            }
+            
+            .settings-container {
+                margin: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <div class="settings-header">
+            <h2><i class="fas fa-microphone-alt"></i> 语音API设置</h2>
+            <a href="index.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 返回主页</a>
+        </div>
+        
+        <div id="notification" class="notification hidden"></div>
+        
+        <div class="settings-section">
+            <h3>选择语音识别服务</h3>
+            <div class="provider-selector" id="providerSelector">
+                <!-- 提供商卡片将通过JavaScript动态生成 -->
+            </div>
+        </div>
+        
+        <div id="webSpeechSettings" class="settings-section hidden">
+            <h3>Web Speech API设置</h3>
+            <p>Web Speech API是浏览器内置的语音识别功能，无需额外配置。</p>
+            <div class="form-group">
+                <label>支持状态</label>
+                <div id="webSpeechStatus"></div>
+            </div>
+        </div>
+        
+        <div id="baiduSettings" class="settings-section hidden">
+            <h3>百度语音API设置</h3>
+            <p>请填写您的百度语音API密钥信息。<a href="https://ai.baidu.com/tech/speech" target="_blank">如何获取百度语音API密钥？</a></p>
+            
+            <div class="form-group">
+                <label for="baiduAppId">应用ID (AppID)</label>
+                <input type="text" id="baiduAppId" placeholder="请输入百度语音应用ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="baiduApiKey">API Key</label>
+                <input type="text" id="baiduApiKey" placeholder="请输入百度语音API Key">
+            </div>
+            
+            <div class="form-group">
+                <label for="baiduSecretKey">Secret Key</label>
+                <input type="password" id="baiduSecretKey" placeholder="请输入百度语音Secret Key">
+            </div>
+            
+            <div class="form-actions">
+                <button id="testBaiduBtn" class="btn btn-secondary"><i class="fas fa-vial"></i> 测试连接</button>
+                <button id="saveBaiduBtn" class="btn btn-primary"><i class="fas fa-save"></i> 保存设置</button>
+            </div>
+        </div>
+        
+        <div class="device-compatibility">
+            <h4><i class="fas fa-mobile-alt"></i> 设备兼容性</h4>
+            <p>不同设备和浏览器对语音识别的支持程度不同，下表显示了各种组合的兼容性：</p>
+            
+            <table class="compatibility-table">
+                <thead>
+                    <tr>
+                        <th>设备/浏览器</th>
+                        <th>Web Speech API</th>
+                        <th>百度语音API</th>
+                        <th>推荐</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>桌面 Chrome</td>
+                        <td><span class="support-level good"><i class="fas fa-check-circle"></i> 良好</span></td>
+                        <td><span class="support-level good"><i class="fas fa-check-circle"></i> 良好</span></td>
+                        <td>Web Speech API</td>
+                    </tr>
+                    <tr>
+                        <td>桌面 Firefox</td>
+                        <td><span class="support-level medium"><i class="fas fa-exclamation-circle"></i> 一般</span></td>
+                        <td><span class="support-level good"><i class="fas fa-check-circle"></i> 良好</span></td>
+                        <td>百度语音API</td>
+                    </tr>
+                    <tr>
+                        <td>桌面 Safari</td>
+                        <td><span class="support-level poor"><i class="fas fa-times-circle"></i> 不支持</span></td>
+                        <td><span class="support-level good"><i class="fas fa-check-circle"></i> 良好</span></td>
+                        <td>百度语音API</td>
+                    </tr>
+                    <tr>
+                        <td>Android Chrome</td>
+                        <td><span class="support-level medium"><i class="fas fa-exclamation-circle"></i> 一般</span></td>
+                        <td><span class="support-level good"><i class="fas fa-check-circle"></i> 良好</span></td>
+                        <td>百度语音API</td>
+                    </tr>
+                    <tr>
+                        <td>iOS Safari</td>
+                        <td><span class="support-level poor"><i class="fas fa-times-circle"></i> 不支持</span></td>
+                        <td><span class="support-level good"><i class="fas fa-check-circle"></i> 良好</span></td>
+                        <td>百度语音API</td>
+                    </tr>
+                    <tr>
+                        <td>微信内置浏览器</td>
+                        <td><span class="support-level poor"><i class="fas fa-times-circle"></i> 不支持</span></td>
+                        <td><span class="support-level good"><i class="fas fa-check-circle"></i> 良好</span></td>
+                        <td>百度语音API</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/speech-api-service.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查语音API服务是否已加载
+            if (!window.speechAPIService) {
+                showNotification('语音API服务未加载，请刷新页面重试', 'error');
+                return;
+            }
+            
+            // 初始化提供商选择器
+            initProviderSelector();
+            
+            // 加载当前设置
+            loadCurrentSettings();
+            
+            // 绑定事件
+            document.getElementById('testBaiduBtn').addEventListener('click', testBaiduConnection);
+            document.getElementById('saveBaiduBtn').addEventListener('click', saveBaiduSettings);
+        });
+        
+        /**
+         * 初始化提供商选择器
+         */
+        function initProviderSelector() {
+            const providerSelector = document.getElementById('providerSelector');
+            const providers = window.speechAPIService.providers;
+            
+            // 清空选择器
+            providerSelector.innerHTML = '';
+            
+            // 添加Web Speech API卡片
+            const webSpeechCard = createProviderCard(
+                'webSpeech',
+                'Web Speech API',
+                'fas fa-microphone',
+                '浏览器内置的语音识别功能，无需额外配置，但在移动设备和某些浏览器上支持有限。',
+                providers.webSpeech.isAvailable
+            );
+            providerSelector.appendChild(webSpeechCard);
+            
+            // 添加百度语音API卡片
+            const baiduCard = createProviderCard(
+                'baidu',
+                '百度语音API',
+                'fas fa-cloud',
+                '百度提供的专业语音识别服务，支持多种语言和方言，适用于各种设备和浏览器。',
+                providers.baidu.isAvailable
+            );
+            providerSelector.appendChild(baiduCard);
+            
+            // 设置当前选中的提供商
+            const currentProvider = window.speechAPIService.currentProvider;
+            const currentCard = document.querySelector(`.provider-card[data-provider="${currentProvider}"]`);
+            if (currentCard) {
+                currentCard.classList.add('active');
+                showProviderSettings(currentProvider);
+            }
+        }
+        
+        /**
+         * 创建提供商卡片
+         */
+        function createProviderCard(id, name, iconClass, description, isAvailable) {
+            const card = document.createElement('div');
+            card.className = `provider-card${isAvailable ? '' : ' disabled'}`;
+            card.dataset.provider = id;
+            
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${isAvailable ? 'available' : 'unavailable'}`;
+            statusBadge.textContent = isAvailable ? '可用' : '不可用';
+            
+            card.innerHTML = `
+                <h4><i class="${iconClass}"></i> ${name}</h4>
+                <p>${description}</p>
+            `;
+            
+            card.appendChild(statusBadge);
+            
+            // 添加点击事件
+            card.addEventListener('click', function() {
+                if (!isAvailable) {
+                    if (id === 'baidu') {
+                        showProviderSettings('baidu');
+                        showNotification('请先配置百度语音API', 'info');
+                    }
+                    return;
+                }
+                
+                // 移除其他卡片的active类
+                document.querySelectorAll('.provider-card').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                card.classList.add('active');
+                
+                // 设置当前提供商
+                window.speechAPIService.setProvider(id);
+                
+                // 显示对应的设置面板
+                showProviderSettings(id);
+                
+                showNotification(`已切换到${name}`, 'success');
+            });
+            
+            return card;
+        }
+        
+        /**
+         * 显示提供商设置面板
+         */
+        function showProviderSettings(provider) {
+            // 隐藏所有设置面板
+            document.querySelectorAll('.settings-section').forEach(section => {
+                if (section.id !== 'providerSelector') {
+                    section.classList.add('hidden');
+                }
+            });
+            
+            // 显示对应的设置面板
+            const settingsPanel = document.getElementById(`${provider}Settings`);
+            if (settingsPanel) {
+                settingsPanel.classList.remove('hidden');
+            }
+            
+            // 更新Web Speech API状态
+            if (provider === 'webSpeech') {
+                updateWebSpeechStatus();
+            }
+        }
+        
+        /**
+         * 更新Web Speech API状态
+         */
+        function updateWebSpeechStatus() {
+            const statusElement = document.getElementById('webSpeechStatus');
+            const isAvailable = window.speechAPIService.providers.webSpeech.isAvailable;
+            
+            if (isAvailable) {
+                statusElement.innerHTML = `
+                    <div class="support-level good">
+                        <i class="fas fa-check-circle"></i>
+                        <span>您的浏览器支持Web Speech API</span>
+                    </div>
+                `;
+            } else {
+                statusElement.innerHTML = `
+                    <div class="support-level poor">
+                        <i class="fas fa-times-circle"></i>
+                        <span>您的浏览器不支持Web Speech API，请尝试使用Chrome浏览器或配置百度语音API</span>
+                    </div>
+                `;
+            }
+        }
+        
+        /**
+         * 加载当前设置
+         */
+        function loadCurrentSettings() {
+            // 加载百度语音API设置
+            const baiduConfig = window.speechAPIService.providers.baidu.config;
+            
+            document.getElementById('baiduAppId').value = baiduConfig.appId || '';
+            document.getElementById('baiduApiKey').value = baiduConfig.apiKey || '';
+            document.getElementById('baiduSecretKey').value = baiduConfig.secretKey || '';
+        }
+        
+        /**
+         * 测试百度语音API连接
+         */
+        async function testBaiduConnection() {
+            const appId = document.getElementById('baiduAppId').value.trim();
+            const apiKey = document.getElementById('baiduApiKey').value.trim();
+            const secretKey = document.getElementById('baiduSecretKey').value.trim();
+            
+            if (!appId || !apiKey || !secretKey) {
+                showNotification('请填写完整的百度语音API信息', 'error');
+                return;
+            }
+            
+            // 禁用按钮
+            const testBtn = document.getElementById('testBaiduBtn');
+            const saveBtn = document.getElementById('saveBaiduBtn');
+            testBtn.disabled = true;
+            testBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 测试中...';
+            saveBtn.disabled = true;
+            
+            try {
+                // 临时配置百度语音API
+                window.speechAPIService.configureBaiduAPI(appId, apiKey, secretKey);
+                
+                // 尝试获取访问令牌
+                await window.speechAPIService.getBaiduAccessToken(apiKey, secretKey);
+                
+                showNotification('百度语音API连接成功！', 'success');
+                
+                // 更新提供商选择器
+                initProviderSelector();
+            } catch (error) {
+                console.error('测试百度语音API连接失败:', error);
+                showNotification(`连接失败: ${error.message}`, 'error');
+            } finally {
+                // 恢复按钮
+                testBtn.disabled = false;
+                testBtn.innerHTML = '<i class="fas fa-vial"></i> 测试连接';
+                saveBtn.disabled = false;
+            }
+        }
+        
+        /**
+         * 保存百度语音API设置
+         */
+        function saveBaiduSettings() {
+            const appId = document.getElementById('baiduAppId').value.trim();
+            const apiKey = document.getElementById('baiduApiKey').value.trim();
+            const secretKey = document.getElementById('baiduSecretKey').value.trim();
+            
+            if (!appId || !apiKey || !secretKey) {
+                showNotification('请填写完整的百度语音API信息', 'error');
+                return;
+            }
+            
+            // 配置百度语音API
+            const isConfigured = window.speechAPIService.configureBaiduAPI(appId, apiKey, secretKey);
+            
+            if (isConfigured) {
+                showNotification('百度语音API设置已保存', 'success');
+                
+                // 更新提供商选择器
+                initProviderSelector();
+                
+                // 如果Web Speech API不可用，自动切换到百度语音API
+                if (!window.speechAPIService.providers.webSpeech.isAvailable) {
+                    window.speechAPIService.setProvider('baidu');
+                    
+                    // 更新UI
+                    document.querySelectorAll('.provider-card').forEach(c => c.classList.remove('active'));
+                    const baiduCard = document.querySelector('.provider-card[data-provider="baidu"]');
+                    if (baiduCard) {
+                        baiduCard.classList.add('active');
+                    }
+                }
+            } else {
+                showNotification('保存设置失败，请检查输入信息', 'error');
+            }
+        }
+        
+        /**
+         * 显示通知
+         */
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.className = `notification ${type}`;
+            
+            const iconMap = {
+                'success': 'fas fa-check-circle',
+                'error': 'fas fa-exclamation-circle',
+                'info': 'fas fa-info-circle'
+            };
+            
+            notification.innerHTML = `
+                <i class="${iconMap[type] || iconMap.info}"></i>
+                <span>${message}</span>
+            `;
+            
+            notification.classList.remove('hidden');
+            
+            // 5秒后自动隐藏
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

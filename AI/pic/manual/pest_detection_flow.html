@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>病虫害检测流程图</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .flow-title {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .step {
+            background-color: #e8f5e9;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            width: 80%;
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            background-color: #4CAF50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .step-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .step-desc {
+            font-size: 14px;
+            color: #555;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flow-title">病虫害检测使用流程</div>
+        
+        <div class="flow-diagram">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-icon">📱</div>
+                <div class="step-title">进入病虫检测页面</div>
+                <div class="step-desc">点击左侧菜单的"病虫检测"或首页的"病虫害检测"卡片</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-icon">📷</div>
+                <div class="step-title">上传图片</div>
+                <div class="step-desc">点击上传区域，选择图片或直接拍照</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-icon">🎤</div>
+                <div class="step-title">描述症状（可选）</div>
+                <div class="step-desc">在文字框中输入或点击麦克风按钮用语音描述</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-icon">🔍</div>
+                <div class="step-title">获取分析结果</div>
+                <div class="step-desc">点击"快速识别"或"提交分析"按钮</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-icon">📋</div>
+                <div class="step-title">查看诊断和建议</div>
+                <div class="step-desc">查看病害名称、详情、防治建议和用药指导</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

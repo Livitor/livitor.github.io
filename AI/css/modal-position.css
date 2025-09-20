@@ -1,0 +1,186 @@
+/* 模态框位置和样式控制 */
+
+/* 设置模态框位置 - 居中靠上 */
+.settings-modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    display: none !important;
+    justify-content: center !important;
+    align-items: flex-start !important; /* 靠上对齐 */
+    padding-top: 80px !important; /* 顶部内边距 */
+    z-index: 1000 !important;
+}
+
+.settings-modal.show {
+    display: flex !important;
+}
+
+/* 设置内容样式 - 磨砂质感浅色透明 - 与用户管理一致 */
+.settings-content {
+    background: rgba(255, 255, 255, 0.1) !important; /* 浅色透明背景，与用户管理一致 */
+    border-radius: 20px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important; /* 与用户管理一致的阴影 */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    position: relative !important;
+    backdrop-filter: blur(20px) !important; /* 增强磨砂效果 */
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+/* 设置模态框动画 */
+@keyframes modalSlideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.settings-content {
+    animation: modalSlideInFromTop 0.3s ease-out forwards;
+}
+
+/* 设置内部元素样式 - 与用户管理一致 */
+.settings-header {
+    background: rgba(255, 255, 255, 0.05) !important; /* 浅色透明 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.settings-section {
+    background: rgba(255, 255, 255, 0.05) !important; /* 微妙的白色透明 */
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    margin-bottom: 15px !important;
+    padding: 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+.settings-section:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(76, 175, 80, 0.3) !important; /* 与用户管理一致的悬停边框颜色 */
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.settings-actions {
+    background: rgba(255, 255, 255, 0.05) !important; /* 浅色透明 */
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* 按钮样式 */
+.settings-btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32) !important;
+    border-radius: 30px !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+    border: none !important;
+}
+
+.settings-btn-secondary {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 30px !important;
+}
+
+/* 表单元素样式 - 与用户管理一致 */
+.settings-section .form-group input,
+.settings-section .form-group select,
+.settings-section .form-group textarea {
+    background: rgba(255, 255, 255, 0.1) !important; /* 浅色透明背景 */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 12px 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+.settings-section .form-group input:hover,
+.settings-section .form-group select:hover,
+.settings-section .form-group textarea:hover {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.settings-section .form-group input:focus,
+.settings-section .form-group select:focus,
+.settings-section .form-group textarea:focus {
+    border-color: #4CAF50 !important;
+    background: rgba(255, 255, 255, 0.15) !important; /* 浅色透明背景 */
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3) !important;
+    outline: none !important;
+    transform: translateY(-2px) !important; /* 与用户管理一致的聚焦效果 */
+}
+
+/* 复选框样式 */
+.settings-section .form-group label {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* 自定义滚动条 - 与用户管理一致 */
+.settings-content::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.settings-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 4px !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .settings-modal {
+        padding-top: 60px !important; /* 移动设备上减少顶部内边距 */
+    }
+    
+    .settings-content {
+        width: 95% !important;
+        max-width: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-modal {
+        padding-top: 40px !important; /* 小屏幕设备上进一步减少顶部内边距 */
+    }
+}
+
+/* 玻璃光泽效果 */
+.settings-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent);
+    border-radius: 15px 15px 0 0;
+    pointer-events: none;
+}

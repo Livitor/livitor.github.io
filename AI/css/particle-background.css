@@ -1,0 +1,133 @@
+/* 粒子背景特效 */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(135deg, 
+        rgba(102, 126, 234, 0.1) 0%, 
+        rgba(118, 75, 162, 0.1) 100%);
+}
+
+/* 确保页面内容在粒子背景之上 */
+body {
+    position: relative;
+    z-index: 1;
+}
+
+/* 粒子动画容器 */
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* 单个粒子样式 */
+.particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 6s ease-in-out infinite;
+    aspect-ratio: 1 / 1; /* 确保粒子保持圆形 */
+}
+
+/* 粒子浮动动画 */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+/* 不同大小的粒子 */
+.particle.small {
+    width: 4px;
+    height: 4px;
+    animation-duration: 4s;
+}
+
+.particle.medium {
+    width: 6px;
+    height: 6px;
+    animation-duration: 6s;
+}
+
+.particle.large {
+    width: 8px;
+    height: 8px;
+    animation-duration: 8s;
+}
+
+/* 粒子连线效果 */
+.particle-line {
+    position: absolute;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.2), 
+        rgba(255, 255, 255, 0.1), 
+        rgba(255, 255, 255, 0.2));
+    height: 1px;
+    pointer-events: none;
+    animation: lineMove 3s linear infinite;
+}
+
+@keyframes lineMove {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .particle {
+        animation-duration: 3s;
+    }
+    
+    .particle.small {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .particle.medium {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .particle.large {
+        width: 5px;
+        height: 5px;
+    }
+}
+
+/* 减少动画效果（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+    .particle,
+    .particle-line {
+        animation: none;
+    }
+    
+    #particles-canvas {
+        display: none;
+    }
+}

@@ -1,0 +1,577 @@
+/* 专门针对各个页面的移动端适配 */
+
+/* 低代码页面移动端适配 */
+@media (max-width: 768px) {
+    /* 低代码页面特殊适配 */
+    .model-training-content {
+        padding: 60px 10px 20px 10px !important;
+    }
+    
+    .training-header {
+        padding: 20px 10px !important;
+        text-align: center !important;
+    }
+    
+    .training-header h1 {
+        font-size: 1.5em !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .training-header p {
+        font-size: 0.9em !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .steps-indicator {
+        flex-direction: column !important;
+        gap: 15px !important;
+        align-items: center !important;
+    }
+    
+    .step {
+        flex-direction: row !important;
+        gap: 10px !important;
+    }
+    
+    .step-number {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 14px !important;
+    }
+    
+    .step-label {
+        font-size: 12px !important;
+    }
+    
+    /* 模型网格适配 - 完美契合屏幕宽度 */
+    .model-row {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .model-card {
+        min-height: 150px !important;
+        padding: 15px !important;
+        margin: 0 0 15px 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 确保模型网格容器完全填充 */
+    .model-grid {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* 确保所有板块容器完全填充屏幕宽度 */
+    .model-selection-section,
+    .dataset-section,
+    .training-deployment-section,
+    .model-management-section {
+        width: 100% !important;
+        margin: 0 0 15px 0 !important;
+        padding: 15px !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 训练主容器完全填充 */
+    .training-main {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 15px !important;
+    }
+    
+    /* 低代码页面主容器优化 */
+    .model-training-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 60px 5px 20px 5px !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+    
+    .model-icon {
+        font-size: 2em !important;
+    }
+    
+    .model-header h3 {
+        font-size: 1.1em !important;
+    }
+    
+    /* 训练配置适配 */
+    .config-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    .config-item input,
+    .config-item select {
+        padding: 10px !important;
+        font-size: 16px !important;
+    }
+    
+    /* 管理统计卡片适配 */
+    .management-stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .stat-card-mini {
+        padding: 15px !important;
+    }
+    
+    .stat-number {
+        font-size: 1.3em !important;
+    }
+    
+    .stat-label {
+        font-size: 0.8em !important;
+    }
+    
+    /* 管理控制区域适配 */
+    .management-controls {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .search-area {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .action-buttons {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+    }
+    
+    /* 模型项适配 */
+    .model-item {
+        padding: 15px !important;
+    }
+    
+    .model-item-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    
+    .model-item-content {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .model-meta {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    
+    .model-actions {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+    }
+}
+
+/* 智能分析页面移动端适配 */
+@media (max-width: 768px) {
+    /* 分析页面特殊适配 */
+    .main-content {
+        padding: 60px 10px 20px 10px !important;
+    }
+    
+    .header {
+        padding: 20px 10px !important;
+        text-align: center !important;
+    }
+    
+    .header h1 {
+        font-size: 1.5em !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .header p {
+        font-size: 0.9em !important;
+    }
+    
+    /* 上传区域适配 */
+    .upload-area {
+        min-height: 200px !important;
+        padding: 20px 10px !important;
+    }
+    
+    .upload-content h3 {
+        font-size: 1.2em !important;
+        margin: 10px 0 !important;
+    }
+    
+    .upload-content p {
+        font-size: 0.9em !important;
+    }
+    
+    .upload-btn {
+        padding: 10px 20px !important;
+        font-size: 14px !important;
+    }
+    
+    /* 图片库适配 */
+    .image-gallery {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .image-preview {
+        height: 120px !important;
+    }
+    
+    /* 工具栏适配 */
+    .toolbar-content {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .toolbar-group {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    
+    .tool-btn {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+    }
+    
+    .analysis-settings {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    
+    .analysis-settings label {
+        min-width: auto !important;
+        text-align: center !important;
+    }
+    
+    .model-selector-group {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .model-select {
+        min-width: auto !important;
+    }
+    
+    /* 参数设置适配 */
+    .params-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    .param-group label {
+        font-size: 14px !important;
+        margin-bottom: 5px !important;
+    }
+    
+    .select-wrapper select,
+    .param-group input {
+        padding: 10px !important;
+        font-size: 16px !important;
+    }
+    
+    /* 分析控制按钮适配 */
+    .analysis-controls .toolbar-group {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .analysis-controls .btn-primary,
+    .analysis-controls .btn-secondary {
+        width: 100% !important;
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+    
+    /* 结果概览适配 */
+    .result-overview {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    
+    .overview-card {
+        padding: 15px !important;
+    }
+    
+    .card-content h4 {
+        font-size: 0.9em !important;
+    }
+    
+    .result-count {
+        font-size: 1.3em !important;
+    }
+    
+    /* 结果卡片适配 */
+    .result-card {
+        padding: 15px !important;
+    }
+    
+    .result-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 10px !important;
+    }
+    
+    .result-image {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .result-meta {
+        flex-direction: column !important;
+        gap: 8px !important;
+        text-align: center !important;
+    }
+    
+    .result-actions {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .result-actions .btn-secondary {
+        width: 100% !important;
+        padding: 10px !important;
+    }
+}
+
+/* 智能管理页面移动端适配 */
+@media (max-width: 768px) {
+    /* 智能管理页面特殊适配 */
+    .smart-management-content {
+        padding: 60px 10px 20px 10px !important;
+    }
+    
+    .management-header {
+        padding: 15px 10px !important;
+    }
+    
+    .header-center {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .system-logo i {
+        font-size: 2em !important;
+    }
+    
+    .management-header h1 {
+        font-size: 1.5em !important;
+    }
+    
+    /* 环境数据卡片适配 */
+    .environment-data {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .data-card {
+        padding: 15px !important;
+    }
+    
+    .data-icon i {
+        font-size: 1.5em !important;
+    }
+    
+    .data-value {
+        font-size: 1.3em !important;
+    }
+    
+    .data-label {
+        font-size: 0.8em !important;
+    }
+    
+    /* 生长信息适配 */
+    .growth-info {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .growth-stage,
+    .growth-progress,
+    .plant-status {
+        text-align: center !important;
+    }
+    
+    .progress-bar {
+        width: 100% !important;
+        height: 8px !important;
+    }
+    
+    /* 操作按钮适配 */
+    .operation-buttons {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .operation-btn {
+        padding: 12px 8px !important;
+        font-size: 12px !important;
+    }
+    
+    .operation-btn span {
+        font-size: 11px !important;
+    }
+    
+    /* 植株表格适配 */
+    .plant-table-container {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .plant-table {
+        min-width: 600px !important;
+        font-size: 12px !important;
+    }
+    
+    .plant-table th,
+    .plant-table td {
+        padding: 8px 4px !important;
+        white-space: nowrap !important;
+    }
+    
+    .status-badge {
+        padding: 3px 8px !important;
+        font-size: 10px !important;
+    }
+    
+    /* 底部状态栏适配 */
+    .management-footer {
+        margin: 10px !important;
+        padding: 15px !important;
+    }
+    
+    .footer-left {
+        flex-direction: column !important;
+        gap: 8px !important;
+        text-align: center !important;
+    }
+    
+    .footer-left span {
+        font-size: 12px !important;
+    }
+    
+    .separator {
+        display: none !important;
+    }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 480px) {
+    /* 进一步缩小间距和字体 */
+    .panel-base {
+        margin: 8px 0 !important;
+        padding: 10px !important;
+    }
+    
+    .panel-header h2,
+    .panel-header h3 {
+        font-size: 1.1em !important;
+        margin-bottom: 10px !important;
+    }
+    
+    /* 低代码页面超小屏幕优化 */
+    .model-training-content {
+        padding: 60px 3px 20px 3px !important;
+    }
+    
+    .model-selection-section,
+    .dataset-section,
+    .training-deployment-section,
+    .model-management-section {
+        padding: 12px !important;
+        margin: 0 0 12px 0 !important;
+    }
+    
+    .model-card {
+        padding: 12px !important;
+        margin: 0 0 12px 0 !important;
+    }
+    
+    /* 环境数据单列显示 */
+    .environment-data {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 操作按钮单列显示 */
+    .operation-buttons {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 图片库单列显示 */
+    .image-gallery {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 管理统计单列显示 */
+    .management-stats {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* 通用移动端优化 */
+@media (max-width: 768px) {
+    /* 确保所有面板都有合适的间距 */
+    .panel-base {
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border-radius: 12px !important;
+    }
+    
+    .panel-header {
+        margin-bottom: 15px !important;
+    }
+    
+    .panel-header h2,
+    .panel-header h3 {
+        font-size: 1.2em !important;
+        margin-bottom: 8px !important;
+    }
+    
+    /* 按钮统一样式 */
+    .btn-primary,
+    .btn-secondary {
+        padding: 10px 15px !important;
+        font-size: 14px !important;
+        border-radius: 6px !important;
+        min-height: 44px !important;
+        touch-action: manipulation !important;
+    }
+    
+    /* 输入框统一样式 */
+    input,
+    select,
+    textarea {
+        padding: 10px !important;
+        font-size: 16px !important;
+        border-radius: 6px !important;
+        min-height: 44px !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 表格响应式 */
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* 模态框适配 */
+    .modal-content,
+    .settings-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 5vh auto !important;
+        padding: 15px !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+    }
+}

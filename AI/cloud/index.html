@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精准农业AI一体系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <span class="logo-text">智慧农业平台</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <nav class="nav-tabs">
+                <button class="nav-tab active">数据可视化</button>
+                <button class="nav-tab">设备管理</button>
+                <button class="nav-tab">+</button>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span class="user-name">用户名称</span>
+                <span class="user-id">大于AI</span>
+            </div>
+            <div class="toggle-switch">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle"></label>
+            </div>
+        </div>
+    </header>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>导航菜单</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="menu-item active">
+                <span class="menu-icon">📊</span>
+                <span class="menu-text">数据</span>
+            </li>
+            <li class="menu-item">
+                <span class="menu-icon">📈</span>
+                <span class="menu-text">图表</span>
+            </li>
+            <li class="menu-item">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-text">设备</span>
+            </li>
+            <li class="menu-item">
+                <span class="menu-icon">🔔</span>
+                <span class="menu-text">报警</span>
+            </li>
+            <li class="menu-item">
+                <span class="menu-icon">📋</span>
+                <span class="menu-text">日志</span>
+            </li>
+            <li class="menu-item">
+                <span class="menu-icon">👥</span>
+                <span class="menu-text">用户</span>
+            </li>
+            <li class="menu-item">
+                <span class="menu-icon">🏠</span>
+                <span class="menu-text">首页</span>
+            </li>
+            <li class="menu-item">
+                <span class="menu-icon">📱</span>
+                <span class="menu-text">移动端</span>
+            </li>
+        </ul>
+        
+        <div class="sidebar-section">
+            <h4>数据可视化</h4>
+            <ul class="sub-menu">
+                <li class="sub-menu-item">📊 仪表板</li>
+                <li class="sub-menu-item">📈 图表</li>
+                <li class="sub-menu-item">📋 报表</li>
+                <li class="sub-menu-item">🔍 分析</li>
+                <li class="sub-menu-item">📊 统计</li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>系统管理</h4>
+            <ul class="sub-menu">
+                <li class="sub-menu-item">⚙️ 系统设置</li>
+                <li class="sub-menu-item">👤 用户管理</li>
+                <li class="sub-menu-item">🔐 权限管理</li>
+                <li class="sub-menu-item">📝 日志管理</li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 系统标题 -->
+        <div class="system-title">
+            <h1>精准农业AI一体系统</h1>
+            <div class="datetime">2025-09-02 16:16 星期一</div>
+        </div>
+
+        <!-- 监控面板 -->
+        <div class="dashboard-grid">
+            <!-- 监测系统 -->
+            <div class="panel monitoring-panel">
+                <h3 class="panel-title">监测系统</h3>
+                <div class="monitoring-gauges">
+                    <div class="gauge">
+                        <div class="gauge-circle">
+                            <div class="gauge-needle" style="transform: rotate(45deg);"></div>
+                            <div class="gauge-value">75%</div>
+                        </div>
+                        <div class="gauge-label">土壤湿度</div>
+                    </div>
+                    <div class="gauge">
+                        <div class="gauge-circle">
+                            <div class="gauge-needle" style="transform: rotate(90deg);"></div>
+                            <div class="gauge-value">28°C</div>
+                        </div>
+                        <div class="gauge-label">环境温度</div>
+                    </div>
+                    <div class="gauge">
+                        <div class="gauge-circle">
+                            <div class="gauge-needle" style="transform: rotate(135deg);"></div>
+                            <div class="gauge-value">65%</div>
+                        </div>
+                        <div class="gauge-label">空气湿度</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 灯控系统 -->
+            <div class="panel light-control-panel">
+                <h3 class="panel-title">灯控系统</h3>
+                <div class="light-controls">
+                    <div class="light-item">
+                        <div class="light-bulb red active"></div>
+                        <div class="light-switch on">开</div>
+                    </div>
+                    <div class="light-item">
+                        <div class="light-bulb yellow active"></div>
+                        <div class="light-switch on">开</div>
+                    </div>
+                    <div class="light-item">
+                        <div class="light-bulb green"></div>
+                        <div class="light-switch off">关</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 播种系统 -->
+            <div class="panel seeding-panel">
+                <h3 class="panel-title">播种系统</h3>
+                <div class="seeding-display">
+                    <div class="plant-icon">🌱</div>
+                    <div class="seeding-info">
+                        <div class="seeding-status">运行中</div>
+                        <button class="detail-btn">详细数据 ></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 风控系统 -->
+            <div class="panel wind-control-panel">
+                <h3 class="panel-title">风控系统</h3>
+                <div class="wind-display">
+                    <div class="fan-icon">🌀</div>
+                    <div class="wind-info">
+                        <div class="wind-status">运行中</div>
+                        <div class="wind-switch on">开</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 社区圈 -->
+            <div class="panel community-panel">
+                <h3 class="panel-title">社区圈</h3>
+                <div class="community-content">
+                    <div class="community-bars">
+                        <div class="bar-group">
+                            <div class="bar purple" style="height: 80px;"></div>
+                            <div class="bar yellow" style="height: 60px;"></div>
+                            <div class="bar cyan" style="height: 30px;"></div>
+                            <div class="bar purple" style="height: 90px;"></div>
+                            <div class="bar yellow" style="height: 70px;"></div>
+                            <div class="bar cyan" style="height: 40px;"></div>
+                        </div>
+                        <div class="bar-labels">
+                            <span>2025-09-01 19</span>
+                            <span>2025-09-01 20</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 折线图 -->
+            <div class="panel chart-panel">
+                <h3 class="panel-title">折线图</h3>
+                <div class="chart-container">
+                    <canvas id="lineChart" width="400" height="200"></canvas>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color purple"></div>
+                            <span>2025-09-01 19</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color yellow"></div>
+                            <span>2025-09-01 20</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color cyan"></div>
+                            <span>其他数据</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 右侧面板 -->
+    <aside class="right-panel">
+        <div class="panel-section">
+            <h4>实时监控</h4>
+            <div class="monitor-item">
+                <span class="monitor-label">设备状态</span>
+                <span class="monitor-value">正常</span>
+            </div>
+            <div class="monitor-item">
+                <span class="monitor-label">连接数</span>
+                <span class="monitor-value">12</span>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <h4>系统信息</h4>
+            <div class="system-info">
+                <div class="info-item">
+                    <span class="info-label">CPU使用率</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">内存使用率</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <h4>快速操作</h4>
+            <button class="quick-btn">刷新数据</button>
+            <button class="quick-btn">导出报告</button>
+            <button class="quick-btn">系统设置</button>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>

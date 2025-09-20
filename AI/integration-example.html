@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页面 - 集成天气板块示例</title>
+    <link rel="stylesheet" href="css/weather-widget.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .dashboard-item h3 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .weather-section {
+            grid-column: 1 / -1;
+        }
+
+        .weather-section .weather-widget {
+            margin: 0;
+            max-width: none;
+        }
+
+        .other-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .section-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .section-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- 页面头部 -->
+        <div class="header">
+            <h1>智能控制系统</h1>
+            <p>环境监测与设备控制平台</p>
+        </div>
+
+        <!-- 主要仪表板 -->
+        <div class="dashboard">
+            <!-- 天气板块 -->
+            <div class="weather-section">
+                <div id="weatherContainer"></div>
+            </div>
+        </div>
+
+        <!-- 其他功能板块 -->
+        <div class="other-sections">
+            <div class="section-card">
+                <h3>系统状态</h3>
+                <p>所有设备运行正常，系统稳定运行中。最后检查时间：刚刚</p>
+            </div>
+
+            <div class="section-card">
+                <h3>数据统计</h3>
+                <p>今日数据采集次数：1,234次<br>平均响应时间：120ms<br>系统可用性：99.9%</p>
+            </div>
+
+            <div class="section-card">
+                <h3>设备管理</h3>
+                <p>在线设备：5台<br>离线设备：0台<br>维护设备：1台</p>
+            </div>
+
+            <div class="section-card">
+                <h3>告警信息</h3>
+                <p>当前无告警信息<br>系统运行状态良好</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="js/weather-api.js"></script>
+    <script src="js/weather-widget.js"></script>
+    
+    <script>
+        // 初始化天气组件
+        document.addEventListener('DOMContentLoaded', function() {
+            weatherWidget = new WeatherWidget('weatherContainer');
+        });
+
+        // 页面卸载时清理资源
+        window.addEventListener('beforeunload', function() {
+            if (weatherWidget) {
+                weatherWidget.destroy();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .debug-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>页面加载调试信息</h1>
+    
+    <div class="debug-info">
+        <h3>CSS文件检查</h3>
+        <p id="css-status">检查中...</p>
+    </div>
+    
+    <div class="debug-info">
+        <h3>JavaScript错误</h3>
+        <p id="js-errors">无错误</p>
+    </div>
+    
+    <div class="debug-info">
+        <h3>页面加载时间</h3>
+        <p id="load-time">计算中...</p>
+    </div>
+
+    <script>
+        // 记录页面加载开始时间
+        const startTime = performance.now();
+        
+        // 检查CSS文件
+        function checkCSS() {
+            const cssFiles = [
+                'css/style.css',
+                'css/minimal-dark.css',
+                'css/global-background.css'
+            ];
+            
+            let status = '';
+            cssFiles.forEach(file => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = file;
+                link.onload = () => status += `✓ ${file} 加载成功\n`;
+                link.onerror = () => status += `✗ ${file} 加载失败\n`;
+                document.head.appendChild(link);
+            });
+            
+            setTimeout(() => {
+                document.getElementById('css-status').innerText = status || '所有CSS文件检查完成';
+            }, 1000);
+        }
+        
+        // 监听JavaScript错误
+        window.addEventListener('error', function(e) {
+            document.getElementById('js-errors').innerText = `错误: ${e.message} 在 ${e.filename}:${e.lineno}`;
+        });
+        
+        // 页面加载完成后计算时间
+        window.addEventListener('load', function() {
+            const loadTime = performance.now() - startTime;
+            document.getElementById('load-time').innerText = `页面加载耗时: ${loadTime.toFixed(2)}ms`;
+        });
+        
+        // 开始检查
+        checkCSS();
+    </script>
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>穗安巡视官 - 精准农业AI一体系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home-page.css">
+    <link rel="stylesheet" href="css/panel-layout.css">
+    <link rel="stylesheet" href="css/mobile-menu.css">
+    <link rel="stylesheet" href="css/desktop-layout-fix.css">
+    <link rel="stylesheet" href="css/unified-ui-components.css">
+    <link rel="stylesheet" href="css/settings-enhanced.css">
+    <link rel="stylesheet" href="css/user-management.css">
+    <link rel="stylesheet" href="css/scrollbar-styles.css">
+    <link rel="stylesheet" href="css/modal-centered.css">
+    <link rel="stylesheet" href="css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/mobile-touch.css">
+    <link rel="stylesheet" href="css/mobile-pages-fix.css">
+    <link rel="stylesheet" href="css/modal-fix.css">
+    <link rel="stylesheet" href="css/settings-button-fix.css">
+    <link rel="stylesheet" href="css/homepage-animations.css">
+    <link rel="stylesheet" href="css/title-animation.css">
+    <link rel="stylesheet" href="css/particle-background.css">
+    <link rel="stylesheet" href="css/mouse-effects.css">
+    <link rel="stylesheet" href="css/frosted-background.css">
+    <link rel="stylesheet" href="css/background-settings.css">
+    <link rel="stylesheet" href="css/modal-position.css">
+    <link rel="stylesheet" href="css/sidebar-fix.css">
+    <link rel="stylesheet" href="css/suian-assistant.css">
+    <link rel="stylesheet" href="css/force-dark-panels.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="icon" type="image/png" href="pic/icon-192.png">
+    <style>
+        /* 强制磨砂板块样式 - 深灰色背景 */
+        section, .welcome-section, .feature-card, .news-card, .frosted-glass {
+            background: rgba(50, 50, 50, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+            color: white !important;
+        }
+        /* 确保标题区域透明 */
+        .header {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .feature-card.green-card {
+            background: rgba(46, 125, 50, 0.8) !important;
+            color: white !important;
+        }
+        /* 确保文字颜色为白色 */
+        section h1, section h2, section h3, section p, section span, section div {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏将由common-sidebar.js动态注入 -->
+
+    <div class="container" id="mainContainer">
+        <!-- 顶部导航栏 -->
+        <header class="header" style="background: transparent; box-shadow: none; border: none;">
+            <div class="header-content" style="display: flex; justify-content: center; border: none;">
+                <div class="logo" style="text-align: center; border: none; display: flex; align-items: center; justify-content: center; margin-top: -10px;">
+                    <img src="pic/logo.png" alt="穗安巡视官" style="height: 65px; margin-right: 15px; border-radius: 50%; object-fit: cover;">
+                    <h1 class="centered-title main-title" style="background: none; -webkit-text-fill-color: white; border: none; display: flex; align-items: center;">穗安巡视官 - 精准农业AI一体系统</h1>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+        <!-- 设置齿轮按钮 -->
+        <button class="settings-btn menu-toggle-style" id="settingsBtn" title="设置">
+            <i class="fas fa-cog"></i>
+        </button>
+
+        <!-- 设置模态框 -->
+        <div class="settings-modal" id="settingsModal">
+            <div class="settings-content">
+                <div class="modal-header settings-header">
+                    <h2 class="modal-title"><i class="fas fa-cog"></i> 系统设置</h2>
+                    <button class="modal-close settings-close" id="settingsClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="settings-body">
+                <div class="settings-section">
+                    <h3><i class="fas fa-key"></i> AI API配置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="apiKey">API密钥:</label>
+                            <input type="password" id="apiKey" placeholder="请输入您的API密钥">
+                        </div>
+                        <div class="form-group">
+                            <label for="apiEndpoint">API端点:</label>
+                            <input type="text" id="apiEndpoint" placeholder="接入AI服务端地址">
+                        </div>
+                        <div class="form-group">
+                            <label for="model">模型:</label>
+                            <input type="text" id="model" placeholder="请输入模型名称">
+                            <div class="model-suggestions">
+                                <small>常用模型：qwen-vl-plus, qwen-max, qwen-turbo</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3><i class="fas fa-microphone"></i> 语音API配置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="speechApiProvider">语音API提供商:</label>
+                            <select id="speechApiProvider" class="form-control">
+                                <option value="webSpeech">Web Speech API (浏览器原生)</option>
+                                <option value="baidu">百度语音API</option>
+                            </select>
+                        </div>
+                        
+                        <div id="baiduSpeechSettings" style="display: none;">
+                            <div class="form-group">
+                                <label for="baiduAppId">百度AppID:</label>
+                                <input type="text" id="baiduAppId" placeholder="请输入百度语音AppID" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="baiduApiKey">百度API Key:</label>
+                                <input type="password" id="baiduApiKey" placeholder="请输入百度语音API Key" value="">
+                                <button id="showBaiduApiKey" class="toggle-password">显示</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="baiduSecretKey">百度Secret Key:</label>
+                                <input type="password" id="baiduSecretKey" placeholder="请输入百度语音Secret Key" value="">
+                                <button id="showBaiduSecretKey" class="toggle-password">显示</button>
+                            </div>
+                            <div class="form-group">
+                                <button id="testBaiduApi" class="btn btn-sm">测试连接</button>
+                                <span id="baiduApiStatus" class="status"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group info-box" style="max-width: 100%; box-sizing: border-box; margin: 10px 0;">
+                            <div class="info-title" style="font-weight: bold; margin-bottom: 5px;"><i class="fas fa-info-circle"></i> 设备兼容性提示</div>
+                            <ul class="info-list" style="padding-left: 20px; margin: 5px 0;">
+                                <li style="margin-bottom: 3px;">Web Speech API在Chrome、Edge浏览器上支持最佳</li>
+                                <li style="margin-bottom: 3px;">在iOS、Safari或微信内置浏览器上，建议使用百度语音API</li>
+                                <li style="margin-bottom: 3px;">百度语音API对中文识别有更好的支持</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-palette"></i> 外观设置</h3>
+                    <div class="background-preview">
+                        <div class="bg-preview bg-preview-light" id="previewLight"></div>
+                        <div class="bg-preview bg-preview-dark" id="previewDark" style="display: none;"></div>
+                        <div class="bg-preview bg-preview-custom" id="previewCustom" style="display: none;"></div>
+                    </div>
+                    <div class="background-control">
+                        <button class="bg-btn" id="bgLight" data-bg="light">
+                            <i class="fas fa-sun"></i> 浅色默认背景
+                        </button>
+                        <button class="bg-btn" id="bgDark" data-bg="dark">
+                            <i class="fas fa-moon"></i> 深色默认背景
+                        </button>
+                        <button class="bg-btn" id="bgCustom" data-bg="custom">
+                            <i class="fas fa-image"></i> 图片背景
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-language"></i> 语言设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="systemLanguage">系统语言:</label>
+                            <select id="systemLanguage" class="form-control">
+                                <option value="zh-CN">简体中文</option>
+                                <option value="zh-TW">繁體中文</option>
+                                <option value="en-US">English</option>
+                                <option value="ja-JP">日本語</option>
+                                <option value="ko-KR">한국어</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateFormat">日期格式:</label>
+                            <select id="dateFormat" class="form-control">
+                                <option value="YYYY-MM-DD">2025-01-01</option>
+                                <option value="MM/DD/YYYY">01/01/2025</option>
+                                <option value="DD/MM/YYYY">01/01/2025</option>
+                                <option value="YYYY年MM月DD日">2025年01月01日</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-bell"></i> 通知设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableNotifications" checked>
+                                启用系统通知
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableSounds" checked>
+                                启用提示音
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableWeatherAlerts">
+                                天气预警通知
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enablePestAlerts" checked>
+                                病虫害预警通知
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-database"></i> 数据设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="dataRetention">数据保留期限:</label>
+                            <select id="dataRetention" class="form-control">
+                                <option value="30">30天</option>
+                                <option value="90" selected>90天</option>
+                                <option value="180">180天</option>
+                                <option value="365">1年</option>
+                                <option value="0">永久保留</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="autoBackup" checked>
+                                自动备份数据
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="backupFrequency">备份频率:</label>
+                            <select id="backupFrequency" class="form-control">
+                                <option value="daily" selected>每日</option>
+                                <option value="weekly">每周</option>
+                                <option value="monthly">每月</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-shield-alt"></i> 安全设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="sessionTimeout">会话超时时间:</label>
+                            <select id="sessionTimeout" class="form-control">
+                                <option value="15">15分钟</option>
+                                <option value="30" selected>30分钟</option>
+                                <option value="60">1小时</option>
+                                <option value="120">2小时</option>
+                                <option value="0">永不超时</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableTwoFactor">
+                                启用双因素认证
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableLoginLog" checked>
+                                记录登录日志
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-cog"></i> 高级设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="debugMode">调试模式:</label>
+                            <select id="debugMode" class="form-control">
+                                <option value="off" selected>关闭</option>
+                                <option value="basic">基础</option>
+                                <option value="verbose">详细</option>
+                            </select>
+                        </div>
+                            <div class="form-group" style="display: flex; align-items: center; margin-top: 10px;">
+                                <button id="testBaiduApi" class="modal-btn modal-btn-primary" style="padding: 8px 15px; font-size: 14px; margin-right: 10px;">
+                                    <i class="fas fa-check-circle"></i> 测试连接
+                                </button>
+                                <span id="baiduApiStatus" class="status" style="flex: 1;"></span>
+                            </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableAnalytics">
+                                启用使用统计
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableAutoUpdate" checked>
+                                自动检查更新
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                
+                <div class="modal-footer settings-actions">
+                    <button class="modal-btn modal-btn-secondary settings-btn-secondary" id="resetSettings">
+                        <i class="fas fa-undo"></i> 重置设置
+                    </button>
+                    <button class="modal-btn modal-btn-primary settings-btn-primary" id="saveSettings">
+                        <i class="fas fa-save"></i> 保存设置
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 欢迎区域 -->
+        <section class="welcome-section weather-section" style="background: rgba(255, 255, 255, 0.5);">
+            <div class="welcome-content">
+                <h2 style="color: white; text-align: left; background: none; -webkit-text-fill-color: white; margin-left: 0; justify-content: flex-start;">天气</h2>
+                <p style="color: rgba(255, 255, 255, 0.9); text-align: left;">运用AI模型技术农业生产，让种植更精准、更高效、更可持续</p>
+            </div>
+            <div class="weather-dashboard">
+                <div class="weather-main weather-card" style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="weather-icon">☀️</div>
+                    <div class="weather-details">
+                        <div class="temperature"><span class="temperature-value">22</span>°C</div>
+                        <div class="weather-desc">晴朗</div>
+                        <div class="weather-location">📍 某市</div>
+                    </div>
+                </div>
+                <div class="environment-data" style="background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <div class="env-item">
+                        <div class="env-icon">💧</div>
+                        <div class="env-info">
+                            <span class="env-label" style="color: rgba(255, 255, 255, 0.8);">湿度</span>
+                            <span class="env-value" style="color: white;">65%</span>
+                        </div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-icon">🌡️</div>
+                        <div class="env-info">
+                            <span class="env-label" style="color: rgba(255, 255, 255, 0.8);">体感温度</span>
+                            <span class="env-value" style="color: white;">27°C</span>
+                        </div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-icon">💨</div>
+                        <div class="env-info">
+                            <span class="env-label" style="color: rgba(255, 255, 255, 0.8);">风速</span>
+                            <span class="env-value" style="color: white;">3级</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="farming-status" style="background: rgba(255, 255, 255, 0.25);">
+                    <div class="status-indicator suitable" style="background: rgba(76, 175, 80, 0.3);">
+                        <div class="status-icon">✅</div>
+                        <div class="status-text" style="color: white;">适宜耕种</div>
+                    </div>
+                    <div class="farming-advice">
+                        <div class="advice-title" style="color: white;">🌾 今日农事建议</div>
+                        <div class="advice-content">
+                            <div class="advice-item" style="color: rgba(255, 255, 255, 0.9);">• 适宜进行播种和移栽作业</div>
+                            <div class="advice-item" style="color: rgba(255, 255, 255, 0.9);">• 建议上午10点前完成田间管理</div>
+                            <div class="advice-item" style="color: rgba(255, 255, 255, 0.9);">• 注意适量灌溉，保持土壤湿润</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <!-- 功能卡片区域 -->
+            <section class="features-section system-functions">
+                <h3 style="text-align: left; color: white;">系统功能</h3>
+                <div class="feature-cards">
+                    <!-- 第一行 -->
+                    <div class="feature-card primary-feature function-card btn-ripple" onclick="navigateToPage('pest-detection.html')" style="color: white; background: rgba(76, 175, 80, 0.4); border: 1px solid rgba(76, 175, 80, 0.6);">
+                        <div class="card-icon function-icon"><i class="fas fa-bug"></i></div>
+                        <h4 style="color: white;">病虫害检测</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">AI智能识别作物病虫害，提供精准诊断和防治建议</p>
+                        <div class="card-badge">核心功能</div>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <div class="feature-card primary-feature function-card btn-ripple" onclick="navigateToPage('model-training.html')" style="color: white; background: rgba(76, 175, 80, 0.4); border: 1px solid rgba(76, 175, 80, 0.6);">
+                        <div class="card-icon function-icon"><i class="fas fa-code"></i></div>
+                        <h4 style="color: white;">低代码开发</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">无需编程知识，快速构建专属农业应用和自动化流程</p>
+                        <div class="card-badge">核心功能</div>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <div class="feature-card primary-feature function-card btn-ripple" onclick="navigateToPage('analysis.html')" style="color: white; background: rgba(76, 175, 80, 0.4); border: 1px solid rgba(76, 175, 80, 0.6);">
+                        <div class="card-icon function-icon"><i class="fas fa-chart-line"></i></div>
+                        <h4 style="color: white;">智能分析</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">深度分析农业数据，洞察作物生长趋势和产量预测</p>
+                        <div class="card-badge">核心功能</div>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <!-- 第二行 -->
+                    <div class="feature-card function-card btn-ripple" onclick="navigateToPage('sample-library.html')" style="color: white; background: rgba(255, 255, 255, 0.25);">
+                        <div class="card-icon function-icon"><i class="fas fa-leaf"></i></div>
+                        <h4 style="color: white;">病害样本库</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">收集和分类常见作物病害样本，提供快速查询和比对</p>
+                        <div class="card-badge new-badge">新功能</div>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <div class="feature-card function-card btn-ripple" onclick="navigateToPage('reports.html')" style="color: white; background: rgba(255, 255, 255, 0.25);">
+                        <div class="card-icon function-icon"><i class="fas fa-file-alt"></i></div>
+                        <h4 style="color: white;">报告中心</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">生成详细的农业报告，跟踪生产进度和收益分析</p>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <div class="feature-card function-card btn-ripple" onclick="navigateToPage('help.html')" style="color: white; background: rgba(255, 255, 255, 0.25);">
+                        <div class="card-icon function-icon"><i class="fas fa-question-circle"></i></div>
+                        <h4 style="color: white;">帮助中心</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">获取系统使用指南和农业技术支持服务</p>
+                        <div class="card-arrow">→</div>
+                    </div>
+                </div>
+            </section>
+
+            <style>
+                .feature-cards {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 20px;
+                }
+                
+                .feature-card {
+                    position: relative;
+                    border-radius: 12px;
+                    padding: 25px;
+                    transition: all 0.3s ease;
+                    cursor: pointer;
+                    overflow: hidden;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                }
+                
+                .feature-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+                }
+                
+                .primary-feature {
+                    border-left: 4px solid #4CAF50;
+                }
+                
+                .card-badge {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background: rgba(76, 175, 80, 0.8);
+                    color: white;
+                    padding: 3px 8px;
+                    border-radius: 10px;
+                    font-size: 0.7rem;
+                    font-weight: bold;
+                }
+                
+                .new-badge {
+                    background: rgba(33, 150, 243, 0.8);
+                }
+                
+                .card-icon {
+                    font-size: 2rem;
+                    margin-bottom: 15px;
+                    color: white;
+                }
+                
+                @media (max-width: 768px) {
+                    .feature-cards {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .feature-card {
+                        margin-bottom: 15px;
+                    }
+                    
+                    .feature-card:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            </style>
+
+            <!-- 系统下载区域 -->
+            <section class="download-section">
+                <h3 style="text-align: left; color: white;">系统下载</h3>
+                
+                <!-- 移动应用下载区域 -->
+                <div class="mobile-apps-section">
+                    <div id="appDownloadContainer" class="app-download-container">
+                        <!-- 应用卡片将由JavaScript动态生成 -->
+                        <div class="loading-apps" style="text-align: center; padding: 20px; color: white;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 2em; margin-bottom: 10px;"></i>
+                            <p>正在加载应用列表...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 农业资讯区域 -->
+            <section class="news-section">
+                <h3 style="text-align: left; color: white;">农业资讯</h3>
+                <div class="news-cards">
+                    <div class="news-card" style="color: white; background: rgba(255, 255, 255, 0.25);">
+                        <div class="news-date" style="color: rgba(255, 255, 255, 0.8);">今日</div>
+                        <h4 style="color: white;">春季作物管理要点</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">春季是作物生长的关键期，需要注意温度变化和病虫害防治...</p>
+                    </div>
+                    <div class="news-card" style="color: white; background: rgba(255, 255, 255, 0.25);">
+                        <div class="news-date" style="color: rgba(255, 255, 255, 0.8);">昨日</div>
+                        <h4 style="color: white;">智能灌溉技术应用</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">现代智能灌溉系统可以根据土壤湿度和天气预报自动调节...</p>
+                    </div>
+                    <div class="news-card" style="color: white; background: rgba(255, 255, 255, 0.25);">
+                        <div class="news-date" style="color: rgba(255, 255, 255, 0.8);">2天前</div>
+                        <h4 style="color: white;">有机农业发展趋势</h4>
+                        <p style="color: rgba(255, 255, 255, 0.9);">有机农业正成为现代农业发展的重要方向，市场需求持续增长...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部信息 -->
+        <footer class="footer" style="background: transparent; padding: 15px 0;">
+            <div class="footer-content" style="justify-content: center;">
+                <p style="color: white;">&copy; 2025 穗安巡视官 - 精准农业AI一体系统</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 在页面渲染前加载背景脚本 -->
+    <script src="js/global-background.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/background.js"></script>
+    <script src="js/common-sidebar.js"></script>
+    <script src="js/enhanced-menu.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/home-page.js"></script>
+    <script src="js/user-management.js"></script>
+    <script src="js/page-navigation.js"></script>
+    <script src="js/weather-service.js"></script>
+    <script src="js/app-manager.js"></script>
+    <script src="js/speech-api-service.js"></script>
+    <script src="js/suian-assistant.js"></script>
+    <script src="js/homepage-animations.js"></script>
+    <script src="js/title-animation.js"></script>
+    <script src="js/particle-background.js"></script>
+    <script src="js/mouse-effects.js"></script>
+</body>
+</html>

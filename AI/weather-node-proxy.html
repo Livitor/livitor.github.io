@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真实环境监测数据 - Node.js代理</title>
+    <link rel="stylesheet" href="css/weather-widget.css">
+    <style>
+        .proxy-info {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+        }
+
+        .proxy-info h4 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-success { background: #28a745; }
+        .status-error { background: #dc3545; }
+        .status-warning { background: #ffc107; }
+
+        .setup-instructions {
+            background: rgba(23, 162, 184, 0.2);
+            border: 1px solid rgba(23, 162, 184, 0.5);
+            color: #b8daff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+            font-size: 0.9em;
+            text-align: left;
+        }
+
+        .setup-instructions h5 {
+            margin-bottom: 10px;
+            color: #17a2b8;
+            text-align: center;
+        }
+
+        .setup-instructions code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .data-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .data-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; padding: 20px; font-family: Arial, sans-serif;">
+    
+    <div style="text-align: center; color: white; margin-bottom: 30px;">
+        <h1>真实环境监测系统</h1>
+        <p>通过Node.js代理服务器获取真实传感器数据</p>
+    </div>
+
+    <!-- 设置说明 -->
+    <div class="setup-instructions">
+        <h5>🚀 启动说明</h5>
+        <p><strong>1. 安装Node.js</strong>（如果还没有安装）</p>
+        <p><strong>2. 启动代理服务器：</strong></p>
+        <p style="margin-left: 20px;"><code>node proxy-server.js</code></p>
+        <p><strong>3. 访问页面：</strong></p>
+        <p style="margin-left: 20px;"><code>http://localhost:3000</code></p>
+        <p style="margin-top: 15px; color: #ffc107;"><strong>注意：</strong>确保代理服务器正在运行，否则无法获取数据</p>
+    </div>
+
+    <!-- 代理状态信息 -->
+    <div class="proxy-info">
+        <h4>代理服务器状态</h4>
+        <div id="proxyStatus" style="margin-bottom: 15px;">
+            <span class="status-indicator status-warning"></span>
+            正在检查连接...
+        </div>
+        
+        <div class="data-info">
+            <div class="data-item">
+                <strong>API地址</strong><br>
+                http://api.nlecloud.com
+            </div>
+            <div class="data-item">
+                <strong>设备ID</strong><br>
+                1309651
+            </div>
+            <div class="data-item">
+                <strong>温度标签</strong><br>
+                temp
+            </div>
+            <div class="data-item">
+                <strong>湿度标签</strong><br>
+                shi_du
+            </div>
+        </div>
+    </div>
+
+    <!-- 天气组件容器 -->
+    <div id="weatherContainer"></div>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="js/weather-api-node.js"></script>
+    <script src="js/weather-widget.js"></script>
+    
+    <script>
+        // 检查代理服务器状态
+        async function checkProxyStatus() {
+            const statusElement = document.getElementById('proxyStatus');
+            try {
+                const response = await fetch('http://localhost:3000/api/weather');
+                if (response.ok) {
+                    statusElement.innerHTML = '<span class="status-indicator status-success"></span>代理服务器运行正常';
+                    return true;
+                } else {
+                    throw new Error('服务器响应错误');
+                }
+            } catch (error) {
+                statusElement.innerHTML = '<span class="status-indicator status-error"></span>代理服务器未运行或连接失败';
+                return false;
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 检查代理服务器状态
+            const isProxyRunning = await checkProxyStatus();
+            
+            if (isProxyRunning) {
+                // 初始化天气组件
+                window.weatherWidget = new WeatherWidget('weatherContainer');
+            } else {
+                // 显示错误信息
+                const container = document.getElementById('weatherContainer');
+                container.innerHTML = `
+                    <div style="background: rgba(220, 53, 69, 0.2); border: 1px solid rgba(220, 53, 69, 0.5); color: #f8d7da; padding: 20px; border-radius: 12px; text-align: center; max-width: 400px; margin: 0 auto;">
+                        <h4>❌ 无法连接到代理服务器</h4>
+                        <p>请确保已启动Node.js代理服务器：</p>
+                        <code style="background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 4px; display: inline-block; margin: 10px 0;">node proxy-server.js</code>
+                        <p style="margin-top: 15px; font-size: 0.9em;">然后刷新此页面</p>
+                    </div>
+                `;
+            }
+        });
+
+        // 页面卸载时清理资源
+        window.addEventListener('beforeunload', function() {
+            if (window.weatherWidget) {
+                window.weatherWidget.destroy();
+            }
+        });
+    </script>
+</body>
+</html>

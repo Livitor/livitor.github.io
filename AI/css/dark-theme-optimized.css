@@ -1,0 +1,27 @@
+/* 优化的深色主题 - 精确选择器 */
+
+/* 主要内容区域的磨砂板块 */
+main section,
+.welcome-section,
+.feature-card,
+.news-card,
+.report-card,
+.help-section,
+.model-card,
+.panel-base {
+    background: rgba(50, 50, 50, 0.8) !important;
+    color: white !important;
+}
+
+/* 文字颜色优化 */
+main section *,
+.panel-base *,
+.feature-card *,
+.report-card * {
+    color: white !important;
+}
+
+/* 保持头部透明 */
+header.header {
+    background: transparent !important;
+}

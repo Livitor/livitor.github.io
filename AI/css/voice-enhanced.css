@@ -1,0 +1,583 @@
+/* 增强语音功能样式 */
+
+/* 权限指南模态框 */
+.permission-guide-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.permission-guide-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.guide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.guide-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.guide-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.guide-body {
+    padding: 20px;
+}
+
+.guide-step {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.guide-step h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.guide-step ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.guide-step li {
+    margin-bottom: 5px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.guide-actions {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    background: #f8f9fa;
+    border-radius: 0 0 12px 12px;
+}
+
+.guide-btn-primary,
+.guide-btn-secondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.guide-btn-primary {
+    background: #4CAF50;
+    color: white;
+}
+
+.guide-btn-primary:hover {
+    background: #45a049;
+}
+
+.guide-btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.guide-btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* 语音替代方案 */
+.voice-alternatives {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 12px;
+}
+
+.alternatives-content h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.alternative-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.alt-btn {
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    min-width: 100px;
+}
+
+.alt-btn:hover {
+    background: rgba(255, 193, 7, 0.3);
+    transform: translateY(-2px);
+}
+
+.alt-btn i {
+    font-size: 1.2rem;
+}
+
+/* 症状选择器模态框 */
+.symptom-selector-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.symptom-selector-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.selector-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.selector-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selector-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.selector-body {
+    padding: 20px;
+}
+
+.symptom-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.symptom-category {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    border-left: 4px solid #4CAF50;
+}
+
+.symptom-category h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1rem;
+}
+
+.symptom-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.symptom-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.symptom-options label:hover {
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.symptom-options input[type="checkbox"] {
+    margin: 0;
+}
+
+.selector-actions {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    background: #f8f9fa;
+    border-radius: 0 0 12px 12px;
+}
+
+.selector-btn-primary,
+.selector-btn-secondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.selector-btn-primary {
+    background: #4CAF50;
+    color: white;
+}
+
+.selector-btn-primary:hover {
+    background: #45a049;
+}
+
+.selector-btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.selector-btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* 常见问题模态框 */
+.common-issues-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.common-issues-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.issues-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.issues-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.issues-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.issues-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.issues-body {
+    padding: 20px;
+}
+
+.issue-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.issue-item {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 4px solid #2196F3;
+}
+
+.issue-item:hover {
+    background: #e3f2fd;
+    transform: translateX(5px);
+}
+
+.issue-item h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 1rem;
+}
+
+.issue-item p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* 语音回退提示 */
+.voice-fallback {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(33, 150, 243, 0.1);
+    border: 1px solid rgba(33, 150, 243, 0.3);
+    border-radius: 12px;
+}
+
+.fallback-info {
+    text-align: center;
+}
+
+.fallback-info i {
+    font-size: 2rem;
+    color: #2196F3;
+    margin-bottom: 10px;
+}
+
+.fallback-info p {
+    margin: 0 0 15px 0;
+    color: #333;
+    line-height: 1.5;
+}
+
+.manual-input-btn {
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.manual-input-btn:hover {
+    background: #1976D2;
+    transform: translateY(-2px);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .permission-guide-content,
+    .symptom-selector-content,
+    .common-issues-content {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .symptom-categories {
+        grid-template-columns: 1fr;
+    }
+    
+    .alternative-options {
+        justify-content: center;
+    }
+    
+    .guide-actions,
+    .selector-actions {
+        flex-direction: column;
+    }
+    
+    .guide-btn-primary,
+    .guide-btn-secondary,
+    .selector-btn-primary,
+    .selector-btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .guide-header,
+    .selector-header,
+    .issues-header {
+        padding: 15px;
+    }
+    
+    .guide-body,
+    .selector-body,
+    .issues-body {
+        padding: 15px;
+    }
+    
+    .guide-actions,
+    .selector-actions {
+        padding: 15px;
+    }
+    
+    .alt-btn {
+        min-width: 80px;
+        font-size: 0.8rem;
+    }
+}
+
+/* 动画效果 */
+/* 动画效果 */
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.permission-guide-modal,
+.symptom-selector-modal,
+.common-issues-modal {
+    animation: slideInFromTop 0.3s ease-out;
+}
+
+/* 菜单通知样式 */
+.menu-notification {
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+/* 无障碍支持 */
+.guide-close:focus,
+.selector-close:focus,
+.issues-close:focus {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+.symptom-options label:focus-within {
+    background: rgba(76, 175, 80, 0.2);
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+.issue-item:focus {
+    outline: 2px solid #2196F3;
+    outline-offset: 2px;
+}

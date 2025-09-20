@@ -1,0 +1,317 @@
+/* 优化UI样式 - 磨砂效果和背景更改 */
+
+/* 更改背景样式 */
+body {
+    background-image: url('../pic/bg-pattern-light.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* 标题居中样式 */
+.logo h1, .centered-title {
+    text-align: center;
+    width: 100%;
+    font-size: 1.8rem;
+    margin: 0 auto;
+    padding: 15px 0;
+    display: block;
+}
+
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* 磨砂效果卡片 */
+.feature-card, 
+.download-card, 
+.news-card, 
+.weather-dashboard,
+.environment-data,
+.farming-status,
+.download-info-card,
+.download-actions-card,
+.env-item,
+.status-indicator,
+.farming-advice {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px rgba(0, 31, 63, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover, 
+.download-card:hover, 
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 31, 63, 0.15);
+}
+
+/* 系统下载卡片布局 */
+.download-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.download-header {
+    padding: 20px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.download-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 15px;
+    gap: 15px;
+}
+
+.download-info-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 31, 63, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.download-actions-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 31, 63, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 产品信息样式 */
+.product-info h5, .system-requirements h5, .download-features h5 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #4CAF50;
+    font-size: 1.1rem;
+}
+
+.info-item, .req-item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.info-label {
+    font-weight: 600;
+    margin-right: 8px;
+    color: #555;
+}
+
+.req-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* 下载按钮样式 */
+.download-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.download-btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.download-btn.primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.download-btn.primary:hover {
+    background-color: #3e8e41;
+}
+
+.download-btn.secondary {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+.download-btn.secondary:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 天气卡片样式优化 */
+.weather-dashboard {
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 31, 63, 0.08);
+}
+
+.weather-icon {
+    font-size: 3.5rem;
+    margin-right: 20px;
+}
+
+.temperature {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.weather-desc {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.weather-location {
+    font-size: 1rem;
+    opacity: 0.8;
+    color: #555;
+}
+
+.environment-data {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 31, 63, 0.08);
+}
+
+.env-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 30%;
+}
+
+.env-icon {
+    font-size: 1.8rem;
+    margin-right: 12px;
+    color: #4CAF50;
+}
+
+.env-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.env-value {
+    display: block;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.farming-status {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 31, 63, 0.08);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.status-icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.status-text {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.farming-advice {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.advice-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #4CAF50;
+}
+
+.advice-item {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .download-content {
+        flex-direction: column;
+    }
+    
+    .download-info-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .environment-data {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .weather-main {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .weather-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}

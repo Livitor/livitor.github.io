@@ -1,0 +1,19 @@
+/* 基础触摸优化 - 简化版 */
+@media (max-width: 768px) {
+    /* 基本触摸目标大小 */
+    button, .btn, a {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+    }
+    
+    /* 移除点击高亮 */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* 基础滚动优化 */
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+}

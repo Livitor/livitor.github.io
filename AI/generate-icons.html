@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA图标生成器</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f7fafc;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .upload-area {
+            border: 3px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+        #fileInput {
+            display: none;
+        }
+        .preview {
+            text-align: center;
+            margin: 20px 0;
+        }
+        #previewImage {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .sizes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .size-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .size-item h3 {
+            margin: 0 0 10px 0;
+            color: #2d3748;
+        }
+        .size-item canvas {
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            background: #5a67d8;
+        }
+        .download-all {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .download-all:hover {
+            background: #38a169;
+        }
+        .instructions {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .instructions h3 {
+            color: #2d3748;
+            margin-top: 0;
+        }
+        .instructions ol {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌾 PWA图标生成器</h1>
+        <p style="text-align: center; color: #718096; margin-bottom: 30px;">
+            为穗安巡视官生成PWA所需的图标文件
+        </p>
+
+        <div class="upload-area" id="uploadArea">
+            <div>
+                <i style="font-size: 3rem; color: #a0aec0; margin-bottom: 15px;">📁</i>
+                <h3>上传原始图片</h3>
+                <p>点击或拖拽图片到此处</p>
+                <p style="font-size: 0.9rem; color: #718096;">建议使用512x512或更高分辨率的PNG图片</p>
+            </div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="preview" id="preview" style="display: none;">
+            <h3>预览</h3>
+            <img id="previewImage" alt="预览">
+        </div>
+
+        <div class="sizes" id="sizes" style="display: none;">
+            <div class="size-item">
+                <h3>16x16</h3>
+                <canvas id="canvas16" width="16" height="16"></canvas>
+                <button class="download-btn" data-size="16">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>32x32</h3>
+                <canvas id="canvas32" width="32" height="32"></canvas>
+                <button class="download-btn" data-size="32">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>72x72</h3>
+                <canvas id="canvas72" width="72" height="72"></canvas>
+                <button class="download-btn" data-size="72">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>96x96</h3>
+                <canvas id="canvas96" width="96" height="96"></canvas>
+                <button class="download-btn" data-size="96">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>128x128</h3>
+                <canvas id="canvas128" width="128" height="128"></canvas>
+                <button class="download-btn" data-size="128">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>144x144</h3>
+                <canvas id="canvas144" width="144" height="144"></canvas>
+                <button class="download-btn" data-size="144">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>152x152</h3>
+                <canvas id="canvas152" width="152" height="152"></canvas>
+                <button class="download-btn" data-size="152">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>192x192</h3>
+                <canvas id="canvas192" width="192" height="192"></canvas>
+                <button class="download-btn" data-size="192">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>384x384</h3>
+                <canvas id="canvas384" width="384" height="384"></canvas>
+                <button class="download-btn" data-size="384">下载</button>
+            </div>
+            <div class="size-item">
+                <h3>512x512</h3>
+                <canvas id="canvas512" width="512" height="512"></canvas>
+                <button class="download-btn" data-size="512">下载</button>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="download-all" id="downloadAll" style="display: none;">📦 下载所有图标</button>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 使用说明</h3>
+            <ol>
+                <li>上传一张高质量的图片（建议512x512或更高分辨率）</li>
+                <li>系统会自动生成不同尺寸的图标</li>
+                <li>点击单个图标下载，或使用"下载所有图标"批量下载</li>
+                <li>将下载的图标文件放入项目的 <code>icons/</code> 文件夹中</li>
+                <li>确保文件名与manifest.json中的路径一致</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        let originalImage = null;
+
+        // 绑定事件
+        document.getElementById('uploadArea').addEventListener('click', () => {
+            document.getElementById('fileInput').click();
+        });
+
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+
+        // 拖拽事件
+        const uploadArea = document.getElementById('uploadArea');
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        // 处理文件选择
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        // 处理文件
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImage = new Image();
+                originalImage.onload = () => {
+                    showPreview();
+                    generateIcons();
+                };
+                originalImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 显示预览
+        function showPreview() {
+            document.getElementById('preview').style.display = 'block';
+            document.getElementById('previewImage').src = originalImage.src;
+        }
+
+        // 生成图标
+        function generateIcons() {
+            const sizes = [16, 32, 72, 96, 128, 144, 152, 192, 384, 512];
+            
+            sizes.forEach(size => {
+                const canvas = document.getElementById(`canvas${size}`);
+                const ctx = canvas.getContext('2d');
+                
+                // 清空画布
+                ctx.clearRect(0, 0, size, size);
+                
+                // 绘制圆形背景
+                ctx.beginPath();
+                ctx.arc(size/2, size/2, size/2, 0, 2 * Math.PI);
+                ctx.fillStyle = '#667eea';
+                ctx.fill();
+                
+                // 计算图片尺寸和位置
+                const scale = Math.min(size / originalImage.width, size / originalImage.height) * 0.8;
+                const scaledWidth = originalImage.width * scale;
+                const scaledHeight = originalImage.height * scale;
+                const x = (size - scaledWidth) / 2;
+                const y = (size - scaledHeight) / 2;
+                
+                // 绘制图片
+                ctx.drawImage(originalImage, x, y, scaledWidth, scaledHeight);
+            });
+            
+            document.getElementById('sizes').style.display = 'grid';
+            document.getElementById('downloadAll').style.display = 'inline-block';
+        }
+
+        // 下载单个图标
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const size = btn.getAttribute('data-size');
+                const canvas = document.getElementById(`canvas${size}`);
+                downloadCanvas(canvas, `icon-${size}x${size}.png`);
+            });
+        });
+
+        // 下载所有图标
+        document.getElementById('downloadAll').addEventListener('click', () => {
+            const sizes = [16, 32, 72, 96, 128, 144, 152, 192, 384, 512];
+            
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    const canvas = document.getElementById(`canvas${size}`);
+                    downloadCanvas(canvas, `icon-${size}x${size}.png`);
+                }, index * 100);
+            });
+        });
+
+        // 下载画布
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html> 

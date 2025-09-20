@@ -1,0 +1,11 @@
+/* 极简深色主题 */
+.panel-base, .model-card, .feature-card, .report-card, .help-section {
+    background: rgba(50, 50, 50, 0.8) !important;
+    color: white !important;
+}
+.panel-base *, .model-card *, .feature-card *, .report-card *, .help-section * {
+    color: white !important;
+}
+.header {
+    background: transparent !important;
+}

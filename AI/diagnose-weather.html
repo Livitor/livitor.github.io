@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气数据诊断工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .diagnostic-card {
+            background: rgba(50, 50, 50, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+            color: white !important;
+        }
+        .status-ok { color: #28a745; }
+        .status-error { color: #dc3545; }
+        .status-warning { color: #ffc107; }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 天气数据诊断工具</h1>
+    
+    <div class="diagnostic-card">
+        <h3>1. 代理服务器连接测试</h3>
+        <button class="test-button" onclick="testProxyServer()">测试代理服务器</button>
+        <div id="proxyResult" class="result-box">点击按钮开始测试...</div>
+    </div>
+
+    <div class="diagnostic-card">
+        <h3>2. 天气API数据测试</h3>
+        <button class="test-button" onclick="testWeatherAPI()">测试天气API</button>
+        <div id="weatherResult" class="result-box">点击按钮开始测试...</div>
+    </div>
+
+    <div class="diagnostic-card">
+        <h3>3. 本地存储检查</h3>
+        <button class="test-button" onclick="checkLocalStorage()">检查本地存储</button>
+        <button class="test-button" onclick="clearLocalStorage()">清除缓存</button>
+        <div id="storageResult" class="result-box">点击按钮开始检查...</div>
+    </div>
+
+    <div class="diagnostic-card">
+        <h3>4. 主界面天气元素检查</h3>
+        <button class="test-button" onclick="checkWeatherElements()">检查页面元素</button>
+        <div id="elementsResult" class="result-box">点击按钮开始检查...</div>
+    </div>
+
+    <div class="diagnostic-card">
+        <h3>5. 实时数据更新测试</h3>
+        <button class="test-button" onclick="startRealTimeTest()">开始实时测试</button>
+        <button class="test-button" onclick="stopRealTimeTest()">停止测试</button>
+        <div id="realtimeResult" class="result-box">点击按钮开始测试...</div>
+    </div>
+
+    <script>
+        let realtimeInterval = null;
+
+        // 测试代理服务器连接
+        async function testProxyServer() {
+            const resultDiv = document.getElementById('proxyResult');
+            resultDiv.textContent = '正在测试代理服务器连接...';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/weather', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `<span class="status-ok">✅ 代理服务器连接成功</span>\n响应数据:\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="status-error">❌ 代理服务器响应错误</span>\n状态码: ${response.status}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="status-error">❌ 代理服务器连接失败</span>\n错误信息: ${error.message}\n\n请确保运行了: node proxy-server.js`;
+            }
+        }
+
+        // 测试天气API
+        async function testWeatherAPI() {
+            const resultDiv = document.getElementById('weatherResult');
+            resultDiv.textContent = '正在测试天气API...';
+            
+            try {
+                // 模拟weather-service.js中的调用
+                const response = await fetch('http://localhost:3000/api/weather');
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `<span class="status-ok">✅ 天气API调用成功</span>\n温度: ${data.temperature}°C\n湿度: ${data.humidity}%\n时间: ${data.timestamp}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="status-error">❌ 天气API调用失败</span>\n错误: ${data.error}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="status-error">❌ 天气API测试失败</span>\n错误: ${error.message}`;
+            }
+        }
+
+        // 检查本地存储
+        function checkLocalStorage() {
+            const resultDiv = document.getElementById('storageResult');
+            
+            const weatherData = localStorage.getItem('real_weather_data');
+            const oldWeatherData = localStorage.getItem('beijing_weather_data');
+            
+            let result = '本地存储检查结果:\n\n';
+            
+            if (weatherData) {
+                result += `✅ 找到新的天气数据 (real_weather_data):\n${weatherData}\n\n`;
+            } else {
+                result += `❌ 未找到新的天气数据 (real_weather_data)\n\n`;
+            }
+            
+            if (oldWeatherData) {
+                result += `⚠️ 找到旧的天气数据 (beijing_weather_data):\n${oldWeatherData}\n\n`;
+            } else {
+                result += `✅ 未找到旧的天气数据缓存\n\n`;
+            }
+            
+            resultDiv.textContent = result;
+        }
+
+        // 清除本地存储
+        function clearLocalStorage() {
+            localStorage.removeItem('real_weather_data');
+            localStorage.removeItem('beijing_weather_data');
+            document.getElementById('storageResult').innerHTML = '<span class="status-ok">✅ 本地存储已清除</span>\n请刷新主页面重新加载数据';
+        }
+
+        // 检查页面元素
+        function checkWeatherElements() {
+            const resultDiv = document.getElementById('elementsResult');
+            
+            // 打开主页面检查元素
+            const mainWindow = window.open('index.html', '_blank');
+            
+            setTimeout(() => {
+                try {
+                    const elements = {
+                        '.temperature': mainWindow.document.querySelector('.temperature'),
+                        '.weather-desc': mainWindow.document.querySelector('.weather-desc'),
+                        '.weather-location': mainWindow.document.querySelector('.weather-location'),
+                        '.env-value (湿度)': mainWindow.document.querySelector('.env-item:nth-child(1) .env-value')
+                    };
+                    
+                    let result = '页面元素检查结果:\n\n';
+                    
+                    for (const [selector, element] of Object.entries(elements)) {
+                        if (element) {
+                            result += `✅ ${selector}: "${element.textContent}"\n`;
+                        } else {
+                            result += `❌ ${selector}: 元素未找到\n`;
+                        }
+                    }
+                    
+                    resultDiv.textContent = result;
+                } catch (error) {
+                    resultDiv.innerHTML = `<span class="status-error">❌ 无法检查页面元素</span>\n错误: ${error.message}\n\n请确保主页面已打开`;
+                }
+            }, 2000);
+        }
+
+        // 开始实时测试
+        function startRealTimeTest() {
+            const resultDiv = document.getElementById('realtimeResult');
+            resultDiv.textContent = '开始实时数据监控...\n\n';
+            
+            let count = 0;
+            realtimeInterval = setInterval(async () => {
+                count++;
+                try {
+                    const response = await fetch('http://localhost:3000/api/weather');
+                    const data = await response.json();
+                    
+                    const timestamp = new Date().toLocaleTimeString();
+                    const logEntry = `[${timestamp}] 第${count}次: 温度=${data.temperature}°C, 湿度=${data.humidity}%\n`;
+                    
+                    resultDiv.textContent += logEntry;
+                    resultDiv.scrollTop = resultDiv.scrollHeight;
+                } catch (error) {
+                    resultDiv.textContent += `[${new Date().toLocaleTimeString()}] 错误: ${error.message}\n`;
+                }
+            }, 5000);
+        }
+
+        // 停止实时测试
+        function stopRealTimeTest() {
+            if (realtimeInterval) {
+                clearInterval(realtimeInterval);
+                realtimeInterval = null;
+                document.getElementById('realtimeResult').textContent += '\n实时测试已停止。';
+            }
+        }
+    </script>
+</body>
+</html>

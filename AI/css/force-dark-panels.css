@@ -1,0 +1,238 @@
+/* 强制深色板块样式 - 高优先级 */
+
+/* 低代码页面的板块 */
+.model-selection-section,
+.dataset-section,
+.model-card,
+.training-section,
+.step-content,
+.model-grid > div,
+.panel-base,
+.step-card,
+.training-step,
+.model-management-section,
+.config-section,
+.parameter-config {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+}
+
+/* 参数配置区域的特殊暗色样式 */
+.step-content .config-section,
+.training-step .parameter-config,
+.step-card .config-area {
+    background: rgba(35, 35, 35, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin: 15px 0 !important;
+}
+
+/* 配置面板内部容器 */
+.config-panel-inner {
+    background: rgba(45, 45, 45, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 12px !important;
+    padding: 25px !important;
+    margin-top: 15px !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* 训练配置区域强制样式 */
+.training-config.config-section.parameter-config {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.training-config.config-section.parameter-config h3 {
+    color: white !important;
+    margin-bottom: 15px !important;
+}
+
+/* 移除底部状态栏背景 */
+.management-footer,
+.smart-management-main footer,
+footer,
+.footer,
+.status-bar,
+.plant-status,
+.device-status,
+[class*="footer"],
+[class*="status"] {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* 低代码页面特殊元素 */
+.step-number,
+.step-title,
+.step-description,
+.model-selection-grid,
+.training-progress,
+.dataset-upload,
+.model-config {
+    color: white !important;
+}
+
+/* 低代码页面容器 */
+.training-container,
+.model-training-main,
+.step-container,
+.training-deployment-section,
+.training-config,
+.model-management-section {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+}
+
+/* 低代码页面所有section */
+section {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+}
+
+/* 帮助中心板块 */
+.help-section,
+.faq-item,
+.help-card,
+.guide-section {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+}
+
+/* 统计报告板块 */
+.report-card,
+.chart-container,
+.stats-card {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+}
+
+/* 主页面板块 */
+.welcome-section,
+.feature-card,
+.news-card {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+}
+
+/* 强制文字为白色 */
+.model-selection-section *,
+.dataset-section *,
+.model-card *,
+.help-section *,
+.report-card *,
+.welcome-section *,
+.feature-card *,
+.panel-base * {
+    color: white !important;
+}
+
+/* 保持标题透明 */
+.header {
+    background: transparent !important;
+}
+
+/* 病害样本库底部状态栏 - 移除背景 */
+.management-footer,
+.status-bar,
+.footer-status,
+.plant-list-section footer,
+.management-main footer,
+footer,
+.management-main > footer,
+.smart-management-main footer {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 强制移除所有footer元素的背景 */
+footer * {
+    background: transparent !important;
+}
+
+/* 最近识别的病害板块样式 */
+.recent-diseases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.disease-card {
+    background: rgba(60, 60, 60, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.disease-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.disease-icon {
+    font-size: 2.5em;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.disease-info h3 {
+    color: white !important;
+    margin: 0 0 8px 0;
+    font-size: 1.2em;
+}
+
+.disease-info p {
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 4px 0;
+    font-size: 0.9em;
+}
+
+.severity-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.severity-badge.high {
+    background: #ff6b6b;
+    color: white;
+}
+
+.severity-badge.medium {
+    background: #ffa726;
+    color: white;
+}
+
+.severity-badge.low {
+    background: #66bb6a;
+    color: white;
+}

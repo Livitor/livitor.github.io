@@ -1,0 +1,232 @@
+/* 穗安精灵按钮样式 - 重新设计 */
+.suian-assistant-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 999;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.suian-assistant-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.suian-assistant-btn i {
+    font-size: 24px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* 穗安精灵悬浮窗样式 - 重新设计 */
+.suian-assistant-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 340px;
+    height: 480px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    display: none;
+    flex-direction: column;
+    z-index: 998;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.suian-assistant-header {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.suian-assistant-title {
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.suian-assistant-title:before {
+    content: '\f544';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.suian-assistant-close {
+    cursor: pointer;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.suian-assistant-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.suian-assistant-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+}
+
+.suian-assistant-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    margin-bottom: 12px;
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 1.4;
+    position: relative;
+    font-size: 14px;
+}
+
+.user-message {
+    background-color: #E3F2FD;
+    color: #0D47A1;
+    align-self: flex-end;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+.ai-message {
+    background-color: #FFFFFF;
+    color: #333333;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    border-left: 3px solid #4CAF50;
+}
+
+.suian-assistant-input {
+    display: flex;
+    padding: 12px 15px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fff;
+    align-items: center;
+}
+
+.suian-assistant-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    color: #000000 !important;
+    font-size: 14px;
+    background-color: #f5f5f5;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.suian-assistant-input input:focus {
+    border-color: #4CAF50;
+    background-color: #ffffff;
+    box-shadow: inset 0 1px 3px rgba(76, 175, 80, 0.2);
+}
+
+.suian-assistant-input input::placeholder {
+    color: #888;
+}
+
+.suian-assistant-input button {
+    margin-left: 10px;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.suian-assistant-input button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.suian-assistant-input button i {
+    font-size: 16px;
+}
+
+/* 加载动画 - 改进版 */
+.loading-dots {
+    display: inline-block;
+    position: relative;
+    min-width: 30px;
+    text-align: left;
+}
+
+.loading-dots:after {
+    content: '.';
+    animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% {
+        content: '.';
+    }
+    40% {
+        content: '..';
+    }
+    60% {
+        content: '...';
+    }
+    80%, 100% {
+        content: '';
+    }
+}
+
+/* 添加响应式设计 */
+@media (max-width: 480px) {
+    .suian-assistant-window {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+        bottom: 80px;
+    }
+    
+    .suian-assistant-btn {
+        bottom: 15px;
+        right: 15px;
+    }
+}

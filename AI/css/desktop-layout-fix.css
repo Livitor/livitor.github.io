@@ -1,0 +1,121 @@
+/* 桌面端布局修复 - 确保内容居中显示 */
+
+/* 桌面端布局修复 */
+@media (min-width: 1024px) {
+    /* 主页面布局 */
+    body.index-page .container,
+    body.index-page .main-content {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 分析页面布局 */
+    body.analysis-page .container,
+    body.analysis-page .analysis-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 历史记录页面布局 */
+    body.history-page .container,
+    body.history-page .history-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 报告页面布局 */
+    body.reports-page .container,
+    body.reports-page .reports-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 模型训练页面布局 */
+    body.model-training-page .container,
+    body.model-training-page .training-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 智能管理页面布局 */
+    body.smart-management-page .container,
+    body.smart-management-page .management-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 帮助中心页面布局 */
+    body.help-page .container,
+    body.help-page .help-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 通用容器布局 */
+    .main-wrapper,
+    .content-wrapper,
+    .page-content,
+    .main-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 面板布局 */
+    .panel-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+    }
+    
+    /* 卡片网格布局 */
+    .cards-grid,
+    .features-grid,
+    .nav-cards {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+    }
+    
+    /* 确保内容不会过度拉伸 */
+    .container > * {
+        max-width: 100% !important;
+    }
+    
+    /* 修复可能的全宽元素 */
+    .full-width {
+        width: 100% !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+    }
+}
+
+/* 中等屏幕适配 */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container,
+    .main-content,
+    .content-wrapper {
+        max-width: 95% !important;
+        margin: 0 auto !important;
+        padding: 15px !important;
+    }
+}
+
+/* 确保所有页面都有正确的居中布局 */
+@media (min-width: 1024px) {
+    /* 强制所有主要容器居中 */
+    .container:not(.sidebar):not(.menu-toggle):not(.sidebar-overlay),
+    .main-content:not(.sidebar):not(.menu-toggle):not(.sidebar-overlay),
+    .content-area:not(.sidebar):not(.menu-toggle):not(.sidebar-overlay) {
+        max-width: 1200px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}

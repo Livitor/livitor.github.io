@@ -1,0 +1,102 @@
+/* 侧边栏高度修复 */
+.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 200px !important; /* 从300px减少到200px，减少了三分之一 */
+    height: 100% !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 9998 !important;
+    transform: translateX(-200px) !important; /* 确保完全移出视图 */
+    transition: transform 0.3s ease !important;
+    visibility: hidden !important; /* 默认隐藏 */
+}
+
+.sidebar.show {
+    transform: translateX(0) !important;
+    visibility: visible !important; /* 显示时可见 */
+}
+
+/* 覆盖其他可能的样式 */
+.sidebar:not(.show) {
+    transform: translateX(-200px) !important;
+    visibility: hidden !important;
+}
+
+/* 确保侧边栏内容可以滚动 */
+.sidebar-menu {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-bottom: 20px !important;
+}
+
+/* 确保主内容区域有足够的最小高度 */
+.main-content {
+    min-height: calc(100vh - 150px) !important; /* 减去头部和底部的高度 */
+}
+
+/* 确保容器有足够的最小高度 */
+.container {
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    transition: margin-left 0.3s ease !important;
+}
+
+/* 当侧边栏显示时，调整主内容区域 */
+.sidebar.show ~ .container {
+    margin-left: 200px !important; /* 从300px减少到200px */
+    width: calc(100% - 200px) !important; /* 从300px减少到200px */
+}
+
+/* 确保页脚始终在底部 */
+.footer {
+    margin-top: auto !important;
+}
+
+/* 桌面端适配 */
+@media (min-width: 1024px) {
+    .sidebar {
+        width: 200px !important; /* 从300px减少到200px */
+    }
+}
+
+/* 菜单按钮位置调整 */
+.menu-toggle {
+    position: fixed !important;
+    top: 15px !important;
+    left: 15px !important;
+    z-index: 9999 !important;
+    transition: all 0.3s ease !important;
+}
+
+.menu-toggle.menu-open {
+    left: 200px !important; /* 精确贴合菜单栏右侧边缘 */
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70% !important; /* 从90%减少到70% */
+        max-width: 300px !important; /* 从450px减少到300px */
+    }
+    
+    /* 移动端不调整主内容区域宽度 */
+    .sidebar.show ~ .container {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* 移动端菜单按钮位置 */
+    .menu-toggle.menu-open {
+        left: calc(70% + 10px) !important;
+        max-left: 310px !important; /* 最大宽度300px + 10px */
+    }
+}
+

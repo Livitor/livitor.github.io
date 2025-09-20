@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>语音识别使用指南</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .guide-title {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .voice-guide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .step {
+            display: flex;
+            width: 90%;
+            background-color: #e8f5e9;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .step-left {
+            flex: 0 0 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px dashed #4CAF50;
+            padding-right: 15px;
+        }
+        .step-number {
+            background-color: #4CAF50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .step-icon {
+            font-size: 24px;
+        }
+        .step-right {
+            flex: 1;
+            text-align: left;
+            padding-left: 15px;
+        }
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2e7d32;
+        }
+        .step-desc {
+            font-size: 14px;
+            color: #555;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="guide-title">语音识别使用指南</div>
+        
+        <div class="voice-guide">
+            <div class="step">
+                <div class="step-left">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🎤</div>
+                </div>
+                <div class="step-right">
+                    <div class="step-title">找到语音输入按钮</div>
+                    <div class="step-desc">在病虫检测页面，找到带有麦克风图标的语音输入按钮</div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-left">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">👆</div>
+                </div>
+                <div class="step-right">
+                    <div class="step-title">点击开始录音</div>
+                    <div class="step-desc">点击麦克风按钮，系统会请求麦克风权限（首次使用时）</div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-left">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🗣️</div>
+                </div>
+                <div class="step-right">
+                    <div class="step-title">说出植物症状</div>
+                    <div class="step-desc">清晰地描述您观察到的植物症状，例如："我的水稻叶子发黄卷曲"</div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-left">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">⏹️</div>
+                </div>
+                <div class="step-right">
+                    <div class="step-title">停止录音</div>
+                    <div class="step-desc">说完后点击停止按钮，或等待系统自动停止录音（静音几秒后）</div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <div class="step">
+                <div class="step-left">
+                    <div class="step-number">5</div>
+                    <div class="step-icon">📝</div>
+                </div>
+                <div class="step-right">
+                    <div class="step-title">查看识别结果</div>
+                    <div class="step-desc">系统会自动将您的语音转为文字，并填入文本框中</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

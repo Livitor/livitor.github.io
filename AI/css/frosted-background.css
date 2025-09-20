@@ -1,0 +1,111 @@
+/* 透明背景效果样式 */
+:root {
+    --frosted-bg: rgba(255, 255, 255, 0.25);
+    --frosted-border: rgba(255, 255, 255, 0.18);
+    --frosted-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* 主体背景 - 完全无模糊效果 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 200, 120, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(76, 175, 80, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(129, 199, 132, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 50%, #A5D6A7 100%);
+    z-index: -2;
+}
+
+/* 移除点状纹理叠加 */
+body::after {
+    display: none;
+}
+
+/* 透明效果容器 - 完全无模糊效果 */
+.frosted-glass {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 应用透明效果到主要组件 */
+.welcome-section,
+.feature-card,
+.news-card,
+.header {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
+
+/* 特殊的透明效果变体 */
+.weather-main {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.environment-data,
+.farming-status {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* 绿色卡片的透明效果 */
+.feature-card.green-card {
+    background: rgba(76, 175, 80, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* 移除动态效果 */
+@keyframes frostedPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.95;
+    }
+}
+
+/* 移除动画效果 */
+.welcome-section:hover {
+    /* 移除动画 */
+}
+
+/* 响应式效果 - 确保无模糊 */
+@media (max-width: 768px) {
+    body::before {
+        /* 确保无模糊效果 */
+    }
+    
+    .frosted-glass,
+    .welcome-section,
+    .feature-card,
+    .news-card {
+        /* 确保无模糊效果 */
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+}
+
+/* 浏览器兼容性 */
+@supports not (backdrop-filter: blur(20px)) {
+    .frosted-glass,
+    .welcome-section,
+    .feature-card,
+    .news-card {
+        background: rgba(255, 255, 255, 0.5);
+    }
+    
+    .weather-main {
+        background: rgba(255, 255, 255, 0.5);
+    }
+    
+    .feature-card.green-card {
+        background: rgba(76, 175, 80, 0.75);
+    }
+}

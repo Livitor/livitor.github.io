@@ -1,0 +1,204 @@
+/* 鼠标拖尾和点击效果 */
+
+/* 鼠标拖尾容器 */
+.mouse-trail-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* 拖尾粒子 - 与背景粒子样式一致 */
+.trail-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: trailFade 1.2s ease-out forwards;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* 拖尾淡出动画 */
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.2);
+    }
+}
+
+/* 点击波纹效果 */
+.click-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(76, 175, 80, 0.4) 0%, rgba(76, 175, 80, 0.1) 70%, transparent 100%);
+    pointer-events: none;
+    animation: rippleExpand 0.6s ease-out forwards;
+}
+
+/* 波纹扩散动画 */
+@keyframes rippleExpand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+    }
+}
+
+/* 保持默认鼠标光标 */
+body {
+    cursor: auto;
+}
+
+/* 不同大小的拖尾粒子 - 与背景粒子一致 */
+.trail-particle.small {
+    width: 4px;
+    height: 4px;
+    animation-duration: 1s;
+}
+
+.trail-particle.medium {
+    width: 6px;
+    height: 6px;
+    animation-duration: 1.2s;
+}
+
+.trail-particle.large {
+    width: 8px;
+    height: 8px;
+    animation-duration: 1.4s;
+}
+
+/* 彩色拖尾变体 - 保持白色但有微妙变化 */
+.trail-particle.colorful {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* 长按效果 */
+.long-press-indicator {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(76, 175, 80, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: longPressGrow 2s linear forwards;
+}
+
+@keyframes longPressGrow {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        border-width: 3px;
+    }
+    100% {
+        width: 60px;
+        height: 60px;
+        opacity: 0;
+        border-width: 1px;
+    }
+}
+
+/* 双击效果 */
+.double-click-burst {
+    position: absolute;
+    pointer-events: none;
+}
+
+.double-click-burst::before {
+    content: '✨';
+    position: absolute;
+    font-size: 20px;
+    animation: burstSpin 0.8s ease-out forwards;
+}
+
+@keyframes burstSpin {
+    0% {
+        opacity: 1;
+        transform: scale(0.5) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2) rotate(360deg);
+    }
+}
+
+/* 移动端触摸效果 */
+.touch-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(76, 175, 80, 0.3) 0%, transparent 70%);
+    pointer-events: none;
+    animation: touchRipple 0.5s ease-out forwards;
+}
+
+@keyframes touchRipple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .trail-particle {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .trail-particle.small {
+        width: 2px;
+        height: 2px;
+    }
+    
+    .trail-particle.medium {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .trail-particle.large {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .click-ripple {
+        animation-duration: 0.4s;
+    }
+}
+
+/* 减少动画效果（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+    .trail-particle,
+    .click-ripple,
+    .long-press-indicator,
+    .double-click-burst,
+    .touch-ripple {
+        animation: none;
+        transition: none;
+    }
+}

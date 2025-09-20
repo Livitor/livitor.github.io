@@ -1,0 +1,315 @@
+/* 移动端优化样式 - 针对智能管理和统计报告页面 */
+
+/* 通用移动端优化 */
+@media (max-width: 768px) {
+    /* 调整内容区域的内边距 */
+    .main-content {
+        padding: 10px !important;
+    }
+    
+    /* 调整面板内边距 */
+    .panel-base {
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* 调整标题大小 */
+    h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    h2 {
+        font-size: 1.5rem !important;
+    }
+    
+    h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    /* 调整按钮大小和间距 */
+    button {
+        padding: 8px 12px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* 增加触摸区域 */
+    .menu-item, .action-btn, .operation-btn, .chart-btn, .btn-primary, .btn-secondary {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+}
+
+/* 小屏幕设备（手机）优化 */
+@media (max-width: 480px) {
+    /* 进一步减小内边距 */
+    .main-content {
+        padding: 5px !important;
+    }
+    
+    /* 调整标题大小 */
+    h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    h3 {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* 智能管理页面移动端优化 */
+@media (max-width: 768px) {
+    /* 确保主容器有明确的边框 */
+    .container, #mainContainer {
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+    
+    /* 确保内容区域有明确的边界 */
+    .smart-management-content {
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px !important;
+    }
+    
+    /* 环境数据卡片布局 - 改为垂直布局 */
+    .environment-data {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+    
+    .data-card {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+    }
+    
+    /* 农场操作按钮布局 - 改为垂直布局 */
+    .operation-buttons {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+    
+    .operation-btn {
+        width: 100% !important;
+        margin-bottom: 8px !important;
+        padding: 12px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* 植株表格滚动 - 增强滚动条可见性 */
+    .plant-table-container {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 5px !important;
+        margin: 10px 0 !important;
+        position: relative !important;
+    }
+    
+    .plant-table-container:after {
+        content: "← 滑动查看更多 →" !important;
+        position: absolute !important;
+        bottom: 5px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        color: white !important;
+        padding: 5px 10px !important;
+        border-radius: 15px !important;
+        font-size: 0.8rem !important;
+        opacity: 0.8 !important;
+        pointer-events: none !important;
+    }
+    
+    .plant-table {
+        min-width: 600px !important; /* 确保表格内容不会被压缩 */
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+    
+    .plant-table th, .plant-table td {
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding: 10px !important;
+    }
+    
+    /* 生长信息布局 */
+    .growth-info {
+        flex-direction: column !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        margin: 10px 0 !important;
+    }
+    
+    .growth-info > div {
+        margin-bottom: 10px !important;
+        width: 100% !important;
+        padding: 8px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .growth-info > div:last-child {
+        border-bottom: none !important;
+    }
+    
+    /* 底部状态栏 */
+    .management-footer {
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 15px !important;
+        margin: 10px 0 !important;
+        width: 100% !important;
+    }
+    
+    .management-footer .footer-left {
+        flex-direction: column !important;
+        gap: 5px !important;
+    }
+    
+    .management-footer .separator {
+        display: none !important;
+    }
+    
+    /* 确保所有面板都有明确的边界 */
+    .panel-base {
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        margin-bottom: 15px !important;
+        overflow: hidden !important;
+        width: 100% !important;
+    }
+}
+
+/* 统计报告页面移动端优化 */
+@media (max-width: 768px) {
+    /* 报告控制面板 */
+    .report-controls .toolbar-content {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .time-range, .report-actions {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+    
+    /* 关键指标布局 */
+    .metrics-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .metric-card {
+        padding: 10px !important;
+    }
+    
+    .metric-icon {
+        font-size: 1.5rem !important;
+    }
+    
+    .metric-value {
+        font-size: 1.3rem !important;
+    }
+    
+    /* 图表布局 */
+    .charts-grid {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .chart-container {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        height: auto !important;
+        min-height: 300px !important;
+    }
+    
+    /* 表格滚动 */
+    .table-container {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .data-table {
+        min-width: 700px !important; /* 确保表格内容不会被压缩 */
+    }
+    
+    /* 表格控制 */
+    .table-controls {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .table-controls input, .table-controls button {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+    
+    /* 报告摘要 */
+    .summary-content {
+        flex-direction: column !important;
+    }
+    
+    .summary-section {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+    }
+}
+
+/* 超小屏幕设备优化 */
+@media (max-width: 360px) {
+    /* 智能管理页面 */
+    .environment-data, .operation-buttons {
+        grid-template-columns: 1fr !important; /* 单列布局 */
+    }
+    
+    /* 统计报告页面 */
+    .metrics-grid {
+        grid-template-columns: 1fr !important; /* 单列布局 */
+    }
+}
+
+/* 修复图表在移动端的显示问题 */
+@media (max-width: 768px) {
+    canvas {
+        max-height: 250px !important;
+    }
+}
+
+/* 增强触摸体验 */
+@media (max-width: 768px) {
+    /* 增加滚动条的宽度，便于触摸操作 */
+    ::-webkit-scrollbar {
+        width: 8px !important;
+        height: 8px !important;
+    }
+    
+    /* 增加所有可点击元素的触摸区域 */
+    button, select, input[type="checkbox"], input[type="radio"] {
+        transform: scale(1.05) !important;
+    }
+    
+    /* 增加表格行高，便于触摸选择 */
+    table tr td, table tr th {
+        padding: 12px 8px !important;
+    }
+}

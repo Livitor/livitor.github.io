@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统计报告 - 穗安巡视官</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/page-animations.css">
+    <link rel="stylesheet" href="css/particle-background.css">
+    <link rel="stylesheet" href="css/mouse-effects.css">
+    <link rel="stylesheet" href="css/mobile-menu.css">
+    <link rel="stylesheet" href="css/desktop-layout-fix.css">
+    <link rel="stylesheet" href="css/unified-ui-components.css">
+    <link rel="stylesheet" href="css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/mobile-touch.css">
+    <link rel="stylesheet" href="css/mobile-pages-fix.css">
+    <link rel="stylesheet" href="css/mobile-reports-fix.css">
+    <link rel="stylesheet" href="css/modal-fix.css">
+    <link rel="stylesheet" href="css/mobile-optimization.css">
+    <link rel="stylesheet" href="css/reports-mobile-fix.css">
+    <link rel="stylesheet" href="css/global-background.css">
+    <link rel="stylesheet" href="css/background-settings.css">
+    <!-- 使用本地资源替代CDN -->
+    <link href="css/fontawesome-lite.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/force-dark-panels.css">
+    <link rel="stylesheet" href="css/enhanced-charts.css">
+    <link rel="stylesheet" href="css/dark-charts-theme.css">
+    <script src="js/chart.min.js"></script>
+    
+    <!-- 在页面渲染前加载背景脚本 -->
+    <script src="js/global-background.js"></script>
+    <script src="js/background.js"></script>
+</head>
+<body>
+    <!-- 侧边栏将由common-sidebar.js动态注入 -->
+
+    <!-- 侧边栏遮罩层 -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container" id="mainContainer">
+        <header class="header">
+            <h1><i class="fas fa-chart-bar"></i> 统计报告</h1>
+            <p>全面的数据分析和可视化报告</p>
+        </header>
+
+        <main class="main-content">
+            <!-- 报告控制面板 -->
+            <section class="report-controls panel-base">
+                <div class="panel-header">
+                    <h3><i class="fas fa-cog"></i> 报告设置</h3>
+                </div>
+                <div class="toolbar-content">
+                    <div class="time-range">
+                        <label>时间范围：</label>
+                        <div class="select-wrapper">
+                            <select id="timeRange">
+                                <option value="week">最近一周</option>
+                                <option value="month" selected>最近一月</option>
+                                <option value="quarter">最近三月</option>
+                                <option value="year">最近一年</option>
+                                <option value="custom">自定义</option>
+                            </select>
+                        </div>
+                        <div class="custom-date" id="customDate" style="display: none;">
+                            <input type="date" id="startDate">
+                            <span>至</span>
+                            <input type="date" id="endDate">
+                        </div>
+                    </div>
+                    <div class="report-actions">
+                        <div class="toolbar-group">
+                            <button class="btn-secondary" id="refreshBtn">
+                                <i class="fas fa-sync-alt"></i>
+                                刷新数据
+                            </button>
+                            <button class="btn-primary" id="exportReportBtn">
+                                <i class="fas fa-file-pdf"></i>
+                                导出报告
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 关键指标概览 -->
+            <section class="key-metrics panel-base">
+                <div class="panel-header">
+                    <h3><i class="fas fa-tachometer-alt"></i> 关键指标</h3>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>总诊断次数</h3>
+                            <div class="metric-value">1,247</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +12.5%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>成功率</h3>
+                            <div class="metric-value">94.2%</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +2.1%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>平均响应时间</h3>
+                            <div class="metric-value">2.3s</div>
+                            <div class="metric-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                -0.5s
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>活跃用户</h3>
+                            <div class="metric-value">856</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                +8.3%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 图表区域 -->
+            <section class="charts-section panel-base">
+                <div class="dashboard-header">
+                    <h2><i class="fas fa-chart-bar dashboard-icon"></i> 数据可视化</h2>
+                    <div class="chart-controls">
+                        <button class="chart-control-btn active" data-view="charts">
+                            <i class="fas fa-chart-line"></i> 图表视图
+                        </button>
+                        <button class="chart-control-btn" data-view="export">
+                            <i class="fas fa-download"></i> 导出数据
+                        </button>
+                    </div>
+                </div>
+                <div class="enhanced-charts-grid">
+                    <!-- 诊断趋势图 -->
+                    <div class="enhanced-chart-card">
+                        <div class="enhanced-chart-header">
+                            <div class="chart-title-section">
+                                <span class="chart-emoji">📈</span>
+                                <h3>诊断趋势</h3>
+                            </div>
+                            <div class="chart-controls">
+                                <div class="toolbar-group">
+                                    <button class="chart-btn active" data-chart="line">线图</button>
+                                    <button class="chart-btn" data-chart="bar">柱图</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="enhanced-chart-body">
+                            <canvas id="trendChart"></canvas>
+                            <div class="chart-stats-overlay">
+                                <div class="stat-item">
+                                    <span class="stat-label">本月诊断</span>
+                                    <span class="stat-value">1,247</span>
+                                    <span class="stat-change positive">+12.5%</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">日均诊断</span>
+                                    <span class="stat-value">41.6</span>
+                                    <span class="stat-change positive">+8.3%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 病虫害分布 -->
+                    <div class="enhanced-chart-card">
+                        <div class="enhanced-chart-header">
+                            <div class="chart-title-section">
+                                <span class="chart-emoji">🐛</span>
+                                <h3>病虫害分布</h3>
+                            </div>
+                            <div class="chart-period-selector">
+                                <select id="pestPeriodSelect">
+                                    <option value="month">本月</option>
+                                    <option value="quarter">本季度</option>
+                                    <option value="year">本年度</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="enhanced-chart-body">
+                            <canvas id="distributionChart"></canvas>
+                            <div class="enhanced-legend">
+                                <div class="legend-item">
+                                    <span class="legend-dot" style="background: #FF6B6B;"></span>
+                                    <span class="legend-text">叶斑病</span>
+                                    <span class="legend-percent">32.5%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-dot" style="background: #4ECDC4;"></span>
+                                    <span class="legend-text">蚜虫</span>
+                                    <span class="legend-percent">28.3%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-dot" style="background: #45B7D1;"></span>
+                                    <span class="legend-text">白粉病</span>
+                                    <span class="legend-percent">21.7%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-dot" style="background: #96CEB4;"></span>
+                                    <span class="legend-text">其他</span>
+                                    <span class="legend-percent">17.5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 作物类型统计 -->
+                    <div class="enhanced-chart-card">
+                        <div class="enhanced-chart-header">
+                            <div class="chart-title-section">
+                                <span class="chart-emoji">🌾</span>
+                                <h3>作物类型统计</h3>
+                            </div>
+                            <div class="chart-filter-selector">
+                                <select id="cropFilterSelect" class="chart-filter-btn">
+                                    <option value="all">全部作物</option>
+                                    <option value="grain">粮食作物</option>
+                                    <option value="vegetable">蔬菜作物</option>
+                                    <option value="fruit">果树作物</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="enhanced-chart-body">
+                            <canvas id="cropChart"></canvas>
+                            <div class="crop-progress-bars">
+                                <div class="crop-progress-item">
+                                    <div class="crop-info">
+                                        <span class="crop-name">水稻</span>
+                                        <span class="crop-percentage">35.2%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 35.2%; background: linear-gradient(90deg, #00ff88, #44ffaa); box-shadow: 0 0 12px rgba(0, 255, 136, 0.8);"></div>
+                                    </div>
+                                </div>
+                                <div class="crop-progress-item">
+                                    <div class="crop-info">
+                                        <span class="crop-name">小麦</span>
+                                        <span class="crop-percentage">28.7%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 28.7%; background: linear-gradient(90deg, #00d4ff, #44ddff); box-shadow: 0 0 12px rgba(0, 212, 255, 0.8);"></div>
+                                    </div>
+                                </div>
+                                <div class="crop-progress-item">
+                                    <div class="crop-info">
+                                        <span class="crop-name">玉米</span>
+                                        <span class="crop-percentage">22.1%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 22.1%; background: linear-gradient(90deg, #ffaa00, #ffcc44); box-shadow: 0 0 12px rgba(255, 170, 0, 0.8);"></div>
+                                    </div>
+                                </div>
+                                <div class="crop-progress-item">
+                                    <div class="crop-info">
+                                        <span class="crop-name">其他</span>
+                                        <span class="crop-percentage">14.0%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 14.0%; background: linear-gradient(90deg, #dd44ff, #ff66dd); box-shadow: 0 0 12px rgba(221, 68, 255, 0.8);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 准确率分析 -->
+                    <div class="enhanced-chart-card">
+                        <div class="enhanced-chart-header">
+                            <div class="chart-title-section">
+                                <span class="chart-emoji">🎯</span>
+                                <h3>准确率分析</h3>
+                            </div>
+                            <div class="accuracy-score-display">
+                                <span class="score-label">综合准确率</span>
+                                <span class="score-value">94.2%</span>
+                            </div>
+                        </div>
+                        <div class="enhanced-chart-body">
+                            <canvas id="accuracyChart"></canvas>
+                            <div class="accuracy-breakdown">
+                                <div class="accuracy-level excellent">
+                                    <div class="level-indicator">
+                                        <span class="level-dot"></span>
+                                        <span class="level-name">优秀 (≥95%)</span>
+                                    </div>
+                                    <span class="level-count">156 项</span>
+                                </div>
+                                <div class="accuracy-level good">
+                                    <div class="level-indicator">
+                                        <span class="level-dot"></span>
+                                        <span class="level-name">良好 (85-94%)</span>
+                                    </div>
+                                    <span class="level-count">89 项</span>
+                                </div>
+                                <div class="accuracy-level average">
+                                    <div class="level-indicator">
+                                        <span class="level-dot"></span>
+                                        <span class="level-name">一般 (75-84%)</span>
+                                    </div>
+                                    <span class="level-count">23 项</span>
+                                </div>
+                                <div class="accuracy-level poor">
+                                    <div class="level-indicator">
+                                        <span class="level-dot"></span>
+                                        <span class="level-name">待改进 (<75%)</span>
+                                    </div>
+                                    <span class="level-count">8 项</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 详细数据表格 -->
+            <section class="data-table-section panel-base">
+                <div class="panel-header">
+                    <h3><i class="fas fa-table"></i> 详细数据</h3>
+                    <div class="table-controls">
+                        <div class="toolbar-group">
+                            <input type="text" id="tableSearch" placeholder="搜索数据...">
+                            <button class="btn-secondary" id="exportTableBtn">
+                                <i class="fas fa-download"></i>
+                                导出表格
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>作物类型</th>
+                                <th>问题类型</th>
+                                <th>诊断结果</th>
+                                <th>置信度</th>
+                                <th>处理状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2025-01-08</td>
+                                <td>水稻</td>
+                                <td>病害</td>
+                                <td>稻瘟病</td>
+                                <td>92.5%</td>
+                                <td><span class="status-badge success">已完成</span></td>
+                                <td>
+                                    <div class="toolbar-group">
+                                        <button class="action-btn view" title="查看详情">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" title="编辑">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2025-01-08</td>
+                                <td>玉米</td>
+                                <td>虫害</td>
+                                <td>玉米螟</td>
+                                <td>87.3%</td>
+                                <td><span class="status-badge success">已完成</span></td>
+                                <td>
+                                    <div class="toolbar-group">
+                                        <button class="action-btn view" title="查看详情">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" title="编辑">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2025-01-07</td>
+                                <td>小麦</td>
+                                <td>营养缺乏</td>
+                                <td>氮素缺乏</td>
+                                <td>78.9%</td>
+                                <td><span class="status-badge processing">处理中</span></td>
+                                <td>
+                                    <div class="toolbar-group">
+                                        <button class="action-btn view" title="查看详情">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" title="编辑">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 报告摘要 -->
+            <section class="report-summary panel-base">
+                <div class="panel-header">
+                    <h3><i class="fas fa-file-alt"></i> 报告摘要</h3>
+                </div>
+                <div class="summary-content">
+                    <div class="summary-section panel-base">
+                        <h4><i class="fas fa-search"></i> 主要发现</h4>
+                        <ul>
+                            <li>本月诊断量较上月增长12.5%，系统使用率持续上升</li>
+                            <li>病害诊断占比最高（45%），其次是虫害（32%）和营养缺乏（23%）</li>
+                            <li>水稻相关诊断最多，占总量的38%</li>
+                            <li>系统整体准确率达到94.2%，较上月提升2.1%</li>
+                        </ul>
+                    </div>
+                    <div class="summary-section panel-base">
+                        <h4><i class="fas fa-lightbulb"></i> 改进建议</h4>
+                        <ul>
+                            <li>加强对营养缺乏类问题的低代码训练，提高识别准确率</li>
+                            <li>增加小麦和玉米的病虫害案例库，丰富诊断数据</li>
+                            <li>优化图像预处理算法，缩短响应时间</li>
+                            <li>建议用户上传更高质量的图片以提高诊断准确性</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 穗安巡视官 - 智慧农业AI一体系统</p>
+        </footer>
+    </div>
+
+    <!-- 系统设置模态框 -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h2><i class="fas fa-cog"></i> 系统设置</h2>
+                <button class="settings-close" id="settingsClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-body">
+                <div class="settings-section">
+                    <h3><i class="fas fa-key"></i> API配置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="apiKey">API密钥:</label>
+                            <input type="password" id="apiKey" placeholder="请输入您的API密钥">
+                        </div>
+                        <div class="form-group">
+                            <label for="apiEndpoint">API端点:</label>
+                            <input type="text" id="apiEndpoint" placeholder="https://api.openai.com/v1/chat/completions" value="https://api.openai.com/v1/chat/completions">
+                        </div>
+                        <div class="form-group">
+                            <label for="model">模型:</label>
+                            <input type="text" id="model" placeholder="请输入模型名称，例如：gpt-4-vision-preview" value="gpt-4-vision-preview">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-palette"></i> 外观设置</h3>
+                    <div class="background-control">
+                        <button class="bg-btn" id="bgDefault" data-bg="default">
+                            <i class="fas fa-palette"></i> 默认背景
+                        </button>
+                        <button class="bg-btn" id="bgCustom" data-bg="custom">
+                            <i class="fas fa-image"></i> 图片背景
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-language"></i> 语言设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="systemLanguage">系统语言:</label>
+                            <select id="systemLanguage" class="form-control">
+                                <option value="zh-CN">简体中文</option>
+                                <option value="zh-TW">繁體中文</option>
+                                <option value="en-US">English</option>
+                                <option value="ja-JP">日本語</option>
+                                <option value="ko-KR">한국어</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-bell"></i> 通知设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableNotifications" checked>
+                                启用系统通知
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableSounds" checked>
+                                启用提示音
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-actions">
+                <button class="settings-btn-secondary" id="resetSettings">
+                    <i class="fas fa-undo"></i> 重置设置
+                </button>
+                <button class="settings-btn-primary" id="saveSettings">
+                    <i class="fas fa-save"></i> 保存设置
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/common-sidebar.js"></script>
+    <script src="js/enhanced-menu.js"></script>
+    <script src="js/mobile-handler.js"></script>
+    <script src="js/user-management.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/page-animations.js"></script>
+    <script src="js/particle-background.js"></script>
+    <script src="js/mouse-effects.js"></script>
+</body>
+</html>    <script src="js/reports.js"></script>
+</body>
+</html>

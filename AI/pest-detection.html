@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病虫检测 - 穗安巡视官</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="智能识别植物病虫害，提供专业诊断建议的智慧农业AI系统">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="穗安巡视官">
+    <meta name="msapplication-TileColor" content="#667eea">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#667eea">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/page-animations.css">
+    <link rel="stylesheet" href="css/page-animations.css">
+    <link rel="stylesheet" href="css/particle-background.css">
+    <link rel="stylesheet" href="css/mouse-effects.css">
+    <link rel="stylesheet" href="css/panel-layout.css">
+    <link rel="stylesheet" href="css/mobile-menu.css">
+    <link rel="stylesheet" href="css/desktop-layout-fix.css">
+    <link rel="stylesheet" href="css/unified-ui-components.css">
+    <link rel="stylesheet" href="css/settings-enhanced.css">
+    <link rel="stylesheet" href="css/voice-enhanced.css">
+    <link rel="stylesheet" href="css/voice-broadcast.css">
+    <link rel="stylesheet" href="css/voice-permission-fix.css">
+    <link rel="stylesheet" href="css/text-input.css">
+    <link rel="stylesheet" href="css/user-management.css">
+    <link rel="stylesheet" href="css/scrollbar-styles.css">
+    <link rel="stylesheet" href="css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/mobile-touch.css">
+    <link rel="stylesheet" href="css/mobile-pages-fix.css">
+    <link rel="stylesheet" href="css/modal-fix.css">
+    <link rel="stylesheet" href="css/global-background.css">
+    <link rel="stylesheet" href="css/force-dark-panels.css">
+    <link rel="stylesheet" href="css/local-voice-recognition.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* 强制磨砂板块样式 - 深灰色背景 */
+        section, .diagnosis-control-panel, .result-content, .frosted-glass {
+            background: rgba(50, 50, 50, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+            color: white !important;
+        }
+        /* 确保标题区域透明 */
+        .header {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        /* 翻译功能样式 */
+        .translation-note {
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2196F3;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .translation-note i {
+            font-size: 16px;
+        }
+
+        .translation-status {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #FF9800;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .translation-status i {
+            font-size: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        .show-original-btn,
+        .show-translated-btn {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid rgba(33, 150, 243, 0.4);
+            color: #2196F3;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .show-original-btn:hover,
+        .show-translated-btn:hover {
+            background: rgba(33, 150, 243, 0.3);
+            transform: translateY(-1px);
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* AI诊断控制面板样式 */
+        .diagnosis-control-panel {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .diagnosis-control-panel.active {
+            display: block;
+        }
+
+        .control-panel-title {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .diagnosis-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .diagnosis-control-btn {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diagnosis-control-btn:hover:not(:disabled) {
+            background: rgba(76, 175, 80, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .diagnosis-control-btn:disabled {
+            background: rgba(158, 158, 158, 0.2);
+            border-color: rgba(158, 158, 158, 0.3);
+            color: #9E9E9E;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .diagnosis-control-btn.danger {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: rgba(244, 67, 54, 0.3);
+            color: #F44336;
+        }
+
+        .diagnosis-control-btn.danger:hover:not(:disabled) {
+            background: rgba(244, 67, 54, 0.3);
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+
+        /* 语音识别结果区域增强 */
+        .diagnosis-action {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .diagnosis-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .diagnosis-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .diagnosis-btn:disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 结果内容区域样式增强 - 字体调大 */
+        .result-content {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            font-size: 20px;
+        }
+
+        .result-content h3 {
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .result-content h4 {
+            color: #FFFFFF;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* 结果头部信息样式 */
+        .result-header {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 10px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .result-header h3 {
+            color: #FFFFFF !important;
+            font-size: 24px !important;
+            font-weight: bold !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9) !important;
+            margin-bottom: 10px !important;
+        }
+
+        .result-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .result-meta span {
+            color: #FFFFFF !important;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-meta i {
+            color: #4CAF50 !important;
+            margin-right: 5px;
+        }
+
+        .result-content p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 20px;
+        }
+
+        .result-content strong {
+            color: white;
+            font-size: 20px;
+        }
+
+        .result-content em {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 20px;
+        }
+
+        .result-content br + * {
+            font-size: 20px;
+        }
+
+        /* 语音播报状态显示样式 */
+        .speech-status {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .speaking-icon {
+            font-size: 2em;
+            color: #4CAF50;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.1); 
+                opacity: 0.8; 
+            }
+        }
+
+        /* 通知样式 */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notification {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            max-width: 400px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.info {
+            border-left: 4px solid #2196F3;
+        }
+
+        .notification.warning {
+            border-left: 4px solid #FF9800;
+        }
+
+        .notification.error {
+            border-left: 4px solid #F44336;
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .notification-content i {
+            font-size: 18px;
+        }
+
+        .notification.info .notification-content i {
+            color: #2196F3;
+        }
+
+        .notification.warning .notification-content i {
+            color: #FF9800;
+        }
+
+        .notification.error .notification-content i {
+            color: #F44336;
+        }
+
+        .notification-content span {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .notification-close:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .translation-note {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .show-original-btn,
+            .show-translated-btn {
+                margin-left: 0;
+                align-self: flex-end;
+            }
+
+            .result-content {
+                font-size: 18px;
+            }
+            
+            .result-content h3 {
+                font-size: 24px;
+            }
+            
+            .result-content h4 {
+                font-size: 20px;
+            }
+            
+            .result-content p {
+                font-size: 18px;
+            }
+
+            .result-header h3 {
+                font-size: 22px !important;
+            }
+
+            .result-meta span {
+                font-size: 14px !important;
+            }
+            
+            .diagnosis-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .diagnosis-control-btn {
+                width: 100%;
+                max-width: 200px;
+                justify-content: center;
+            }
+
+            .notification-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+            }
+            
+            .notification {
+                min-width: auto;
+                max-width: none;
+            }
+        }
+    </style>
+    
+    <!-- 背景管理器 - 在页面渲染前加载 -->
+    <script src="js/background.js"></script>
+    <script src="js/global-background.js"></script>
+    <script src="js/common-sidebar.js"></script>
+    <script src="js/enhanced-menu.js"></script>
+</head>
+<body>
+    <!-- 侧边栏将由common-sidebar.js动态注入 -->
+
+    <div class="container" id="mainContainer">
+        <header class="header">
+            <h1><i class="fas fa-bug"></i> 病虫检测 - 智能识别植物病虫害</h1>
+            <p>上传植物图片或描述症状，AI智能识别病虫害并提供解决方案</p>
+        </header>
+
+        <main class="main-content">
+            <!-- 智能交互区域 -->
+            <section class="smart-interaction-section">
+                <h2><i class="fas fa-robot"></i> 智能交互</h2>
+                
+                <!-- 图片上传面板 -->
+                <div class="upload-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-image"></i> 图片上传</h3>
+                    </div>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>点击或拖拽图片到此处</p>
+                            <p class="upload-hint">支持 JPG, PNG, GIF 格式</p>
+                        </div>
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                    </div>
+                    <div class="image-preview" id="imagePreview" style="display: none;">
+                        <img id="previewImage" alt="预览图片">
+                        <button class="remove-image" id="removeImage">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 回复语种面板 -->
+                <div class="language-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-language"></i> 回复语种</h3>
+                    </div>
+                    <div class="language-settings">
+                        <div class="language-group">
+                            <label for="dialectSelect">方言选择:</label>
+                            <select id="dialectSelect">
+                                <option value="zh-CN">普通话</option>
+                                <option value="zh-CN-guangdong">粤语 (广东)</option>
+                                <option value="zh-CN-fujian">闽语 (福建)</option>
+                                <option value="zh-CN-sichuan">四川话</option>
+                                <option value="zh-CN-hunan">湖南话</option>
+                                <option value="zh-CN-jiangsu">江苏话</option>
+                                <option value="zh-CN-zhejiang">浙江话</option>
+                                <option value="zh-CN-shandong">山东话</option>
+                                <option value="zh-CN-henan">河南话</option>
+                                <option value="zh-CN-hubei">湖北话</option>
+                                <option value="zh-CN-anhui">安徽话</option>
+                                <option value="zh-CN-jiangxi">江西话</option>
+                                <option value="zh-CN-hebei">河北话</option>
+                                <option value="zh-CN-shanxi">山西话</option>
+                                <option value="zh-CN-shaanxi">陕西话</option>
+                                <option value="zh-CN-gansu">甘肃话</option>
+                                <option value="zh-CN-qinghai">青海话</option>
+                                <option value="zh-CN-ningxia">宁夏话</option>
+                                <option value="zh-CN-xinjiang">新疆话</option>
+                                <option value="zh-CN-tibet">西藏话</option>
+                                <option value="zh-CN-yunnan">云南话</option>
+                                <option value="zh-CN-guizhou">贵州话</option>
+                                <option value="zh-CN-guangxi">广西话</option>
+                                <option value="zh-CN-hainan">海南话</option>
+                                <option value="zh-CN-chongqing">重庆话</option>
+                                <option value="zh-CN-tianjin">天津话</option>
+                                <option value="zh-CN-beijing">北京话</option>
+                                <option value="zh-CN-shanghai">上海话</option>
+                                <option value="zh-CN-taiwan">台湾话</option>
+                            </select>
+                        </div>
+                        
+                        <div class="language-group">
+                            <label for="languageSelect">其他语言:</label>
+                            <select id="languageSelect">
+                                <option value="zh-CN">中文 (简体)</option>
+                                <option value="zh-TW">中文 (繁体)</option>
+                                <option value="zh-HK">中文 (香港)</option>
+                                <option value="zh-MO">中文 (澳门)</option>
+                                <option value="en-US">English (US)</option>
+                                <option value="en-GB">English (UK)</option>
+                                <option value="ja-JP">日本語</option>
+                                <option value="ko-KR">한국어</option>
+                                <option value="fr-FR">Français</option>
+                                <option value="de-DE">Deutsch</option>
+                                <option value="es-ES">Español</option>
+                                <option value="ru-RU">Русский</option>
+                                <option value="it-IT">Italiano</option>
+                                <option value="pt-PT">Português</option>
+                                <option value="nl-NL">Nederlands</option>
+                                <option value="sv-SE">Svenska</option>
+                                <option value="da-DK">Dansk</option>
+                                <option value="no-NO">Norsk</option>
+                                <option value="fi-FI">Suomi</option>
+                                <option value="pl-PL">Polski</option>
+                                <option value="cs-CZ">Čeština</option>
+                                <option value="sk-SK">Slovenčina</option>
+                                <option value="hu-HU">Magyar</option>
+                                <option value="ro-RO">Română</option>
+                                <option value="bg-BG">Български</option>
+                                <option value="hr-HR">Hrvatski</option>
+                                <option value="sr-RS">Српски</option>
+                                <option value="sl-SI">Slovenščina</option>
+                                <option value="et-EE">Eesti</option>
+                                <option value="lv-LV">Latviešu</option>
+                                <option value="lt-LT">Lietuvių</option>
+                                <option value="tr-TR">Türkçe</option>
+                                <option value="ar-SA">العربية</option>
+                                <option value="he-IL">עברית</option>
+                                <option value="th-TH">ไทย</option>
+                                <option value="vi-VN">Tiếng Việt</option>
+                                <option value="id-ID">Bahasa Indonesia</option>
+                                <option value="ms-MY">Bahasa Melayu</option>
+                                <option value="hi-IN">हिन्दी</option>
+                                <option value="bn-BD">বাংলা</option>
+                                <option value="ur-PK">اردو</option>
+                                <option value="fa-IR">فارسی</option>
+                                <option value="sw-KE">Kiswahili</option>
+                                <option value="zu-ZA">isiZulu</option>
+                                <option value="af-ZA">Afrikaans</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 语音输入面板 -->
+                <div class="voice-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-microphone"></i> 语音输入</h3>
+                    </div>
+                    
+                    <!-- 语音识别按钮 -->
+                    <div class="voice-recognition-area">
+                        <div class="voice-button-container" style="display: flex; gap: 20px; justify-content: center;">
+                            <div style="text-align: center;">
+                                <button class="voice-recognition-btn" id="localVoiceRecognitionBtn" style="background: rgba(255, 193, 7, 0.2); border: 1px solid rgba(255, 193, 7, 0.4);">
+                                    <i class="fas fa-bolt"></i>
+                                </button>
+                                <span class="voice-text">快速识别</span>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="voice-recognition-btn" id="voiceRecognitionBtn">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <span class="voice-text">在线识别</span>
+                            </div>
+                        </div>
+                        <div class="voice-status" id="voiceStatus"></div>
+                    </div>
+
+                    <!-- 语音识别结果区域 -->
+                    <div class="recognition-result" id="recognitionResult" style="display: none;">
+                        <div class="result-header">
+                            <h4><i class="fas fa-comment-dots"></i> 识别结果</h4>
+                            <button class="retry-btn" id="retryRecognition">
+                                <i class="fas fa-redo"></i> 重新识别
+                            </button>
+                        </div>
+                        
+                        <div class="result-content">
+                            <div class="voice-text-result">
+                                <label>识别内容:</label>
+                                <div class="recognized-text" id="recognizedText"></div>
+                            </div>
+                            
+                            <div class="uploaded-image-display" id="uploadedImageDisplay" style="display: none;">
+                                <label>上传的图片:</label>
+                                <div class="image-thumbnail">
+                                    <img id="thumbnailImage" alt="上传的图片">
+                                </div>
+                            </div>
+                            
+                            <div class="diagnosis-action">
+                                <button class="diagnosis-btn" id="getDiagnosisBtn">
+                                    <i class="fas fa-stethoscope"></i> 获取AI诊断建议
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文字输入面板 -->
+                <div class="text-input-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-keyboard"></i> 文字输入</h3>
+                    </div>
+                    
+                    <!-- 文字输入区域 -->
+                    <div class="text-input-area">
+                        <textarea id="textInput" class="text-input-field" placeholder="请输入植物症状描述..."></textarea>
+                        <div class="text-input-controls">
+                            <span class="char-counter" id="charCounter">0/500</span>
+                            <button class="clear-text-btn" id="clearTextBtn">
+                                <i class="fas fa-times"></i> 清空
+                            </button>
+                            <button class="submit-text-btn" id="submitTextBtn">
+                                <i class="fas fa-paper-plane"></i> 提交
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 文字输入结果区域 -->
+                    <div class="text-result" id="textResult" style="display: none;">
+                        <div class="result-header">
+                            <h4><i class="fas fa-file-alt"></i> 输入内容</h4>
+                            <button class="edit-btn" id="editText">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                        </div>
+                        
+                        <div class="result-content">
+                            <div class="text-content-result">
+                                <div class="submitted-text" id="submittedText"></div>
+                            </div>
+                            
+                            <div class="uploaded-image-display-text" id="uploadedImageDisplayText" style="display: none;">
+                                <label>上传的图片:</label>
+                                <div class="image-thumbnail">
+                                    <img id="thumbnailImageText" alt="上传的图片">
+                                </div>
+                            </div>
+                            
+                            <div class="diagnosis-action">
+                                <button class="diagnosis-btn" id="getTextDiagnosisBtn">
+                                    <i class="fas fa-stethoscope"></i> 获取AI诊断建议
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI诊断控制面板 -->
+                <div class="diagnosis-control-panel" id="diagnosisControlPanel">
+                    <div class="control-panel-title">
+                        <i class="fas fa-cogs"></i> AI诊断控制
+                    </div>
+                    <div class="diagnosis-controls">
+                        <button class="diagnosis-control-btn" id="pauseDiagnosisBtn">
+                            <i class="fas fa-pause"></i> 暂停诊断
+                        </button>
+                        <button class="diagnosis-control-btn" id="stopDiagnosisBtn">
+                            <i class="fas fa-stop"></i> 停止诊断
+                        </button>
+                        <button class="diagnosis-control-btn danger" id="closeDiagnosisBtn">
+                            <i class="fas fa-times"></i> 关闭诊断
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 语音播报控制面板 -->
+            </section>
+
+            <!-- 结果显示区域 -->
+            <!-- 结果显示区域 -->
+            <section class="result-section" id="resultSection" style="display: none;">
+                <h2><i class="fas fa-chart-line"></i> 分析结果</h2>
+                <div class="loading" id="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>正在分析中，请稍候...</p>
+                </div>
+                <div class="result-content" id="resultContent">
+                    <!-- 结果内容将在这里动态生成 -->
+                </div>
+                
+                <!-- 语音播报控制面板 -->
+                <div class="voice-broadcast-panel" id="voiceBroadcastPanel" style="display: none;">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-volume-up"></i> 语音播报控制</h3>
+                    </div>
+                    <div class="broadcast-status">
+                        <div class="status-info">
+                            <span class="status-text" id="broadcastStatusText">准备播报...</span>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="broadcastProgress"></div>
+                                </div>
+                                <span class="progress-text" id="progressText">0/0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="broadcast-controls">
+                        <button id="pauseVoiceBtn" class="broadcast-btn pause-btn">
+                            <i class="fas fa-pause"></i> 暂停播报
+                        </button>
+                        <button id="resumeVoiceBtn" class="broadcast-btn resume-btn" style="display: none;">
+                            <i class="fas fa-play"></i> 继续播报
+                        </button>
+                        <button id="stopVoiceBtn" class="broadcast-btn stop-btn">
+                            <i class="fas fa-stop"></i> 停止播报
+                        </button>
+                        <button id="closeVoiceBtn" class="broadcast-btn close-btn">
+                            <i class="fas fa-times"></i> 关闭面板
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 穗安巡视官 - 智慧农业AI一体系统</p>
+        </footer>
+    </div>
+
+    <!-- 系统设置模态框 -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h2><i class="fas fa-cog"></i> 系统设置</h2>
+                <button class="settings-close" id="settingsClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-body">
+                <div class="settings-section">
+                    <h3><i class="fas fa-key"></i> API配置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="apiKey">API密钥:</label>
+                            <input type="password" id="apiKey" placeholder="请输入您的API密钥">
+                        </div>
+                        <div class="form-group">
+                            <label for="apiEndpoint">API端点:</label>
+                            <input type="text" id="apiEndpoint" placeholder="https://api.openai.com/v1/chat/completions" value="https://api.openai.com/v1/chat/completions">
+                        </div>
+                        <div class="form-group">
+                            <label for="model">模型:</label>
+                            <input type="text" id="model" placeholder="请输入模型名称，例如：gpt-4-vision-preview" value="gpt-4-vision-preview">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-palette"></i> 外观设置</h3>
+                    <div class="background-control">
+                        <button class="bg-btn" id="bgDefault" data-bg="default">
+                            <i class="fas fa-palette"></i> 默认背景
+                        </button>
+                        <button class="bg-btn" id="bgCustom" data-bg="custom">
+                            <i class="fas fa-image"></i> 图片背景
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-language"></i> 语言设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="systemLanguage">系统语言:</label>
+                            <select id="systemLanguage" class="form-control">
+                                <option value="zh-CN">简体中文</option>
+                                <option value="zh-TW">繁體中文</option>
+                                <option value="en-US">English</option>
+                                <option value="ja-JP">日本語</option>
+                                <option value="ko-KR">한국어</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-bell"></i> 通知设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableNotifications" checked>
+                                启用系统通知
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableSounds" checked>
+                                启用提示音
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-actions">
+                <button class="settings-btn-secondary" id="resetSettings">
+                    <i class="fas fa-undo"></i> 重置设置
+                </button>
+                <button class="settings-btn-primary" id="saveSettings">
+                    <i class="fas fa-save"></i> 保存设置
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/speech-api-service.js"></script>
+    <script src="js/voice.js"></script>
+    <script src="js/voice-playback.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/cases.js"></script>
+    <script src="js/pwa.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/multilingual-api.js"></script>
+    <script src="js/voice-broadcast.js"></script>
+    <script src="js/voice-test.js"></script>
+    <script src="js/mobile-handler.js"></script>
+    <script src="js/trained-model-manager.js"></script>
+    <script src="js/smart-interaction.js"></script>
+    <script src="js/local-voice-recognition.js"></script>
+    <script src="js/text-input.js"></script>
+    <script src="js/page-navigation.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/user-management.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/page-animations.js"></script>
+    <script src="js/particle-background.js"></script>
+    <script src="js/mouse-effects.js"></script>
+</body>
+</html>

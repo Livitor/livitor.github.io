@@ -1,0 +1,144 @@
+/* 全局滚动条样式 - 适用于所有页面 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(76, 175, 80, 0.8);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(76, 175, 80, 1);
+}
+
+::-webkit-scrollbar-corner {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 针对不同背景的滚动条适配 */
+.light-theme ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.light-theme ::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+}
+
+.light-theme ::-webkit-scrollbar-thumb:hover {
+    background: #45a049;
+}
+
+/* 模态框内的滚动条样式 */
+.modal-content ::-webkit-scrollbar,
+.settings-content ::-webkit-scrollbar,
+.settings-body ::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+.modal-content ::-webkit-scrollbar-track,
+.settings-content ::-webkit-scrollbar-track,
+.settings-body ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 3px;
+}
+
+.modal-content ::-webkit-scrollbar-thumb,
+.settings-content ::-webkit-scrollbar-thumb,
+.settings-body ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 3px;
+}
+
+.modal-content ::-webkit-scrollbar-thumb:hover,
+.settings-content ::-webkit-scrollbar-thumb:hover,
+.settings-body ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* 表格滚动条样式 */
+.table-container ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.table-container ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.table-container ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.table-container ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 聊天消息区域滚动条 */
+.chat-messages ::-webkit-scrollbar,
+.training-details ::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages ::-webkit-scrollbar-track,
+.training-details ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.chat-messages ::-webkit-scrollbar-thumb,
+.training-details ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.chat-messages ::-webkit-scrollbar-thumb:hover,
+.training-details ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* 文件列表滚动条 */
+.file-list ::-webkit-scrollbar,
+.uploaded-files ::-webkit-scrollbar {
+    width: 6px;
+}
+
+.file-list ::-webkit-scrollbar-track,
+.uploaded-files ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.file-list ::-webkit-scrollbar-thumb,
+.uploaded-files ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.file-list ::-webkit-scrollbar-thumb:hover,
+.uploaded-files ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 移动端滚动条优化 */
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .modal-content ::-webkit-scrollbar,
+    .settings-content ::-webkit-scrollbar,
+    .settings-body ::-webkit-scrollbar {
+        width: 4px !important;
+    }
+}

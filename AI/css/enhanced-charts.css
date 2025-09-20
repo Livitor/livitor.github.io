@@ -1,0 +1,467 @@
+/* 增强的数据可视化样式 */
+
+/* 面板操作按钮 */
+.panel-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.panel-actions .btn-secondary {
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.panel-actions .btn-secondary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 增强的图表网格 */
+.enhanced-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+/* 增强的图表卡片 */
+.enhanced-chart-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.enhanced-chart-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4a7c59, #6ba16f);
+}
+
+.enhanced-chart-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+/* 增强的图表头部 */
+.enhanced-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.chart-title-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chart-emoji {
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.chart-title-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* 图表控制按钮 */
+.chart-controls .toolbar-group {
+    display: flex;
+    gap: 4px;
+}
+
+.chart-btn {
+    padding: 6px 12px;
+    border: 2px solid #e9ecef;
+    background: #fff;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #6c757d;
+}
+
+.chart-btn:hover {
+    border-color: #4a7c59;
+    color: #4a7c59;
+    transform: translateY(-1px);
+}
+
+.chart-btn.active {
+    background: linear-gradient(135deg, #4a7c59, #6ba16f);
+    border-color: #4a7c59;
+    color: white;
+    box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+/* 选择器样式 */
+.chart-period-selector select,
+.chart-filter-selector select {
+    padding: 6px 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 16px;
+    background: white;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6c757d;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.chart-period-selector select:focus,
+.chart-filter-selector select:focus {
+    border-color: #4a7c59;
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+}
+
+/* 准确率分数显示 */
+.accuracy-score-display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.score-label {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-bottom: 4px;
+}
+
+.score-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #27ae60;
+    text-shadow: 0 2px 4px rgba(39, 174, 96, 0.2);
+}
+
+/* 增强的图表主体 */
+.enhanced-chart-body {
+    position: relative;
+    min-height: 300px;
+}
+
+.enhanced-chart-body canvas {
+    max-height: 280px;
+    margin-bottom: 16px;
+}
+
+/* 图表统计覆盖层 */
+.chart-stats-overlay {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 12px;
+    margin-top: 16px;
+}
+
+.chart-stats-overlay .stat-item {
+    text-align: center;
+    flex: 1;
+}
+
+.chart-stats-overlay .stat-label {
+    display: block;
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.chart-stats-overlay .stat-value {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.chart-stats-overlay .stat-change {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.chart-stats-overlay .stat-change.positive {
+    color: #27ae60;
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.chart-stats-overlay .stat-change.negative {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+/* 增强的图例 */
+.enhanced-legend {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.enhanced-legend .legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.enhanced-legend .legend-item:hover {
+    background: #e9ecef;
+    transform: translateX(4px);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.legend-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #495057;
+    flex: 1;
+}
+
+.legend-percent {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* 作物进度条 */
+.crop-progress-bars {
+    margin-top: 16px;
+    space-y: 12px;
+}
+
+.crop-progress-item {
+    margin-bottom: 16px;
+}
+
+.crop-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.crop-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.crop-percentage {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 1s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* 准确率分解 */
+.accuracy-breakdown {
+    margin-top: 16px;
+}
+
+.accuracy-level {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.accuracy-level:hover {
+    transform: translateX(4px);
+}
+
+.accuracy-level.excellent {
+    background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));
+    border-left: 4px solid #27ae60;
+}
+
+.accuracy-level.good {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+    border-left: 4px solid #3498db;
+}
+
+.accuracy-level.average {
+    background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(241, 196, 15, 0.05));
+    border-left: 4px solid #f1c40f;
+}
+
+.accuracy-level.poor {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+    border-left: 4px solid #e74c3c;
+}
+
+.level-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.level-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.excellent .level-dot { background: #27ae60; }
+.good .level-dot { background: #3498db; }
+.average .level-dot { background: #f1c40f; }
+.poor .level-dot { background: #e74c3c; }
+
+.level-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.level-count {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .enhanced-charts-grid {
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .enhanced-charts-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .enhanced-chart-card {
+        padding: 20px;
+    }
+    
+    .enhanced-chart-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    
+    .enhanced-legend {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-stats-overlay {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .panel-actions {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+    
+    .panel-actions .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .enhanced-chart-card {
+        padding: 16px;
+    }
+    
+    .chart-title-section h3 {
+        font-size: 16px;
+    }
+    
+    .chart-emoji {
+        font-size: 20px;
+    }
+}
+
+/* 加载动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.enhanced-chart-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.enhanced-chart-card:nth-child(1) { animation-delay: 0.1s; }
+.enhanced-chart-card:nth-child(2) { animation-delay: 0.2s; }
+.enhanced-chart-card:nth-child(3) { animation-delay: 0.3s; }
+.enhanced-chart-card:nth-child(4) { animation-delay: 0.4s; }

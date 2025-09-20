@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI技术架构 - 穗安巡视官</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 25%, #667eea 50%, #764ba2 75%, #9b59b6 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 75%, rgba(155, 89, 182, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(142, 68, 173, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 50% 10%, rgba(116, 75, 162, 0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+            background-size: 60px 60px;
+            background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        
+        .slide-container {
+            max-width: 1400px;
+            padding: 60px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .slide-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .tech-category {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-category:hover {
+            transform: translateY(-10px);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-right: 20px;
+            color: #FFD700;
+        }
+        
+        .category-title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .tech-list {
+            list-style: none;
+        }
+        
+        .tech-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tech-item:last-child {
+            border-bottom: none;
+        }
+        
+        .tech-item i {
+            margin-right: 15px;
+            color: #FFD700;
+            width: 20px;
+        }
+        
+        .architecture-flow {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 40px;
+        }
+        
+        .flow-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .flow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #FFD700;
+        }
+        
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .step-desc {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-number {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="slide-number">3 / 8</div>
+    
+    <div class="slide-container">
+        <h1 class="slide-title">AI技术架构</h1>
+        
+        <div class="tech-grid">
+            <div class="tech-category">
+                <div class="category-header">
+                    <i class="fas fa-eye category-icon"></i>
+                    <div class="category-title">计算机视觉</div>
+                </div>
+                <ul class="tech-list">
+                    <li class="tech-item">
+                        <i class="fas fa-bug"></i>
+                        病虫害图像识别
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-seedling"></i>
+                        作物生长阶段检测
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-apple-alt"></i>
+                        成熟度智能评估
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-camera"></i>
+                        多模态图像分析
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tech-category">
+                <div class="category-header">
+                    <i class="fas fa-comments category-icon"></i>
+                    <div class="category-title">自然语言处理</div>
+                </div>
+                <ul class="tech-list">
+                    <li class="tech-item">
+                        <i class="fas fa-microphone"></i>
+                        多语言语音识别
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-globe"></i>
+                        30+种语言支持
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-robot"></i>
+                        智能对话交互
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-file-alt"></i>
+                        文档智能解析
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tech-category">
+                <div class="category-header">
+                    <i class="fas fa-brain category-icon"></i>
+                    <div class="category-title">机器学习</div>
+                </div>
+                <ul class="tech-list">
+                    <li class="tech-item">
+                        <i class="fas fa-cogs"></i>
+                        自定义模型训练
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-database"></i>
+                        知识自动提取
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-chart-line"></i>
+                        模式识别分析
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-magic"></i>
+                        智能推荐系统
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tech-category">
+                <div class="category-header">
+                    <i class="fas fa-layer-group category-icon"></i>
+                    <div class="category-title">多模态融合</div>
+                </div>
+                <ul class="tech-list">
+                    <li class="tech-item">
+                        <i class="fas fa-puzzle-piece"></i>
+                        图文结合分析
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-volume-up"></i>
+                        语音图像融合
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-sync"></i>
+                        跨模态数据处理
+                    </li>
+                    <li class="tech-item">
+                        <i class="fas fa-lightbulb"></i>
+                        综合智能诊断
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="architecture-flow">
+            <div class="flow-title">AI处理流程</div>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-icon">📥</div>
+                    <div class="step-title">数据输入</div>
+                    <div class="step-desc">图像/语音/文本</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">🔍</div>
+                    <div class="step-title">特征提取</div>
+                    <div class="step-desc">多模态分析</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">🧠</div>
+                    <div class="step-title">AI推理</div>
+                    <div class="step-desc">专家模型处理</div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-icon">📊</div>
+                    <div class="step-title">结果输出</div>
+                    <div class="step-desc">诊断与建议</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" onclick="window.location.href='slide2-overview.html'">
+            <i class="fas fa-arrow-left"></i> 上一页
+        </button>
+        <button class="nav-btn" onclick="window.location.href='slide4-core-features.html'">
+            <i class="fas fa-arrow-right"></i> 下一页
+        </button>
+    </div>
+</body>
+</html>

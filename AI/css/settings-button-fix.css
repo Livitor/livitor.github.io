@@ -1,0 +1,127 @@
+/* 设置按钮位置修复 - 与菜单按钮保持一致 */
+
+/* 基础设置按钮样式 */
+.settings-btn {
+    position: fixed !important;
+    top: 15px !important;
+    right: 15px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: rgba(76, 175, 80, 0.9) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 9999 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    padding: 0 !important;
+}
+
+.settings-btn:hover,
+.settings-btn:active,
+.settings-btn:focus {
+    background: rgba(76, 175, 80, 1) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.settings-btn i {
+    transition: transform 0.3s ease !important;
+    pointer-events: none !important;
+}
+
+.settings-btn:hover i {
+    transform: rotate(90deg) !important;
+}
+
+/* menu-toggle-style 类的设置按钮 */
+.settings-btn.menu-toggle-style {
+    position: fixed !important;
+    top: 15px !important;
+    right: 15px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: rgba(76, 175, 80, 0.9) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 9999 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    padding: 0 !important;
+}
+
+.settings-btn.menu-toggle-style:hover,
+.settings-btn.menu-toggle-style:active,
+.settings-btn.menu-toggle-style:focus {
+    background: rgba(76, 175, 80, 1) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.settings-btn.menu-toggle-style i {
+    transition: transform 0.3s ease !important;
+    pointer-events: none !important;
+}
+
+.settings-btn.menu-toggle-style:hover i {
+    transform: rotate(90deg) !important;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .settings-btn,
+    .settings-btn.menu-toggle-style {
+        top: 10px !important;
+        right: 10px !important;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 18px !important;
+    }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 480px) {
+    .settings-btn,
+    .settings-btn.menu-toggle-style {
+        top: 8px !important;
+        right: 8px !important;
+        width: 42px !important;
+        height: 42px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* APP环境优化 */
+@media (display-mode: standalone) {
+    .settings-btn,
+    .settings-btn.menu-toggle-style {
+        top: 25px !important;
+    }
+}
+
+/* 桌面端适配 */
+@media (min-width: 1024px) {
+    .settings-btn,
+    .settings-btn.menu-toggle-style {
+        top: 20px !important;
+        right: 20px !important;
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 22px !important;
+    }
+}

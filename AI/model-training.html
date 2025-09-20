@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>低代码 - AI植物识别助手</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/page-animations.css">
+    <link rel="stylesheet" href="css/particle-background.css">
+    <link rel="stylesheet" href="css/mouse-effects.css">
+    <link rel="stylesheet" href="css/mobile-menu.css">
+    <link rel="stylesheet" href="css/desktop-layout-fix.css">
+    <link rel="stylesheet" href="css/unified-ui-components.css">
+    <link rel="stylesheet" href="css/model-management.css">
+    <link rel="stylesheet" href="css/scrollbar-styles.css">
+    <link rel="stylesheet" href="css/mobile-responsive.css">
+    <link rel="stylesheet" href="css/mobile-touch.css">
+    <link rel="stylesheet" href="css/mobile-pages-fix.css">
+    <link rel="stylesheet" href="css/mobile-lowcode-fix.css">
+    <link rel="stylesheet" href="css/modal-fix.css">
+    <link rel="stylesheet" href="css/global-background.css">
+    <link rel="stylesheet" href="css/force-dark-panels.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4a7c59">
+    
+    <style>
+        /* 去除标头的毛玻璃背景 */
+        .training-header {
+            background: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* 去除最底层的毛玻璃底板 */
+        .model-training-content {
+            background: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* 保持标头文字可见性 */
+        .training-header h1 {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .training-header p {
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        /* 步骤指示器样式优化 */
+        .steps-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-number {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .step-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .step.active .step-label {
+            color: white;
+            font-weight: 500;
+        }
+
+        /* 模型网格布局优化 */
+        .model-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .model-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: stretch;
+        }
+
+        .model-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .model-card.available {
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+
+        .model-card.premium {
+            border-color: rgba(255, 193, 7, 0.3);
+        }
+
+        .model-card.selected {
+            border-color: rgba(76, 175, 80, 0.6);
+            background: rgba(76, 175, 80, 0.1);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .model-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .model-icon {
+            font-size: 3em;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .model-card.premium .model-icon {
+            color: #FFC107;
+        }
+
+        .model-header h3 {
+            color: white;
+            margin: 0;
+            font-size: 1.3em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .model-content {
+            text-align: center;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .model-content p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            font-size: 1.1em;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .model-actions {
+            text-align: center;
+        }
+
+        .train-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .train-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .train-btn.premium {
+            background: #FFC107;
+            color: #333;
+        }
+
+        .train-btn.selected {
+            background: #45a049;
+            box-shadow: 0 4px 15px rgba(69, 160, 73, 0.4);
+        }
+
+        .train-btn:disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .train-btn:disabled:hover {
+            transform: none;
+            background: #666;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .model-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .model-card {
+                min-height: 180px;
+                padding: 20px;
+            }
+            
+            .model-icon {
+                font-size: 2.5em;
+            }
+            
+            .model-header h3 {
+                font-size: 1.2em;
+            }
+        }
+
+        /* 确保与底部知识库板块的视觉协调 */
+        
+        /* 训练主容器布局 */
+        .training-main {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 20px;
+        }
+
+        /* 各个板块的通用样式 */
+        /* 各个板块的通用样式 */
+        .model-selection-section,
+        .dataset-section,
+        .training-deployment-section,
+        .model-management-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .model-selection-section h2,
+        .dataset-section h2,
+        .training-deployment-section h2,
+        .model-management-section h2 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 模型管理中心统计卡片样式 */
+        .management-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card-mini {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card-mini:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card-mini::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+        }
+
+        .stat-card-mini.deployed-models::before {
+            background: linear-gradient(90deg, #2196F3, #1976D2);
+        }
+
+        .stat-card-mini.pending-models::before {
+            background: linear-gradient(90deg, #FF9800, #F57C00);
+        }
+
+        .stat-card-mini.storage-usage::before {
+            background: linear-gradient(90deg, #9C27B0, #7B1FA2);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+            background: rgba(76, 175, 80, 0.2);
+            flex-shrink: 0;
+        }
+
+        .deployed-models .stat-icon {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+        }
+
+        .pending-models .stat-icon {
+            background: rgba(255, 152, 0, 0.2);
+            color: #FF9800;
+        }
+
+        .storage-usage .stat-icon {
+            background: rgba(156, 39, 176, 0.2);
+            color: #9C27B0;
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        /* 管理控制区域样式 */
+        .management-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+
+        .search-area {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .search-input-wrapper input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-wrapper input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            min-width: 140px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .filter-select option {
+            background: #333;
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .management-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .export-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .export-btn:hover {
+            background: #45a049;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        /* 模型列表容器样式 */
+        /* 模型列表容器样式 */
+        .model-list-container {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 200px;
+        }
+
+        .model-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* 模型项样式 */
+        /* 模型项样式 */
+        .model-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 模型项头部 */
+        .model-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        /* 类别标签样式 */
+        .model-type-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .model-type-badge.disease {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border-color: rgba(76, 175, 80, 0.4);
+        }
+
+        .model-type-badge.insect {
+            background: rgba(255, 152, 0, 0.2);
+            color: #FF9800;
+            border-color: rgba(255, 152, 0, 0.4);
+        }
+
+        .model-type-badge.growth {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+            border-color: rgba(33, 150, 243, 0.4);
+        }
+
+        .model-type-badge.maturity {
+            background: rgba(156, 39, 176, 0.2);
+            color: #9C27B0;
+            border-color: rgba(156, 39, 176, 0.4);
+        }
+
+        /* 状态标签样式 */
+        .model-status {
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .model-status.deployed {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .model-status.undeployed {
+            background: rgba(158, 158, 158, 0.2);
+            color: #9E9E9E;
+            border: 1px solid rgba(158, 158, 158, 0.3);
+        }
+
+        /* 模型内容区域 */
+        .model-item-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .model-basic-info {
+            flex: 1;
+        }
+
+        .model-name {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .model-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0 0 15px 0;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        /* 模型元数据 */
+        .model-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+
+        .meta-item i {
+            color: #4CAF50;
+            width: 16px;
+            text-align: center;
+        }
+
+        /* 操作按钮区域 */
+        .model-actions {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+
+        .action-btn:active::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* 测试按钮 */
+        .test-btn {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+
+        .test-btn:hover {
+            background: rgba(33, 150, 243, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        /* 部署按钮 */
+        .deploy-btn {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .deploy-btn:hover {
+            background: rgba(76, 175, 80, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        /* 取消部署按钮 */
+        .undeploy-btn {
+            background: rgba(255, 152, 0, 0.2);
+            color: #FF9800;
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+
+        .undeploy-btn:hover {
+            background: rgba(255, 152, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        /* 编辑按钮 */
+        .edit-btn {
+            background: rgba(156, 39, 176, 0.2);
+            color: #9C27B0;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+
+        .edit-btn:hover {
+            background: rgba(156, 39, 176, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+
+        /* 删除按钮 */
+        .delete-btn {
+            background: rgba(244, 67, 54, 0.2);
+            color: #F44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .delete-btn:hover {
+            background: rgba(244, 67, 54, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+
+        /* 按钮工具提示 */
+        .action-btn[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        /* 空状态样式 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .empty-icon {
+            font-size: 4em;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .empty-content h3 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .empty-content p {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .management-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .management-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-area {
+                max-width: none;
+            }
+            
+            .action-buttons {
+                justify-content: center;
+            }
+            
+            .stat-card-mini {
+                padding: 15px;
+            }
+            
+            .stat-number {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .management-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-area {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* 第三板块：训练与部署样式 */
+        .training-config {
+            margin-bottom: 30px;
+        }
+
+        .training-config h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .config-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .config-item label {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .config-item input,
+        .config-item select {
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .config-item input:focus,
+        .config-item select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .config-item input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .config-item select option {
+            background: #333;
+            color: white;
+        }
+
+        .training-actions {
+            text-align: center;
+        }
+
+        .start-training-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .start-training-btn:hover:not(:disabled) {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .start-training-btn:disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* 训练进度样式 */
+        .training-progress {
+            margin-bottom: 30px;
+        }
+
+        .training-progress h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .progress-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .training-status {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* 训练详情日志样式 */
+        .training-details {
+            background: rgba(0, 0, 0, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-top: 20px;
+        }
+
+        .training-log {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+            padding: 2px 0;
+            border-left: 3px solid transparent;
+            padding-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .training-log:last-child {
+            border-left-color: #4CAF50;
+            color: rgba(255, 255, 255, 0.95);
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin: 5px 0;
+        }
+
+        .training-details::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .training-details::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .training-details::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .training-details::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 训练结果样式 */
+        .training-results h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.2em;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .result-header i {
+            color: #4CAF50;
+            font-size: 1.2em;
+        }
+
+        .result-header h4 {
+            color: white;
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .result-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .test-model-btn,
+        .deploy-model-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .test-model-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .test-model-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .deploy-model-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .deploy-model-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        /* AI对话测试样式 */
+        .ai-chat-test h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .chat-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ai-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            max-width: 80%;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 16px;
+            border-radius: 18px;
+            color: white;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            max-width: 80%;
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .user-message .message-avatar {
+            background: #2196F3;
+        }
+
+        .user-message .message-content {
+            background: #2196F3;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input-area input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .chat-input-area button {
+            background: #4CAF50;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-input-area button:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-actions {
+                flex-direction: column;
+            }
+            
+            .chat-container {
+                height: 300px;
+            }
+        }
+
+        /* 文件列表样式 */
+        .uploaded-files {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .uploaded-files h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .file-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .file-name {
+            font-weight: 500;
+        }
+
+        .file-size {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+
+        .remove-file-btn {
+            background: rgba(255, 0, 0, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: #ff6b6b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-file-btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* 训练结果样式 */
+        .training-result {
+            padding: 20px;
+            color: white;
+        }
+
+        .model-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .model-capabilities {
+            margin: 20px 0;
+        }
+
+        .model-capabilities ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .model-capabilities li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .model-capabilities li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 测试聊天样式 */
+        .model-test {
+            color: white;
+        }
+
+        .test-chat {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .user-message, .ai-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .ai-message {
+            align-self: flex-start;
+        }
+
+        .message-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+        }
+
+        .user-message .message-content {
+            background: #4CAF50;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+
+        .chat-input input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .chat-input button {
+            background: #4CAF50;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+
+        /* 结果模态框样式 */
+        .result-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .result-modal .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏将由common-sidebar.js动态注入 -->
+
+    <!-- 主容器 -->
+    <div class="container" id="mainContainer">
+        <!-- 模型训练内容区域 -->
+        <div class="model-training-content">
+            <!-- 头部 -->
+            <header class="training-header">
+                <h1><i class="fas fa-brain"></i> 穗安低代码</h1>
+                <p>农业低代码平台，3步构建您的专属AI模型</p>
+                
+                <!-- 步骤指示器 -->
+                <div class="steps-indicator">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <div class="step-label">选择模型类型</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">准备数据集</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">训练与部署</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主要内容 -->
+            <!-- 主要内容 -->
+            <main class="training-main">
+                <!-- 第一板块：模型选择 -->
+                <section class="model-selection-section">
+                    <h2><i class="fas fa-layer-group"></i> 第一步：选择您的模型类型</h2>
+                    <p>根据您的需求选择合适的AI模型类型</p>
+                    
+                    <div class="model-grid">
+                        <!-- 第一行：病害识别模型 和 虫害识别模型 -->
+                        <div class="model-row">
+                            <!-- 病害识别模型 -->
+                            <div class="model-card available" data-model="disease-detection">
+                                <div class="model-header">
+                                    <div class="model-icon">
+                                        <i class="fas fa-leaf"></i>
+                                    </div>
+                                    <h3>病害识别模型</h3>
+                                </div>
+                                <div class="model-content">
+                                    <p>识别作物病害类型</p>
+                                </div>
+                                <div class="model-actions">
+                                    <button class="train-btn available" onclick="selectModel('disease-detection')">
+                                        选择 病害识别模型
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 虫害识别模型 -->
+                            <div class="model-card available" data-model="insect-detection">
+                                <div class="model-header">
+                                    <div class="model-icon">
+                                        <i class="fas fa-spider"></i>
+                                    </div>
+                                    <h3>虫害识别模型</h3>
+                                </div>
+                                <div class="model-content">
+                                    <p>识别常见害虫类型</p>
+                                </div>
+                                <div class="model-actions">
+                                    <button class="train-btn available" onclick="selectModel('insect-detection')">
+                                        选择 虫害识别模型
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第二行：生长阶段模型 和 成熟度检测模型 -->
+                        <div class="model-row">
+                            <!-- 生长阶段模型 -->
+                            <div class="model-card available" data-model="growth-stage">
+                                <div class="model-header">
+                                    <div class="model-icon">
+                                        <i class="fas fa-seedling"></i>
+                                    </div>
+                                    <h3>生长阶段模型</h3>
+                                </div>
+                                <div class="model-content">
+                                    <p>判断作物生长阶段</p>
+                                </div>
+                                <div class="model-actions">
+                                    <button class="train-btn available" onclick="selectModel('growth-stage')">
+                                        选择 生长阶段模型
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 成熟度检测模型 -->
+                            <div class="model-card available" data-model="maturity-detection">
+                                <div class="model-header">
+                                    <div class="model-icon">
+                                        <i class="fas fa-apple-alt"></i>
+                                    </div>
+                                    <h3>成熟度检测模型</h3>
+                                </div>
+                                <div class="model-content">
+                                    <p>评估果实成熟程度</p>
+                                </div>
+                                <div class="model-actions">
+                                    <button class="train-btn available" onclick="selectModel('maturity-detection')">
+                                        选择 成熟度检测模型
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 第二板块：训练数据集 -->
+                <section class="dataset-section">
+                    <h2><i class="fas fa-folder"></i> 第二步：准备训练数据集</h2>
+                    <div class="dataset-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">已上传文件:</span>
+                            <span class="stat-value" id="fileCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">训练内容:</span>
+                            <span class="stat-value" id="contentCount">0</span>
+                        </div>
+                    </div>
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>点击上传训练资料</p>
+                            <small>支持 TXT、DOC、PDF、JPG、PNG 等格式</small>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept=".txt,.doc,.docx,.pdf,.jpg,.jpeg,.png,.gif" style="display: none;">
+                    </div>
+                    
+                    <!-- 文件列表 -->
+                    <div class="uploaded-files" id="uploadedFilesList" style="display: none;">
+                        <h3><i class="fas fa-list"></i> 已上传文件</h3>
+                        <div class="file-list" id="fileList"></div>
+                    </div>
+                </section>
+
+                <!-- 第三板块：训练与部署 -->
+                <section class="training-deployment-section">
+                    <h2><i class="fas fa-cogs"></i> 第三步：训练与部署</h2>
+                    
+                    <!-- 训练配置 -->
+                    <div class="training-config config-section parameter-config">
+                        <h3><i class="fas fa-sliders-h"></i> 训练配置</h3>
+                        <div class="config-grid">
+                            <div class="config-item">
+                                <label for="modelName">模型名称:</label>
+                                <input type="text" id="modelName" placeholder="输入模型名称" value="">
+                            </div>
+                            <div class="config-item">
+                                <label for="cropType">作物类型:</label>
+                                <select id="cropType">
+                                    <option value="">选择作物类型</option>
+                                    <option value="rice">水稻</option>
+                                    <option value="wheat">小麦</option>
+                                    <option value="corn">玉米</option>
+                                    <option value="tomato">番茄</option>
+                                    <option value="potato">马铃薯</option>
+                                    <option value="other">其他</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- 开始训练按钮 -->
+                        <div class="training-actions">
+                            <button class="start-training-btn" id="startTrainingBtn" onclick="startModelTraining()" disabled>
+                                <i class="fas fa-play"></i> 开始训练
+                            </button>
+                        </div>
+                    </div>
+
+
+
+                    <!-- 训练进度 -->
+                    <div class="training-progress" id="trainingProgress" style="display: none;">
+                        <h3><i class="fas fa-chart-line"></i> 训练进度</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-text" id="progressText">0%</div>
+                        </div>
+                        <div class="training-status" id="trainingStatus">准备开始训练...</div>
+                        
+                        <!-- 训练详情日志 -->
+                        <div class="training-details" id="trainingDetails" style="margin-top: 20px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; padding: 15px; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.4;">
+                            <div class="training-log">[系统] 等待开始训练...</div>
+                        </div>
+                    </div>
+
+                    <!-- 训练结果 -->
+                    <div class="training-results" id="trainingResults" style="display: none;">
+                        <h3><i class="fas fa-trophy"></i> 训练结果</h3>
+                        <div class="results-grid">
+                            <div class="result-card">
+                                <div class="result-header">
+                                    <i class="fas fa-robot"></i>
+                                    <h4>AI助手信息</h4>
+                                </div>
+                                <div class="result-content" id="modelInfo">
+                                    <!-- 动态填充模型信息 -->
+                                </div>
+                            </div>
+                            
+                            <div class="result-card">
+                                <div class="result-header">
+                                    <i class="fas fa-brain"></i>
+                                    <h4>学习能力</h4>
+                                </div>
+                                <div class="result-content" id="modelCapabilities">
+                                    <!-- 动态填充能力信息 -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 操作按钮 -->
+                        <div class="result-actions">
+                            <button class="test-model-btn" onclick="testTrainedModel()">
+                                <i class="fas fa-flask"></i> 测试AI助手
+                            </button>
+                            <button class="deploy-model-btn" onclick="deployTrainedModel()">
+                                <i class="fas fa-rocket"></i> 部署到系统
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI对话测试区域 -->
+                    <div class="ai-chat-test" id="aiChatTest" style="display: none;">
+                        <h3><i class="fas fa-comments"></i> AI助手对话测试</h3>
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="ai-message">
+                                    <div class="message-avatar">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="message-content">
+                                        你好！我是根据您的资料训练的专属AI助手。请问有什么可以帮助您的？
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-input-area">
+                                <input type="text" id="chatInput" placeholder="输入您的问题..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                                <button onclick="sendChatMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 模型管理板块 -->
+                <!-- 模型管理中心 -->
+                <!-- 模型管理中心 -->
+                <section class="model-management-section">
+                    <h2><i class="fas fa-brain"></i> 模型管理中心</h2>
+                    
+                    <!-- 统计卡片区域 -->
+                    <div class="management-stats">
+                        <div class="stat-card-mini total-models">
+                            <div class="stat-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="totalModels">0</div>
+                                <div class="stat-label">总模型数</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-mini deployed-models">
+                            <div class="stat-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="deployedModels">0</div>
+                                <div class="stat-label">已部署</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-mini pending-models">
+                            <div class="stat-icon">
+                                <i class="fas fa-pause-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="undeployedModels">0</div>
+                                <div class="stat-label">未部署</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-mini storage-usage">
+                            <div class="stat-icon">
+                                <i class="fas fa-hdd"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="storageUsage">0KB</div>
+                                <div class="stat-label">存储占用</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 搜索和操作区域 -->
+                    <div class="management-controls">
+                        <div class="search-area">
+                            <div class="search-input-wrapper">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="搜索模型名称..." id="modelSearch" onkeyup="filterModels()">
+                            </div>
+                            <select class="filter-select" id="modelFilter" onchange="filterModels()">
+                                <option value="all">全部模型</option>
+                                <option value="deployed">已部署</option>
+                                <option value="undeployed">未部署</option>
+                                <option value="disease">病害识别</option>
+                                <option value="insect">虫害识别</option>
+                                <option value="growth">生长阶段</option>
+                                <option value="maturity">成熟度检测</option>
+                            </select>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="management-btn refresh-btn" onclick="refreshModelList()">
+                                <i class="fas fa-sync-alt"></i>
+                                刷新列表
+                            </button>
+                            <button class="management-btn export-btn" onclick="exportModelData()">
+                                <i class="fas fa-download"></i>
+                                导出数据
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 模型列表 -->
+                    <!-- 模型列表 -->
+                    <div class="model-list-container">
+                        <div class="model-list" id="modelList">
+                            <!-- 用户训练的模型将在这里动态生成 -->
+                        </div>
+                        
+                        <!-- 空状态 -->
+                        <div class="empty-state" id="emptyState">
+                            <div class="empty-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="empty-content">
+                                <h3>暂无自训练模型</h3>
+                                <p>您还没有训练任何专属模型。完成模型训练后，可以在这里管理和部署到智能分析页面使用。</p>
+                                <button class="start-training-btn" onclick="scrollToTraining()">
+                                    <i class="fas fa-plus-circle"></i>
+                                    开始训练第一个模型
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- 底部 -->
+            <footer class="training-footer" style="border: none;">
+                <p>© 2025 穗安巡视官 - 智慧农业AI一体系统</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- 训练配置模态框 -->
+    <div class="modal" id="trainingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">配置训练参数</h2>
+                <button class="modal-close" onclick="closeTrainingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="trainingForm">
+                    <div class="form-group">
+                        <label for="modelName">模型名称</label>
+                        <input type="text" id="modelName" placeholder="输入模型名称" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cropType">作物类型</label>
+                        <select id="cropType" required>
+                            <option value="">选择作物类型</option>
+                            <option value="rice">水稻</option>
+                            <option value="wheat">小麦</option>
+                            <option value="corn">玉米</option>
+                            <option value="tomato">番茄</option>
+                            <option value="potato">马铃薯</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="datasetSize">数据集大小</label>
+                        <select id="datasetSize" required>
+                            <option value="small">小型 (100-500张)</option>
+                            <option value="medium">中型 (500-2000张)</option>
+                            <option value="large">大型 (2000+张)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="epochs">训练轮数</label>
+                        <input type="number" id="epochs" value="50" min="10" max="200" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="learningRate">学习率</label>
+                        <select id="learningRate" required>
+                            <option value="0.001">0.001 (推荐)</option>
+                            <option value="0.01">0.01</option>
+                            <option value="0.0001">0.0001</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeTrainingModal()">取消</button>
+                <button type="button" class="btn-primary" onclick="startTraining()">开始训练</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知容器 -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- 系统设置模态框 -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h2><i class="fas fa-cog"></i> 系统设置</h2>
+                <button class="settings-close" id="settingsClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="settings-body">
+                <div class="settings-section">
+                    <h3><i class="fas fa-key"></i> API配置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="apiKey">API密钥:</label>
+                            <input type="password" id="apiKey" placeholder="请输入您的API密钥">
+                        </div>
+                        <div class="form-group">
+                            <label for="apiEndpoint">API端点:</label>
+                            <input type="text" id="apiEndpoint" placeholder="https://api.openai.com/v1/chat/completions" value="https://api.openai.com/v1/chat/completions">
+                        </div>
+                        <div class="form-group">
+                            <label for="model">模型:</label>
+                            <input type="text" id="model" placeholder="请输入模型名称，例如：gpt-4-vision-preview" value="gpt-4-vision-preview">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-palette"></i> 外观设置</h3>
+                    <div class="background-control">
+                        <button class="bg-btn" id="bgDefault" data-bg="default">
+                            <i class="fas fa-palette"></i> 默认背景
+                        </button>
+                        <button class="bg-btn" id="bgCustom" data-bg="custom">
+                            <i class="fas fa-image"></i> 图片背景
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-language"></i> 语言设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="systemLanguage">系统语言:</label>
+                            <select id="systemLanguage" class="form-control">
+                                <option value="zh-CN">简体中文</option>
+                                <option value="zh-TW">繁體中文</option>
+                                <option value="en-US">English</option>
+                                <option value="ja-JP">日本語</option>
+                                <option value="ko-KR">한국어</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><i class="fas fa-bell"></i> 通知设置</h3>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableNotifications" checked>
+                                启用系统通知
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableSounds" checked>
+                                启用提示音
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-actions">
+                <button class="settings-btn-secondary" id="resetSettings">
+                    <i class="fas fa-undo"></i> 重置设置
+                </button>
+                <button class="settings-btn-primary" id="saveSettings">
+                    <i class="fas fa-save"></i> 保存设置
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/background.js"></script>
+    <script src="js/global-background.js"></script>
+    <script src="js/common-sidebar.js"></script>
+    <script src="js/enhanced-menu.js"></script>
+    <script src="js/mobile-handler.js"></script>
+    <script src="js/user-management.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/trained-model-manager.js"></script>
+    <script src="js/model-training.js"></script>
+    <script src="js/model-management.js"></script>
+    <script src="js/page-animations.js"></script>
+    <script src="js/particle-background.js"></script>
+    <script src="js/mouse-effects.js"></script>
+</body>
+</html>

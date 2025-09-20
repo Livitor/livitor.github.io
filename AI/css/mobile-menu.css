@@ -1,0 +1,329 @@
+/* 移动端和APP优化的菜单系统 */
+
+/* 移动端优化的菜单切换按钮 */
+.menu-toggle {
+    position: fixed !important;
+    top: 15px !important;
+    left: 15px !important;
+    z-index: 9999 !important;
+    width: 50px !important;
+    height: 50px !important;
+    background: rgba(76, 175, 80, 0.9) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    font-size: 20px !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    padding: 0 !important;
+}
+
+.menu-toggle:hover,
+.menu-toggle:active,
+.menu-toggle:focus {
+    background: rgba(76, 175, 80, 1) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.menu-toggle.menu-open {
+    background: rgba(244, 67, 54, 0.9) !important;
+    transform: rotate(90deg) !important;
+}
+
+.menu-toggle.menu-open:hover {
+    background: rgba(244, 67, 54, 1) !important;
+}
+
+.menu-toggle i {
+    transition: transform 0.3s ease !important;
+    pointer-events: none !important;
+}
+
+/* 侧边栏优化 - 恢复磨砂效果 */
+.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 450px !important;
+    height: 100vh !important;
+    background: rgba(45, 80, 22, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3) !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.sidebar.show {
+    transform: translateX(0) !important;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%) !important;
+}
+
+.sidebar-header {
+    padding: 25px 20px !important;
+    background: linear-gradient(135deg, #4CAF50, #45a049) !important;
+    color: white !important;
+    text-align: center !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+}
+
+.sidebar-header h3 {
+    margin: 0 !important;
+    font-size: 1.3em !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    color: white !important;
+}
+
+.sidebar-menu {
+    padding: 20px 0 !important;
+}
+
+.menu-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 15px 25px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    border-left: 4px solid transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.menu-item:hover,
+.menu-item:active {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-left-color: #81C784 !important;
+    transform: translateX(5px) !important;
+    color: white !important;
+}
+
+.menu-item.active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-left-color: #81C784 !important;
+    color: #81C784 !important;
+    font-weight: bold !important;
+}
+
+.menu-item i {
+    margin-right: 15px !important;
+    font-size: 18px !important;
+    width: 20px !important;
+    text-align: center !important;
+}
+
+.menu-item span {
+    font-size: 16px !important;
+}
+
+/* 遮罩层 */
+.sidebar-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 9997 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.sidebar-overlay.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* 主内容区域 */
+.container {
+    width: 100% !important;
+    min-height: 100vh !important;
+    transition: margin-left 0.3s ease !important;
+    margin-left: 0 !important;
+}
+
+/* 桌面端适配 */
+@media (min-width: 1024px) {
+    .menu-toggle {
+        top: 20px !important;
+        left: 20px !important;
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 22px !important;
+    }
+    
+    .sidebar {
+        width: 300px !important;
+    }
+    
+    /* 桌面端内容居中 */
+    .container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 主页面特殊布局 */
+    .main-content {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 分析页面布局 */
+    .analysis-container {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+    
+    /* 其他页面内容区域 */
+    .content-wrapper,
+    .page-content,
+    .main-wrapper {
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        padding: 20px !important;
+    }
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .menu-toggle {
+        top: 10px !important;
+        left: 10px !important;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 18px !important;
+    }
+    
+    .sidebar {
+        width: 90% !important;
+        max-width: 450px !important;
+    }
+    
+    .container {
+        padding-top: 70px !important;
+    }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 95% !important;
+        max-width: 450px !important;
+    }
+    
+    .menu-toggle {
+        top: 8px !important;
+        left: 8px !important;
+        width: 42px !important;
+        height: 42px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* APP环境优化 */
+@media (display-mode: standalone) {
+    .menu-toggle {
+        top: 25px !important;
+    }
+    
+    .container {
+        padding-top: 80px !important;
+    }
+}
+
+/* 防止页面滚动穿透 */
+body.menu-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+}
+
+/* 菜单底部区域样式 */
+.sidebar-footer {
+    margin-top: auto !important;
+    padding: 10px 0 15px 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.sidebar-footer .menu-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 12px 15px !important;
+    margin: 0 10px 10px 10px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 10px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
+    backdrop-filter: blur(5px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.sidebar-footer .menu-item:hover,
+.sidebar-footer .menu-item:active {
+    background: rgba(76, 175, 80, 0.15) !important;
+    border-color: rgba(76, 175, 80, 0.3) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2) !important;
+    color: white !important;
+}
+
+.sidebar-footer .menu-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+.sidebar-footer .menu-item i {
+    margin-right: 12px !important;
+    font-size: 16px !important;
+    width: 18px !important;
+    text-align: center !important;
+    color: #81C784 !important;
+    transition: color 0.3s ease !important;
+}
+
+.sidebar-footer .menu-item:hover i {
+    color: #4CAF50 !important;
+}
+
+.sidebar-footer .menu-item span {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: color 0.3s ease !important;
+}
+
+.sidebar-footer .menu-item:hover span {
+    color: white !important;
+}
+
+/* 确保侧边栏使用flex布局 */
+.sidebar-menu {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    padding-bottom: 10px !important;
+}

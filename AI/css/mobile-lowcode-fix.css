@@ -1,0 +1,364 @@
+/* 低代码页面专门的移动端适配 */
+@media (max-width: 768px) {
+    /* 确保页面容器完全填充屏幕 */
+    .container {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 低代码页面主容器优化 */
+    .model-training-content {
+        width: calc(100vw - 40px) !important;
+        max-width: calc(100vw - 40px) !important;
+        padding: 60px 20px 20px 20px !important;
+        margin: 0 20px !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* 训练头部完全填充 */
+    .training-header {
+        width: 100% !important;
+        padding: 15px 5px !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+    }
+    
+    /* 训练主容器完全填充 */
+    .training-main {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 8px !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 所有板块有合适的边距 */
+    .model-selection-section,
+    .dataset-section,
+    .training-deployment-section,
+    .model-management-section {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 15px 0 !important;
+        padding: 15px !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+    }
+    
+    /* 模型网格完全填充 */
+    .model-grid {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 8px !important;
+    }
+    
+    /* 模型行完全填充 */
+    .model-row {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 8px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* 模型卡片完全填充 */
+    .model-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+        border-radius: 8px !important;
+        min-height: 140px !important;
+    }
+    
+    /* 模型图标优化 */
+    .model-icon {
+        font-size: 2em !important;
+        margin-bottom: 8px !important;
+    }
+    
+    /* 模型标题优化 */
+    .model-header h3 {
+        font-size: 1.1em !important;
+        margin: 0 !important;
+    }
+    
+    /* 模型内容优化 */
+    .model-content p {
+        font-size: 0.9em !important;
+        margin: 8px 0 !important;
+    }
+    
+    /* 训练按钮优化 */
+    .train-btn {
+        width: 100% !important;
+        padding: 10px !important;
+        font-size: 13px !important;
+        border-radius: 6px !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 配置网格优化 */
+    .config-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+    
+    /* 配置项优化 */
+    .config-item {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    
+    .config-item input,
+    .config-item select {
+        width: 100% !important;
+        padding: 10px !important;
+        font-size: 16px !important;
+        box-sizing: border-box !important;
+        border-radius: 6px !important;
+    }
+    
+    /* 管理统计卡片优化 */
+    .management-stats {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        width: 100% !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .stat-card-mini {
+        padding: 12px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+    }
+    
+    .stat-number {
+        font-size: 1.2em !important;
+    }
+    
+    .stat-label {
+        font-size: 0.8em !important;
+    }
+    
+    /* 管理控制区域优化 */
+    .management-controls {
+        flex-direction: column !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+    
+    .search-area {
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    
+    .search-input-wrapper,
+    .filter-select {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .search-input-wrapper input {
+        width: 100% !important;
+        padding: 10px 16px 10px 40px !important;
+        font-size: 16px !important;
+        box-sizing: border-box !important;
+    }
+    
+    .filter-select {
+        padding: 10px !important;
+        font-size: 16px !important;
+    }
+    
+    /* 操作按钮组优化 */
+    .action-buttons {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .management-btn {
+        padding: 10px 15px !important;
+        font-size: 13px !important;
+        border-radius: 6px !important;
+    }
+    
+    /* 模型列表容器优化 */
+    .model-list-container {
+        width: 100% !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+        border-radius: 8px !important;
+    }
+    
+    /* 模型项优化 */
+    .model-item {
+        width: 100% !important;
+        margin: 0 0 12px 0 !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+        border-radius: 8px !important;
+    }
+    
+    .model-item-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+    
+    .model-item-content {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .model-meta {
+        grid-template-columns: 1fr !important;
+        gap: 6px !important;
+    }
+    
+    .model-actions {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+    
+    .action-btn {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 14px !important;
+    }
+    
+    /* 步骤指示器优化 */
+    .steps-indicator {
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: center !important;
+    }
+    
+    .step {
+        flex-direction: row !important;
+        gap: 8px !important;
+        align-items: center !important;
+    }
+    
+    .step-number {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 13px !important;
+    }
+    
+    .step-label {
+        font-size: 12px !important;
+    }
+    
+    /* 上传区域优化 */
+    .upload-area {
+        width: 100% !important;
+        min-height: 150px !important;
+        padding: 15px 8px !important;
+        box-sizing: border-box !important;
+        border-radius: 8px !important;
+    }
+    
+    /* 进度条优化 */
+    .progress-bar {
+        width: 100% !important;
+        height: 6px !important;
+        border-radius: 3px !important;
+    }
+    
+    /* 训练操作按钮优化 */
+    .start-training-btn {
+        width: 100% !important;
+        padding: 12px !important;
+        font-size: 14px !important;
+        border-radius: 6px !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 聊天容器优化 */
+    .chat-container {
+        height: 300px !important;
+        border-radius: 8px !important;
+    }
+    
+    .chat-messages {
+        padding: 12px !important;
+    }
+    
+    .chat-input-area {
+        padding: 10px !important;
+    }
+    
+    .chat-input-area input {
+        padding: 10px 12px !important;
+        font-size: 16px !important;
+    }
+    
+    .chat-input-area button {
+        width: 35px !important;
+        height: 35px !important;
+    }
+}
+
+/* 超小屏幕进一步优化 */
+@media (max-width: 480px) {
+    .model-training-content {
+        padding: 60px 2px 20px 2px !important;
+    }
+    
+    .model-selection-section,
+    .dataset-section,
+    .training-deployment-section,
+    .model-management-section {
+        width: calc(100vw - 4px) !important;
+        padding: 8px !important;
+    }
+    
+    .model-card {
+        padding: 10px !important;
+        min-height: 120px !important;
+    }
+    
+    .management-stats {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .stat-card-mini {
+        padding: 10px !important;
+    }
+}
+
+/* 确保不会有横向滚动 */
+@media (max-width: 768px) {
+    body, html {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 隐藏可能导致横向滚动的元素 */
+    .desktop-only {
+        display: none !important;
+    }
+}

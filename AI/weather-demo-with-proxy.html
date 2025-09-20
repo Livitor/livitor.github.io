@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境监测天气板块 - 代理版本</title>
+    <link rel="stylesheet" href="css/weather-widget.css">
+    <style>
+        .demo-controls {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+        }
+
+        .demo-controls h4 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .control-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .status-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; padding: 20px; font-family: Arial, sans-serif;">
+    
+    <div style="text-align: center; color: white; margin-bottom: 30px;">
+        <h1>环境监测系统</h1>
+        <p>实时温湿度数据监控 - 支持代理和模拟数据</p>
+    </div>
+
+    <!-- 演示控制面板 -->
+    <div class="demo-controls">
+        <h4>数据源控制</h4>
+        <div class="control-buttons">
+            <button class="control-btn active" id="mockDataBtn" onclick="switchToMockData()">
+                模拟数据
+            </button>
+            <button class="control-btn" id="realApiBtn" onclick="switchToRealAPI()">
+                真实API
+            </button>
+        </div>
+        <div class="status-info" id="statusInfo">
+            当前使用模拟数据，数据会自动变化以模拟真实环境
+        </div>
+    </div>
+
+    <!-- 天气组件容器 -->
+    <div id="weatherContainer"></div>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="js/weather-api-proxy.js"></script>
+    <script src="js/weather-widget.js"></script>
+    
+    <script>
+        // 初始化天气组件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 确保weatherWidget是全局变量
+            window.weatherWidget = new WeatherWidget('weatherContainer');
+        });
+
+        // 切换到模拟数据模式
+        function switchToMockData() {
+            if (typeof weatherAPI !== 'undefined') {
+                weatherAPI.enableMockData();
+                updateControlButtons('mock');
+                updateStatusInfo('当前使用模拟数据，数据会自动变化以模拟真实环境');
+                if (window.weatherWidget) {
+                    window.weatherWidget.updateWeatherData();
+                }
+            }
+        }
+
+        // 切换到真实API模式
+        function switchToRealAPI() {
+            if (typeof weatherAPI !== 'undefined') {
+                weatherAPI.enableRealAPI();
+                updateControlButtons('real');
+                updateStatusInfo('当前尝试使用真实API，如果失败会自动降级到模拟数据');
+                if (window.weatherWidget) {
+                    window.weatherWidget.updateWeatherData();
+                }
+            }
+        }
+
+        // 更新控制按钮状态
+        function updateControlButtons(mode) {
+            const mockBtn = document.getElementById('mockDataBtn');
+            const realBtn = document.getElementById('realApiBtn');
+            
+            if (mockBtn && realBtn) {
+                if (mode === 'mock') {
+                    mockBtn.classList.add('active');
+                    realBtn.classList.remove('active');
+                } else {
+                    mockBtn.classList.remove('active');
+                    realBtn.classList.add('active');
+                }
+            }
+        }
+
+        // 更新状态信息
+        function updateStatusInfo(message) {
+            const statusInfo = document.getElementById('statusInfo');
+            if (statusInfo) {
+                statusInfo.textContent = message;
+            }
+        }
+
+        // 页面卸载时清理资源
+        window.addEventListener('beforeunload', function() {
+            if (window.weatherWidget) {
+                window.weatherWidget.destroy();
+            }
+        });
+    </script>
+</body>
+</html>

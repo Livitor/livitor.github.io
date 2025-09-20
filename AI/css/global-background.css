@@ -1,0 +1,153 @@
+/* 全局背景样式 */
+
+/* 浅色默认背景 - 使用主页面的渐变背景（无模糊效果） */
+body.bg-light:not(.bg-custom):not(.bg-dark)::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 200, 120, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(76, 175, 80, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(129, 199, 132, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 50%, #A5D6A7 100%);
+    z-index: -2;
+}
+
+/* 深色默认背景 */
+body.bg-dark:not(.bg-custom):not(.bg-light)::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(76, 175, 80, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(56, 142, 60, 0.5) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(46, 125, 50, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #388E3C 100%);
+    z-index: -2;
+}
+
+/* 默认使用浅色背景 */
+body:not(.bg-custom):not(.bg-dark):not(.bg-light)::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 200, 120, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(76, 175, 80, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(129, 199, 132, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 50%, #A5D6A7 100%);
+    z-index: -2;
+}
+
+/* 自定义背景 - 使用pic/background.png */
+body.bg-custom {
+    background: url('../pic/background.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* 移除点状纹理叠加 */
+body:not(.bg-custom)::after {
+    display: none;
+}
+
+/* 移除图片背景模式下的纹理 */
+body.bg-custom::after {
+    display: none;
+}
+
+/* 背景设置按钮样式 */
+.bg-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    width: calc(50% - 10px);
+}
+
+.bg-btn i {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+
+.bg-btn:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+.bg-btn.active {
+    background-color: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.5);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+/* 背景控制容器 */
+.background-control {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+/* 背景预览 */
+.background-preview {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    margin: 10px 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.bg-preview {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.bg-preview-light {
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 200, 120, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(76, 175, 80, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(129, 199, 132, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 50%, #A5D6A7 100%);
+}
+
+.bg-preview-dark {
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(76, 175, 80, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(56, 142, 60, 0.5) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(46, 125, 50, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #388E3C 100%);
+}
+
+.bg-preview-custom {
+    background: url('../pic/background.png') no-repeat center center;
+    background-size: cover;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .bg-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

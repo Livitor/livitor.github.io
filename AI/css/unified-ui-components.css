@@ -1,0 +1,1160 @@
+/* 统一UI组件样式 - 确保所有页面效果一致 */
+
+/* ==================== 统一标题间距样式 ==================== */
+
+/* 主标题容器统一样式 */
+.header, .page-header, .training-header, .management-header, .help-header, .history-header {
+    text-align: center !important;
+    margin-bottom: 40px !important;
+    padding: 30px 20px !important;
+}
+
+/* 主标题h1统一样式 */
+.header h1, .page-header h1, .training-header h1, .management-header h1, .help-header h1, .history-header h1,
+.main-content > h1, .container > h1 {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    margin: 0 0 15px 0 !important;
+    line-height: 1.2 !important;
+}
+
+/* 副标题p统一样式 */
+.header p, .page-header p, .training-header p, .management-header p, .help-header p, .history-header p,
+.main-content > p, .container > p {
+    font-size: 1.1rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
+
+/* 页面内容区域标题间距 */
+.main-content {
+    padding-top: 20px !important;
+}
+
+/* 确保所有页面标题容器有统一的上边距 */
+.container .header,
+.container .page-header,
+.main-content .header,
+.main-content .page-header {
+    margin-top: 20px !important;
+}
+
+/* 响应式标题样式 */
+@media (max-width: 768px) {
+    .header h1, .page-header h1, .training-header h1, .management-header h1, .help-header h1, .history-header h1,
+    .main-content > h1, .container > h1 {
+        font-size: 2rem !important;
+    }
+    
+    .header, .page-header, .training-header, .management-header, .help-header, .history-header {
+        padding: 20px 15px !important;
+        margin-bottom: 30px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1, .page-header h1, .training-header h1, .management-header h1, .help-header h1, .history-header h1,
+    .main-content > h1, .container > h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .header, .page-header, .training-header, .management-header, .help-header, .history-header {
+        padding: 15px 10px !important;
+        margin-bottom: 25px !important;
+    }
+}
+
+/* ==================== 磨砂面板统一样式 ==================== */
+
+/* 基础面板样式 - 所有磨砂板块的统一标准 */
+.panel-base,
+.upload-panel,
+.language-panel,
+.voice-panel,
+.analysis-toolbar,
+.upload-section,
+.analysis-params,
+.analysis-controls,
+.analysis-results,
+.report-controls,
+.key-metrics,
+.charts-section,
+.data-table-section,
+.report-summary,
+.chart-container,
+.metric-card,
+.overview-card,
+.result-overview,
+.detailed-results,
+.params-grid,
+.toolbar-content,
+.results-container,
+.summary-content {
+    /* 统一尺寸和间距 */
+    padding: 25px !important;
+    margin-bottom: 25px !important;
+    border-radius: 15px !important;
+    
+    /* 统一磨砂效果 */
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    
+    /* 统一边框和阴影 */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    
+    /* 统一过渡效果 */
+    transition: all 0.3s ease !important;
+}
+
+/* 面板悬停效果 */
+.panel-base:hover,
+.upload-panel:hover,
+.language-panel:hover,
+.voice-panel:hover,
+.analysis-toolbar:hover,
+.upload-section:hover,
+.analysis-params:hover,
+.chart-container:hover,
+.metric-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 面板标题统一样式 */
+.panel-header,
+.section h2,
+.chart-header h3,
+.table-header h2 {
+    margin-bottom: 20px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.panel-header h3,
+.section h2,
+.chart-header h3,
+.table-header h2 {
+    margin: 0 !important;
+    font-size: 1.3em !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.panel-header h3 i,
+.section h2 i,
+.chart-header h3 i,
+.table-header h2 i {
+    color: #4CAF50 !important;
+    font-size: 1.1em !important;
+}
+
+/* ==================== 按钮统一样式 ==================== */
+
+/* 主要按钮 */
+.btn-primary,
+.tool-btn.active,
+.upload-btn,
+.diagnosis-btn,
+.voice-recognition-btn,
+.start-analysis,
+#startAnalysis {
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    
+    /* 主要按钮渐变背景 */
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+.btn-primary:hover,
+.tool-btn.active:hover,
+.upload-btn:hover,
+.diagnosis-btn:hover,
+.voice-recognition-btn:hover,
+#startAnalysis:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%) !important;
+}
+
+.btn-primary:active,
+.tool-btn.active:active,
+.upload-btn:active,
+.diagnosis-btn:active,
+.voice-recognition-btn:active,
+#startAnalysis:active {
+    transform: translateY(0) scale(0.98) !important;
+}
+
+/* 次要按钮 */
+.btn-secondary,
+.tool-btn,
+.chart-btn,
+.action-btn,
+.settings-btn,
+.retry-btn,
+#clearAnalysis,
+#saveTemplate,
+#refreshBtn {
+    padding: 10px 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    
+    /* 次要按钮背景 */
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.btn-secondary:hover,
+.tool-btn:hover,
+.chart-btn:hover,
+.action-btn:hover,
+.settings-btn:hover,
+.retry-btn:hover,
+#clearAnalysis:hover,
+#saveTemplate:hover,
+#refreshBtn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 激活状态的工具按钮 */
+.tool-btn.active,
+.chart-btn.active {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+    color: white !important;
+    border-color: #4CAF50 !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+/* ==================== 下拉列表统一样式 ==================== */
+
+select,
+.select-wrapper select,
+#analysisModel,
+#plantType,
+#symptomPart,
+#analysisDepth,
+#timeRange {
+    padding: 12px 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    
+    /* 下拉列表背景 */
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    
+    /* 移除默认样式 */
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+}
+
+select:hover,
+.select-wrapper select:hover,
+#analysisModel:hover,
+#plantType:hover,
+#symptomPart:hover,
+#analysisDepth:hover,
+#timeRange:hover {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+select:focus,
+.select-wrapper select:focus,
+#analysisModel:focus,
+#plantType:focus,
+#symptomPart:focus,
+#analysisDepth:focus,
+#timeRange:focus {
+    outline: none !important;
+    border-color: #4CAF50 !important;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2) !important;
+}
+
+/* 下拉箭头 */
+select::after,
+.select-wrapper::after {
+    content: '▼' !important;
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.8em !important;
+}
+
+/* ==================== 输入框统一样式 ==================== */
+
+input[type="text"],
+input[type="search"],
+input[type="date"],
+input[type="range"],
+textarea,
+#tableSearch,
+#startDate,
+#endDate,
+#confidenceThreshold {
+    padding: 12px 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    
+    /* 输入框背景 */
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+input[type="text"]:hover,
+input[type="search"]:hover,
+input[type="date"]:hover,
+textarea:hover,
+#tableSearch:hover,
+#startDate:hover,
+#endDate:hover {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+#tableSearch:focus,
+#startDate:focus,
+#endDate:focus {
+    outline: none !important;
+    border-color: #4CAF50 !important;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2) !important;
+}
+
+input[type="text"]::placeholder,
+input[type="search"]::placeholder,
+textarea::placeholder,
+#tableSearch::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* ==================== 滑块统一样式 ==================== */
+
+input[type="range"],
+#confidenceThreshold {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    height: 6px !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 3px !important;
+    outline: none !important;
+}
+
+input[type="range"]::-webkit-slider-thumb,
+#confidenceThreshold::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: #4CAF50 !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover,
+#confidenceThreshold::-webkit-slider-thumb:hover {
+    transform: scale(1.2) !important;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4) !important;
+}
+
+/* ==================== 卡片统一样式 ==================== */
+
+.metric-card,
+.overview-card,
+.nav-card,
+.feature-card,
+.result-card {
+    padding: 20px !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+.metric-card:hover,
+.overview-card:hover,
+.nav-card:hover,
+.feature-card:hover,
+.result-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ==================== 表格统一样式 ==================== */
+
+.data-table,
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+.data-table th,
+.data-table td,
+table th,
+table td {
+    padding: 12px 16px !important;
+    text-align: left !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.data-table th,
+table th {
+    background: rgba(255, 255, 255, 0.1) !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.data-table tr:hover,
+table tr:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ==================== 状态徽章统一样式 ==================== */
+
+.status-badge {
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+.status-badge.success {
+    background: rgba(76, 175, 80, 0.2) !important;
+    color: #4CAF50 !important;
+    border: 1px solid rgba(76, 175, 80, 0.3) !important;
+}
+
+.status-badge.processing {
+    background: rgba(255, 193, 7, 0.2) !important;
+    color: #FFC107 !important;
+    border: 1px solid rgba(255, 193, 7, 0.3) !important;
+}
+
+.status-badge.error {
+    background: rgba(244, 67, 54, 0.2) !important;
+    color: #F44336 !important;
+    border: 1px solid rgba(244, 67, 54, 0.3) !important;
+}
+
+/* ==================== 响应式设计 ==================== */
+
+@media (max-width: 768px) {
+    .panel-base,
+    .upload-panel,
+    .language-panel,
+    .voice-panel,
+    .analysis-toolbar,
+    .upload-section,
+    .analysis-params,
+    .analysis-controls,
+    .analysis-results,
+    .report-controls,
+    .key-metrics,
+    .charts-section,
+    .data-table-section,
+    .report-summary {
+        padding: 20px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 10px 16px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    select,
+    input[type="text"],
+    input[type="search"],
+    input[type="date"],
+    textarea {
+        padding: 10px 14px !important;
+        font-size: 0.95rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .panel-base,
+    .upload-panel,
+    .language-panel,
+    .voice-panel,
+    .analysis-toolbar,
+    .upload-section,
+    .analysis-params,
+    .analysis-controls,
+    .analysis-results,
+    .report-controls,
+    .key-metrics,
+    .charts-section,
+    .data-table-section,
+    .report-summary {
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 8px 12px !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+/* ==================== 特殊组件样式 ==================== */
+
+/* 上传区域 */
+.upload-area {
+    border: 3px dashed rgba(255, 255, 255, 0.3) !important;
+    border-radius: 12px !important;
+    padding: 30px !important;
+    text-align: center !important;
+    transition: all 0.3s ease !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.upload-area:hover {
+    border-color: rgba(76, 175, 80, 0.6) !important;
+    background: rgba(76, 175, 80, 0.05) !important;
+}
+
+.upload-area.dragover {
+    border-color: rgba(76, 175, 80, 0.8) !important;
+    background: rgba(76, 175, 80, 0.1) !important;
+}
+
+/* 图表容器 */
+.chart-container {
+    min-height: 400px !important;
+}
+
+.chart-body {
+    padding: 20px 0 !important;
+}
+
+/* 工具栏组 */
+.toolbar-group {
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+}
+
+/* 参数网格 */
+.params-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 20px !important;
+}
+
+.param-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.param-group label {
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.95rem !important;
+}
+
+/* 阈值显示 */
+.threshold-value {
+    font-weight: 600 !important;
+    color: #4CAF50 !important;
+    font-size: 0.9rem !important;
+}
+
+/* ==================== 额外的统一样式 ==================== */
+
+/* 工具栏内容布局 */
+.toolbar-content {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+}
+
+/* 分析设置区域 */
+.analysis-settings {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* 时间范围选择器 */
+.time-range {
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+}
+
+.time-range label {
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    white-space: nowrap !important;
+}
+
+.custom-date {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.custom-date span {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500 !important;
+}
+
+/* 报告操作区域 */
+.report-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* 指标网格布局 */
+.metrics-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 20px !important;
+}
+
+/* 指标卡片内容 */
+.metric-content h3 {
+    margin: 0 0 10px 0 !important;
+    font-size: 0.9rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500 !important;
+}
+
+.metric-value {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: #4CAF50 !important;
+    margin-bottom: 8px !important;
+}
+
+.metric-change {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.metric-change.positive {
+    color: #4CAF50 !important;
+}
+
+.metric-change.negative {
+    color: #FF5722 !important;
+}
+
+.metric-icon {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 12px !important;
+    background: rgba(76, 175, 80, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 15px !important;
+}
+
+.metric-icon i {
+    font-size: 1.5rem !important;
+    color: #4CAF50 !important;
+}
+
+/* 图表网格布局 */
+.charts-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)) !important;
+    gap: 25px !important;
+}
+
+/* 图表控制按钮 */
+.chart-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* 表格控制区域 */
+.table-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    margin-left: auto !important;
+}
+
+/* 表格容器 */
+.table-container {
+    overflow-x: auto !important;
+    border-radius: 10px !important;
+    margin-top: 20px !important;
+}
+
+/* 结果概览网格 */
+.result-overview {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+    gap: 20px !important;
+    margin-bottom: 25px !important;
+}
+
+/* 结果操作区域 */
+.result-actions {
+    margin-top: 25px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 摘要内容布局 */
+.summary-content {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)) !important;
+    gap: 25px !important;
+}
+
+.summary-section h4 {
+    margin: 0 0 15px 0 !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.summary-section h4 i {
+    color: #4CAF50 !important;
+}
+
+.summary-section ul {
+    margin: 0 !important;
+    padding-left: 20px !important;
+}
+
+.summary-section li {
+    margin-bottom: 10px !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    line-height: 1.6 !important;
+}
+
+/* 卡片图标和内容布局 */
+.card-icon {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 12px !important;
+    background: rgba(76, 175, 80, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 15px !important;
+}
+
+.card-icon i {
+    font-size: 1.5rem !important;
+    color: #4CAF50 !important;
+}
+
+.card-content h4 {
+    margin: 0 0 8px 0 !important;
+    font-size: 0.9rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500 !important;
+}
+
+.result-count {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #4CAF50 !important;
+}
+
+/* Select包装器样式 */
+.select-wrapper {
+    position: relative !important;
+    display: inline-block !important;
+    width: 100% !important;
+}
+
+.select-wrapper::after {
+    content: '▼' !important;
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.8em !important;
+}
+
+
+/* ==================== 菜单栏宽度优化 ==================== */
+
+/* 减少菜单栏宽度 */
+.sidebar {
+    width: 170px !important;
+    transform: translateX(-170px) !important;
+}
+
+.sidebar.expanded {
+    transform: translateX(0) !important;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-170px) !important;
+}
+
+.menu-toggle.menu-open {
+    left: 170px !important;
+}
+
+/* 设置按钮圆形绿色样式 */
+.settings-btn.menu-toggle-style {
+    position: fixed !important;
+    top: 15px !important;
+    right: 15px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: rgba(76, 175, 80, 0.9) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 9999 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    padding: 0 !important;
+}
+
+.settings-btn.menu-toggle-style:hover {
+    background: rgba(76, 175, 80, 1) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.settings-btn.menu-toggle-style:active {
+    transform: scale(0.95) !important;
+}
+
+.settings-btn.menu-toggle-style i {
+    transition: transform 0.3s ease !important;
+    pointer-events: none !important;
+}
+
+/* 电脑端鼠标悬停自动展开菜单 */
+@media (min-width: 769px) {
+    .sidebar {
+        transition: transform 0.3s ease !important;
+    }
+    
+    .sidebar:hover {
+        transform: translateX(0) !important;
+    }
+    
+    .sidebar.auto-expanded {
+        transform: translateX(0) !important;
+    }
+}
+
+/* ==================== 智能管理页面特殊样式 ==================== */
+
+/* 强制智能管理页面使用单列布局 */
+.management-main {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 20px !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 智能管理页面磨砂板块样式 */
+.plant-info-section.panel-base,
+.plant-list-section.panel-base {
+    min-height: 300px !important;
+    padding: 25px !important;
+    margin-bottom: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* 操作按钮布局 */
+.operation-buttons {
+    display: flex !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+}
+
+.operation-btn {
+    min-width: 120px !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .management-main {
+        padding: 10px !important;
+        gap: 10px !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: calc(100% - 20px) !important;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
+    
+    .plant-info-section.panel-base,
+    .plant-list-section.panel-base {
+        padding: 15px !important;
+        min-height: auto !important;
+        margin: 0 0 10px 0 !important;
+        border-radius: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 智能管理页面容器优化 */
+    .smart-management-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    .operation-buttons {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+    
+    .operation-btn {
+        width: 100% !important;
+        max-width: 200px !important;
+        padding: 10px 16px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* 环境数据卡片移动端优化 */
+    .environment-data {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .data-card {
+        padding: 10px !important;
+        text-align: center !important;
+    }
+    
+    /* 植株表格移动端优化 */
+    .plant-table-container {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .plant-table {
+        min-width: 600px !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .plant-table th,
+    .plant-table td {
+        padding: 8px 6px !important;
+        white-space: nowrap !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .management-main {
+        padding: 10px !important;
+        gap: 10px !important;
+    }
+    
+    .plant-info-section.panel-base,
+    .plant-list-section.panel-base {
+        padding: 12px !important;
+        margin: 0 0 10px 0 !important;
+    }
+    
+    .environment-data {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    
+    .operation-buttons {
+        gap: 8px !important;
+    }
+    
+    .operation-btn {
+        padding: 8px 12px !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .plant-table {
+        font-size: 0.8rem !important;
+    }
+    
+    .plant-table th,
+    .plant-table td {
+        padding: 6px 4px !important;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .toolbar-content {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 15px !important;
+    }
+    
+    .time-range {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    
+    .charts-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+    }
+    
+    .summary-content {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .table-controls {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        margin-left: 0 !important;
+    }
+    
+    /* 移动端设置按钮适配 */
+    .settings-btn.menu-toggle-style {
+        top: 10px !important;
+        right: 10px !important;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-overview {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .toolbar-group {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    /* 超小屏幕设置按钮适配 */
+    .settings-btn.menu-toggle-style {
+        top: 8px !important;
+        right: 8px !important;
+        width: 42px !important;
+        height: 42px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* APP环境优化 */
+@media (display-mode: standalone) {
+    .settings-btn.menu-toggle-style {
+        top: 25px !important;
+    }
+}
+
+/* 桌面端适配 */
+@media (min-width: 1024px) {
+    .settings-btn.menu-toggle-style {
+        top: 20px !important;
+        right: 20px !important;
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 22px !important;
+    }
+}

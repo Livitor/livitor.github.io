@@ -1,0 +1,197 @@
+/* 统计报告页面移动端修复样式 */
+
+/* 确保页面在移动端有正确的边框和布局 */
+@media (max-width: 768px) {
+    /* 主容器边框修复 */
+    #mainContainer {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        width: 95% !important;
+        margin: 10px auto !important;
+        padding: 0 !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* 报告内容区域修复 */
+    .main-content {
+        padding: 10px !important;
+        width: 100% !important;
+    }
+    
+    /* 报告控制面板修复 */
+    .report-controls {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .toolbar-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .time-range, .report-actions {
+        width: 100%;
+    }
+    
+    /* 关键指标修复 */
+    .key-metrics {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .metrics-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .metric-card {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 15px !important;
+    }
+    
+    /* 图表区域修复 */
+    .charts-section {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .charts-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .chart-container {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        min-height: 300px !important;
+    }
+    
+    /* 表格区域修复 */
+    .data-table-section {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* 表格滚动条显示修复 */
+    .table-container {
+        position: relative;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 30px !important; /* 为滚动提示留出空间 */
+        margin: 10px 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+    }
+    
+    /* 添加滚动提示 */
+    .table-container::after {
+        content: "← 左右滑动查看更多 →";
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        z-index: 10;
+    }
+    
+    /* 确保表格有足够的宽度 */
+    .data-table {
+        min-width: 700px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .data-table th, .data-table td {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 10px;
+        text-align: center;
+    }
+    
+    /* 表格控制区域修复 */
+    .table-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .table-controls input, .table-controls button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    /* 报告摘要修复 */
+    .report-summary {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .summary-content {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .summary-section {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 15px !important;
+    }
+}
+
+/* 超小屏幕设备额外优化 */
+@media (max-width: 360px) {
+    #mainContainer {
+        width: 98% !important;
+        margin: 5px auto !important;
+    }
+    
+    .main-content {
+        padding: 5px !important;
+    }
+    
+    .report-controls, .key-metrics, .charts-section, .data-table-section, .report-summary {
+        padding: 10px !important;
+    }
+}

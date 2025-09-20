@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>核心功能 - 穗安巡视官</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 20%, #667eea 40%, #764ba2 60%, #8e44ad 80%, #9b59b6 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(155, 89, 182, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(142, 68, 173, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 60% 40%, rgba(116, 75, 162, 0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px
+                );
+            pointer-events: none;
+        }
+        
+        .slide-container {
+            max-width: 1400px;
+            padding: 60px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .slide-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .features-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            color: #FFD700;
+            display: block;
+        }
+        
+        .feature-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .feature-desc {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
+        .feature-highlights {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .feature-highlights li {
+            padding: 8px 0;
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .feature-highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+        
+        .demo-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .demo-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .demo-item:hover {
+            transform: scale(1.1);
+        }
+        
+        .demo-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .demo-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-number {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="slide-number">4 / 8</div>
+    
+    <div class="slide-container">
+        <h1 class="slide-title">核心功能展示</h1>
+        
+        <div class="features-showcase">
+            <div class="feature-card">
+                <i class="fas fa-bug feature-icon"></i>
+                <div class="feature-title">病虫害检测</div>
+                <div class="feature-desc">AI智能识别作物病虫害，提供精准诊断和防治建议</div>
+                <ul class="feature-highlights">
+                    <li>多模态输入支持</li>
+                    <li>实时图像分析</li>
+                    <li>专业防治方案</li>
+                    <li>本地案例库匹配</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-code feature-icon"></i>
+                <div class="feature-title">低代码开发</div>
+                <div class="feature-desc">无需编程知识，快速构建专属农业应用和自动化流程</div>
+                <ul class="feature-highlights">
+                    <li>拖拽式界面设计</li>
+                    <li>自定义模型训练</li>
+                    <li>专属AI助手</li>
+                    <li>一键部署上线</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <div class="feature-title">智能分析</div>
+                <div class="feature-desc">深度分析农业数据，洞察作物生长趋势和产量预测</div>
+                <ul class="feature-highlights">
+                    <li>数据可视化展示</li>
+                    <li>趋势预测分析</li>
+                    <li>智能决策支持</li>
+                    <li>报告自动生成</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <div class="demo-title">支持的AI专家模型</div>
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <i class="fas fa-virus demo-icon" style="color: #ff6b6b;"></i>
+                    <div class="demo-label">病害识别专家</div>
+                </div>
+                <div class="demo-item">
+                    <i class="fas fa-spider demo-icon" style="color: #4ecdc4;"></i>
+                    <div class="demo-label">虫害识别专家</div>
+                </div>
+                <div class="demo-item">
+                    <i class="fas fa-leaf demo-icon" style="color: #45b7d1;"></i>
+                    <div class="demo-label">生长阶段专家</div>
+                </div>
+                <div class="demo-item">
+                    <i class="fas fa-apple-alt demo-icon" style="color: #f9ca24;"></i>
+                    <div class="demo-label">成熟度检测专家</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" onclick="window.location.href='slide3-ai-tech.html'">
+            <i class="fas fa-arrow-left"></i> 上一页
+        </button>
+        <button class="nav-btn" onclick="window.location.href='slide5-innovation.html'">
+            <i class="fas fa-arrow-right"></i> 下一页
+        </button>
+    </div>
+</body>
+</html>

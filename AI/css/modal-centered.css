@@ -1,0 +1,436 @@
+/* 居中靠上的模态框通用样式 */
+
+/* 模态框容器 - 靠近屏幕上方布局 */
+.modal-container, .settings-modal, .user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 更透明的背景 */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: none; /* 默认隐藏 */
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 80px; /* 明显靠近屏幕上方，但不会太靠上 */
+    z-index: 1100;
+    overflow-y: auto;
+}
+
+/* 当显示模态框时 */
+.modal-container[style*="display: flex"], 
+.settings-modal[style*="display: flex"], 
+.user-modal[style*="display: flex"] {
+    display: flex !important;
+    background: rgba(0, 0, 0, 0.5); /* 确保背景半透明 */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+/* 模态框内容 */
+.modal-content, .settings-content, .user-content {
+    background: rgba(44, 62, 80, 0.85); /* 稍微透明一点 */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    width: 85%;
+    max-width: 600px;
+    max-height: 90vh; /* 增加高度，让内容更多地显示 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    animation: modalSlideInFromTop 0.4s ease-out; /* 使用新的动画 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* 确保子元素定位正确 */
+    z-index: 1101; /* 确保内容在背景之上 */
+}
+
+/* 模态框头部 */
+.modal-header, .settings-header {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px 20px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.modal-title, .settings-header h2 {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-title i, .settings-header h2 i {
+    color: #4CAF50;
+    font-size: 1.4rem;
+}
+
+.modal-close, .settings-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.modal-close:hover, .settings-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+/* 模态框主体 */
+.modal-body, .settings-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 25px;
+    max-height: calc(90vh - 120px);
+}
+
+/* 模态框底部 */
+.modal-footer, .settings-footer {
+    padding: 15px 25px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 20px 20px;
+    position: sticky;
+    bottom: 0;
+    backdrop-filter: blur(10px);
+}
+
+/* 按钮样式 */
+.modal-btn, .btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-btn-primary, .btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.modal-btn-secondary, .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-btn-primary:hover, .btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+    transform: translateY(-2px);
+}
+
+.modal-btn-secondary:hover, .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* 按钮悬停效果 */
+.modal-btn::before, .btn-primary::before, .btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.modal-btn:hover::before, .btn-primary:hover::before, .btn-secondary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* 模态框部分 */
+.modal-section, .settings-section {
+    margin-bottom: 25px;
+    animation: fadeInUp 0.3s ease;
+}
+
+.modal-section:nth-child(2), .settings-section:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.modal-section:nth-child(3), .settings-section:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.modal-section:nth-child(4), .settings-section:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.modal-section-title, .settings-section h3 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-section-title i, .settings-section h3 i {
+    color: #4CAF50;
+}
+
+/* 表单组样式 */
+.modal-form-group, .form-group {
+    margin-bottom: 20px;
+}
+
+.modal-form-group label, .form-group label {
+    display: block;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.modal-form-group input,
+.modal-form-group select,
+.form-group input,
+.form-group select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    padding: 12px 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.modal-form-group input:focus,
+.modal-form-group select:focus,
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.modal-form-group input::placeholder,
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-form-group select option,
+.form-group select option {
+    background: #2c3e50;
+    color: white;
+    padding: 10px;
+}
+
+/* 复选框样式 */
+.modal-checkbox-label, .checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    margin-bottom: 0;
+    user-select: none;
+}
+
+.modal-checkbox-label input[type="checkbox"],
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.modal-checkmark, .checkmark {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    margin-right: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.modal-checkbox-label:hover .modal-checkmark,
+.checkbox-label:hover .checkmark {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.modal-checkbox-label input[type="checkbox"]:checked + .modal-checkmark,
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.modal-checkbox-label input[type="checkbox"]:checked + .modal-checkmark::after,
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* 自定义滚动条 */
+.modal-content::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar,
+.settings-content::-webkit-scrollbar,
+.settings-body::-webkit-scrollbar,
+.user-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track,
+.settings-content::-webkit-scrollbar-track,
+.settings-body::-webkit-scrollbar-track,
+.user-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb,
+.settings-content::-webkit-scrollbar-thumb,
+.settings-body::-webkit-scrollbar-thumb,
+.user-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover,
+.settings-content::-webkit-scrollbar-thumb:hover,
+.settings-body::-webkit-scrollbar-thumb:hover,
+.user-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* 动画效果 */
+@keyframes modalSlideInFromTop {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .modal-container, .settings-modal, .user-modal {
+        padding-top: 5px;
+    }
+    
+    .modal-content, .settings-content, .user-content {
+        width: 95%;
+        max-width: none;
+        max-height: 95vh;
+        border-radius: 15px;
+    }
+    
+    .modal-body, .settings-body {
+        max-height: calc(95vh - 120px);
+        padding: 20px;
+    }
+    
+    .modal-header, .modal-footer, .settings-header, .settings-footer {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-container, .settings-modal, .user-modal {
+        padding-top: 0;
+    }
+    
+    .modal-content, .settings-content, .user-content {
+        width: 98%;
+        max-height: 98vh;
+        border-radius: 12px;
+    }
+    
+    .modal-body, .settings-body {
+        max-height: calc(98vh - 100px);
+        padding: 15px;
+    }
+    
+    .modal-header, .modal-footer, .settings-header, .settings-footer {
+        padding: 12px 15px;
+    }
+    
+    .modal-btn, .btn-primary, .btn-secondary {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}

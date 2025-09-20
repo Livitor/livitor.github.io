@@ -1,0 +1,33 @@
+/* 轻量级深色主题 - 优化性能版本 */
+
+/* 通用磨砂板块样式 */
+section:not(.header),
+.frosted-glass,
+.panel-base {
+    background: rgba(50, 50, 50, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+}
+
+/* 卡片类元素 */
+.feature-card,
+.news-card,
+.report-card,
+.help-section,
+.model-card {
+    background: rgba(50, 50, 50, 0.85) !important;
+    color: white !important;
+}
+
+/* 文字颜色 */
+section:not(.header) *,
+.frosted-glass *,
+.panel-base * {
+    color: white !important;
+}
+
+/* 标题区域保持透明 */
+.header {
+    background: transparent !important;
+    border: none !important;
+}

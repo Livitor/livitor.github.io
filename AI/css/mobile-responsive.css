@@ -1,0 +1,72 @@
+/* 移动端响应式适配 - 简化版本，专注核心问题 */
+
+/* 基础适配 */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* 容器基础适配 */
+.container,
+.main-content,
+.content-wrapper,
+.page-content,
+.analysis-container,
+.main-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* 简化的移动端适配 */
+@media (max-width: 768px) {
+    /* 基础容器适配 */
+    .container,
+    .main-content,
+    .content-wrapper,
+    .page-content,
+    .analysis-container,
+    .main-wrapper {
+        padding: 70px 15px 20px 15px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* 网格布局简化 */
+    .grid,
+    .features-grid,
+    .cards-grid {
+        display: block;
+        width: 100%;
+    }
+    
+    .grid-item,
+    .feature-item,
+    .card-item,
+    .card,
+    .feature-card {
+        width: 100%;
+        margin: 10px 0;
+        display: block;
+    }
+    
+    /* 防止横向滚动 */
+    body, html {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}

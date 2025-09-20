@@ -1,0 +1,17 @@
+/* 标题逐字动画效果 */
+.typewriter-title {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.typewriter-title .char {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* 确保标题容器有足够的高度 */
+.header h1 {
+    min-height: 1.5em;
+    line-height: 1.2;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境监测天气板块</title>
+    <link rel="stylesheet" href="css/weather-widget.css">
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; padding: 20px; font-family: Arial, sans-serif;">
+    
+    <div style="text-align: center; color: white; margin-bottom: 30px;">
+        <h1>环境监测系统</h1>
+        <p>实时温湿度数据监控</p>
+    </div>
+
+    <!-- 天气组件容器 -->
+    <div id="weatherContainer"></div>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="js/weather-api.js"></script>
+    <script src="js/weather-widget.js"></script>
+    
+    <script>
+        // 初始化天气组件
+        document.addEventListener('DOMContentLoaded', function() {
+            weatherWidget = new WeatherWidget('weatherContainer');
+        });
+
+        // 页面卸载时清理资源
+        window.addEventListener('beforeunload', function() {
+            if (weatherWidget) {
+                weatherWidget.destroy();
+            }
+        });
+    </script>
+</body>
+</html>
