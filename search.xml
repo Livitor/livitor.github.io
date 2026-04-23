@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Test</title>
-    <url>/2025/03/31/Test/</url>
-    <content><![CDATA[hello
+    <title>PageOne</title>
+    <url>/2026/04/23/PageOne/</url>
+    <content><![CDATA[PageOne
+
+test
+
 ]]></content>
   </entry>
   <entry>
@@ -23,6 +26,12 @@ More info: Generating
 Deploy to remote sites
 $ hexo deploy
 More info: Deployment
+]]></content>
+  </entry>
+  <entry>
+    <title>Test</title>
+    <url>/2025/03/31/Test/</url>
+    <content><![CDATA[hello
 ]]></content>
   </entry>
 </search>
