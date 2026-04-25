@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GlazePress</title>
+    <link>/</link>
+    <description>基于 Vue 3 的现代化静态博客，采用 Glassmorphism 设计</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 25 Apr 2026 05:27:28 GMT</lastBuildDate>
+    <generator>GlazePress SSG</generator>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Halo 博客部署</title>
+      <link>/posts/建站/halo/</link>
+      <guid isPermaLink="true">/posts/建站/halo/</guid>
+      <pubDate>Sat, 25 Apr 2026 00:00:00 GMT</pubDate>
+      <description></description>
+      <category>Halo</category>
+      <category>Docker</category>
+      <category>博客</category>
+    </item>
+    <item>
+      <title>Web 性能优化实战：从 60 分到 Lighthouse 100</title>
+      <link>/posts/performance-optimization/</link>
+      <guid isPermaLink="true">/posts/performance-optimization/</guid>
+      <pubDate>Fri, 10 Apr 2026 00:00:00 GMT</pubDate>
+      <description>系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。</description>
+      <category>性能</category>
+      <category>优化</category>
+      <category>Core Web Vitals</category>
+    </item>
+    <item>
+      <title>Glassmorphism 设计系统完全指南</title>
+      <link>/posts/glassmorphism-design/</link>
+      <guid isPermaLink="true">/posts/glassmorphism-design/</guid>
+      <pubDate>Wed, 15 Apr 2026 00:00:00 GMT</pubDate>
+      <description>深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。</description>
+      <category>设计</category>
+      <category>CSS</category>
+      <category>UI/UX</category>
+    </item>
+    <item>
+      <title>Vue 3 Composition API 深度解析</title>
+      <link>/posts/vue3-composition-api/</link>
+      <guid isPermaLink="true">/posts/vue3-composition-api/</guid>
+      <pubDate>Sat, 18 Apr 2026 00:00:00 GMT</pubDate>
+      <description>深入理解 Vue 3 的 Composition API，包括 ref、reactive、computed、watch 等核心概念，以及如何在实际项目中优雅地组织代码。</description>
+      <category>Vue</category>
+      <category>前端</category>
+      <category>JavaScript</category>
+    </item>
+    <item>
+      <title>快速开始指南</title>
+      <link>/posts/getting-started/</link>
+      <guid isPermaLink="true">/posts/getting-started/</guid>
+      <pubDate>Tue, 21 Apr 2026 00:00:00 GMT</pubDate>
+      <description>从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。</description>
+      <category>入门</category>
+      <category>教程</category>
+      <category>配置</category>
+    </item>
+    <item>
+      <title>欢迎来到 GlazePress</title>
+      <link>/posts/hello-world/</link>
+      <guid isPermaLink="true">/posts/hello-world/</guid>
+      <pubDate>Mon, 20 Apr 2026 00:00:00 GMT</pubDate>
+      <description>这是 GlazePress 的第一篇文章，带你了解这个现代化静态博客生成器的核心特性与设计理念。</description>
+      <category>入门</category>
+      <category>GlazePress</category>
+    </item>
+    <item>
+      <title>test</title>
+      <link>/posts/test/</link>
+      <guid isPermaLink="true">/posts/test/</guid>
+      <pubDate>Sat, 25 Apr 2026 00:00:00 GMT</pubDate>
+      <description></description>
+
+    </item>
+    <item>
+      <title>精简风</title>
+      <link>/posts/hexo主题预览/</link>
+      <guid isPermaLink="true">/posts/hexo主题预览/</guid>
+      <pubDate>Sat, 25 Apr 2026 00:00:00 GMT</pubDate>
+      <description></description>
+
+    </item>
+    <item>
+      <title>npm 部署 hexo</title>
+      <link>/posts/hexo/</link>
+      <guid isPermaLink="true">/posts/hexo/</guid>
+      <pubDate>Sat, 25 Apr 2026 00:00:00 GMT</pubDate>
+      <description></description>
+
+    </item>
+  </channel>
+</rss>

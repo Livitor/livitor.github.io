@@ -1,0 +1,575 @@
+<!DOCTYPE html> <html lang="zh-CN" data-theme="light"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title>GlazePress</title> <meta name="description" content="基于 Vue 3 的现代化静态博客，采用 Glassmorphism 设计"> <meta name="author" content="GlazePress Author"> <link rel="canonical" href=""> <meta property="og:type" content="website"> <meta property="og:title" content="GlazePress"> <meta property="og:description" content="基于 Vue 3 的现代化静态博客，采用 Glassmorphism 设计"> <meta property="og:image" content="./assets/images/avatar.jpg"> <link rel="preconnect" href="https://unpkg.com" crossorigin> <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link rel="dns-prefetch" href="https://unpkg.com"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> <style> /* 极简内联样式：防止 FOUC (Flash of Unstyled Content) 使用 opacity:0 避免闪烁，JS 加载后切换为 visible */ body{opacity:0;transition:opacity 0.3s ease}body.loaded{opacity:1} .loading-spinner{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%)} /* 兜底：如果 JS 加载失败或报错，3秒后强制显示页面 */ @keyframes _gp_show_body{to{opacity:1}}body{animation:_gp_show_body 3s 2s forwards} </style> <link rel="stylesheet" href="/assets/css/base.css"> <link rel="stylesheet" href="/assets/css/glassmorphism.css"> <link rel="stylesheet" href="/assets/css/animations.css"> <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌐%3C/text%3E%3C/svg%3E"> </head> <body class="antialiased"> <script>(function(){setTimeout(function(){document.body.classList.add('loaded')},3000)})()</script> <nav id="navbar" class="navbar-glass at-top"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center relative"> <div class="hidden md:flex items-center gap-2"> <a href="/" class="glass-btn text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105" style="color: var(--text-secondary)"> 首页 </a> <a href="/archive/" class="glass-btn text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105" style="color: var(--text-secondary)"> 归档 </a> <a href="/categories/" class="glass-btn text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105" style="color: var(--text-secondary)"> 分类 </a> <a href="/tags/" class="glass-btn text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105" style="color: var(--text-secondary)"> 标签 </a> <a href="/friends/" class="glass-btn text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105" style="color: var(--text-secondary)"> 友链 </a> <a href="/about/" class="glass-btn text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105" style="color: var(--text-secondary)"> 关于 </a> <div class="w-px h-5 mx-1" style="background: var(--bg-glass-border)"></div> <button class="glass-btn" onclick="BlogAPI.openSearch()" aria-label="搜索文章"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> <span class="hidden lg:inline">搜索</span> </button> <button class="glass-btn" onclick="window.dispatchEvent(new CustomEvent('opensettings'))" aria-label="设置"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> <span class="hidden lg:inline">设置</span> </button> <div id="app-theme"></div> </div> <button id="mobile-menu-btn" class="md:hidden glass-btn p-2 absolute right-4" onclick="toggleMobileMenu()" aria-label="菜单"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="menu-icon-open"> <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/> </svg> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="menu-icon-close" class="hidden"> <path d="M18 6 6 18"/><path d="m6 6 12 12"/> </svg> </button> </div> </nav> <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[999] hidden opacity-0 transition-opacity duration-300" onclick="toggleMobileMenu()"></div> <aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-72 glass-card z-[1000] transform translate-x-full transition-transform duration-300 ease-out p-6 pt-20 overflow-y-auto"> <div class="flex flex-col gap-1"> <a href="/" class="glass-btn px-4 py-3 text-base font-medium rounded-lg" style="color: var(--text-primary)" onclick="toggleMobileMenu()"> 首页 </a> <a href="/archive/" class="glass-btn px-4 py-3 text-base font-medium rounded-lg" style="color: var(--text-primary)" onclick="toggleMobileMenu()"> 归档 </a> <a href="/categories/" class="glass-btn px-4 py-3 text-base font-medium rounded-lg" style="color: var(--text-primary)" onclick="toggleMobileMenu()"> 分类 </a> <a href="/tags/" class="glass-btn px-4 py-3 text-base font-medium rounded-lg" style="color: var(--text-primary)" onclick="toggleMobileMenu()"> 标签 </a> <a href="/friends/" class="glass-btn px-4 py-3 text-base font-medium rounded-lg" style="color: var(--text-primary)" onclick="toggleMobileMenu()"> 友链 </a> <a href="/about/" class="glass-btn px-4 py-3 text-base font-medium rounded-lg" style="color: var(--text-primary)" onclick="toggleMobileMenu()"> 关于 </a> <hr class="my-3 border-t" style="border-color: var(--bg-glass-border)"> <button class="w-full glass-input flex items-center gap-2 text-left" onclick="BlogAPI.openSearch(); toggleMobileMenu();"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> 搜索文章... </button> <div id="app-theme-mobile" class="mt-2"></div> </div> </aside> <main id="main-content"> <div id="reading-progress" class="fixed top-0 left-0 right-0 h-[3px] z-[110] origin-left" style="background: linear-gradient(90deg, var(--color-primary), var(--color-success)); transform: scaleX(0); transition: none;"> </div> <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16"> <header class="glass-card p-6 sm:p-8 mb-10 animate-fade-in-up"> <div class="flex flex-wrap gap-2 mb-4"> <span class="tag-pill tag-pill--amber">建站</span> <span class="tag-pill tag-pill--amber">运维</span> <span class="tag-pill tag-pill--rose">Halo</span> <span class="tag-pill tag-pill--rose">Docker</span> <span class="tag-pill tag-pill--rose">博客</span> </div> <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-heading leading-tight mb-5" style="color: var(--text-primary)"> Halo 博客部署 </h1> <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm" style="color: var(--text-secondary)"> <time datetime="2026-04-25" class="flex items-center gap-1.5"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg> 2026-04-25 </time> <span class="flex items-center gap-1.5"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 1 分钟阅读 </span> </div> <div class="mt-5 pt-4 border-t flex items-center justify-between" style="border-color: var(--bg-glass-border)"> <span class="text-xs font-medium uppercase tracking-wider" style="color: var(--text-tertiary)">分享文章</span> <div class="flex gap-2"> <button onclick="sharePost('twitter')" class="w-9 h-9 glass-btn p-0 text-xs" title="分享到 Twitter"> <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> </button> <button onclick="sharePost('link')" class="w-9 h-9 glass-btn p-0 text-xs" title="复制链接"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> </button> </div> </div> </header> <div class="relative lg:flex lg:gap-10"> <div class="flex-1 min-w-0 markdown-body animate-fade-in-up" style="--stagger-index: 1"> <p><a href="https://docs.halo.run/">官方文档</a></p> <h3 id="docker-compose-部署" class="markdown-heading"> <a href="#docker-compose-部署" class="heading-anchor" aria-hidden="true">#</a> docker-compose 部署
+</h3> <h4 id="halo-mysql" class="markdown-heading"> <a href="#halo-mysql" class="heading-anchor" aria-hidden="true">#</a> halo + mysql
+</h4>
+<div class="code-block-wrapper" data-raw="dmVyc2lvbjogIjMiCgpzZXJ2aWNlczoKICBoYWxvOgogICAgaW1hZ2U6IHJlZ2lzdHJ5LmZpdDJjbG91ZC5jb20vaGFsby9oYWxvOjIuMjAKICAgIHJlc3RhcnQ6IG9uLWZhaWx1cmU6MwogICAgZGVwZW5kc19vbjoKICAgICAgaGFsb2RiOgogICAgICAgIGNvbmRpdGlvbjogc2VydmljZV9oZWFsdGh5CiAgICBuZXR3b3JrczoKICAgICAgaGFsb19uZXR3b3JrOgogICAgdm9sdW1lczoKICAgICAgLSAuL2hhbG8yOi9yb290Ly5oYWxvMgogICAgcG9ydHM6CiAgICAgIC0gIjgwOTA6ODA5MCIKICAgIGhlYWx0aGNoZWNrOgogICAgICB0ZXN0OiBbIkNNRCIsICJjdXJsIiwgIi1mIiwgImh0dHA6Ly9sb2NhbGhvc3Q6ODA5MC9hY3R1YXRvci9oZWFsdGgvcmVhZGluZXNzIl0KICAgICAgaW50ZXJ2YWw6IDMwcwogICAgICB0aW1lb3V0OiA1cwogICAgICByZXRyaWVzOiA1CiAgICAgIHN0YXJ0X3BlcmlvZDogMzBzCiAgICBlbnZpcm9ubWVudDoKICAgICAgIyBKVk0g5Y+C5pWw77yM6buY6K6k5Li6IC1YbXgyNTZtIC1YbXMyNTZt77yM5Y+v5Lul5qC55o2u5a6e6ZmF5oOF5Ya15YGa6LCD5pW077yM572u56m66KGo56S65LiN5re75YqgIEpWTSDlj4LmlbAKICAgICAgLSBKVk1fT1BUUz0tWG14MjU2bSAtWG1zMjU2bQogICAgY29tbWFuZDoKICAgICAgLSAtLXNwcmluZy5yMmRiYy51cmw9cjJkYmM6cG9vbDpteXNxbDovL2hhbG9kYjozMzA2L2hhbG8KICAgICAgLSAtLXNwcmluZy5yMmRiYy51c2VybmFtZT1yb290CiAgICAgICMgTXlTUUwg55qE5a+G56CB77yM6K+35L+d6K+B5LiO5LiL5pa5IE1ZU1FMX1JPT1RfUEFTU1dPUkQg55qE5Y+Y6YeP5YC85LiA6Ie044CCCiAgICAgIC0gLS1zcHJpbmcucjJkYmMucGFzc3dvcmQ9byNEd04mSlNhNTYKICAgICAgLSAtLXNwcmluZy5zcWwuaW5pdC5wbGF0Zm9ybT1teXNxbAogICAgICAjIOWklumDqOiuv+mXruWcsOWdgO+8jOivt+agueaNruWunumZhemcgOimgeS/ruaUuQogICAgICAtIC0taGFsby5leHRlcm5hbC11cmw9aHR0cDovL2xvY2FsaG9zdDo4MDkwLwoKICBoYWxvZGI6CiAgICBpbWFnZTogbXlzcWw6OC4xLjAKICAgIHJlc3RhcnQ6IG9uLWZhaWx1cmU6MwogICAgbmV0d29ya3M6CiAgICAgIGhhbG9fbmV0d29yazoKICAgIGNvbW1hbmQ6IAogICAgICAtIC0tZGVmYXVsdC1hdXRoZW50aWNhdGlvbi1wbHVnaW49Y2FjaGluZ19zaGEyX3Bhc3N3b3JkCiAgICAgIC0gLS1jaGFyYWN0ZXItc2V0LXNlcnZlcj11dGY4bWI0CiAgICAgIC0gLS1jb2xsYXRpb24tc2VydmVyPXV0ZjhtYjRfZ2VuZXJhbF9jaQogICAgICAtIC0tZXhwbGljaXRfZGVmYXVsdHNfZm9yX3RpbWVzdGFtcD10cnVlCiAgICB2b2x1bWVzOgogICAgICAtIC4vbXlzcWw6L3Zhci9saWIvbXlzcWwKICAgICAgLSAuL215c3FsQmFja3VwOi9kYXRhL215c3FsQmFja3VwCiAgICBoZWFsdGhjaGVjazoKICAgICAgdGVzdDogWyJDTUQiLCAibXlzcWxhZG1pbiIsICJwaW5nIiwgIi1oIiwgIjEyNy4wLjAuMSIsICItLXNpbGVudCJdCiAgICAgIGludGVydmFsOiAzcwogICAgICByZXRyaWVzOiA1CiAgICAgIHN0YXJ0X3BlcmlvZDogMzBzCiAgICBlbnZpcm9ubWVudDoKICAgICAgIyDor7fkv67mlLnmraTlr4bnoIHvvIzlubblr7nlupTkv67mlLnkuIrmlrkgSGFsbyDmnI3liqHnmoQgU1BSSU5HX1IyREJDX1BBU1NXT1JEIOWPmOmHj+WAvAogICAgICAtIE1ZU1FMX1JPT1RfUEFTU1dPUkQ9byNEd04mSlNhNTYKICAgICAgLSBNWVNRTF9EQVRBQkFTRT1oYWxvCgpuZXR3b3JrczoKICBoYWxvX25ldHdvcms6">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">version: &quot;3&quot;
+
+services:
+  halo:
+    image: registry.fit2cloud.com/halo/halo:2.20
+    restart: on-failure:3
+    depends_on:
+      halodb:
+        condition: service_healthy
+    networks:
+      halo_network:
+    volumes:
+      - ./halo2:/root/.halo2
+    ports:
+      - &quot;8090:8090&quot;
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http://localhost:8090/actuator/health/readiness&quot;]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    environment:
+      # JVM 参数，默认为 -Xmx256m -Xms256m，可以根据实际情况做调整，置空表示不添加 JVM 参数
+      - JVM_OPTS=-Xmx256m -Xms256m
+    command:
+      - --spring.r2dbc.url=r2dbc:pool:mysql://halodb:3306/halo
+      - --spring.r2dbc.username=root
+      # MySQL 的密码，请保证与下方 MYSQL_ROOT_PASSWORD 的变量值一致。
+      - --spring.r2dbc.password=o#DwN&amp;JSa56
+      - --spring.sql.init.platform=mysql
+      # 外部访问地址，请根据实际需要修改
+      - --halo.external-url=http://localhost:8090/
+
+  halodb:
+    image: mysql:8.1.0
+    restart: on-failure:3
+    networks:
+      halo_network:
+    command: 
+      - --default-authentication-plugin=caching_sha2_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --explicit_defaults_for_timestamp=true
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./mysqlBackup:/data/mysqlBackup
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;mysqladmin&quot;, &quot;ping&quot;, &quot;-h&quot;, &quot;127.0.0.1&quot;, &quot;--silent&quot;]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    environment:
+      # 请修改此密码，并对应修改上方 Halo 服务的 SPRING_R2DBC_PASSWORD 变量值
+      - MYSQL_ROOT_PASSWORD=o#DwN&amp;JSa56
+      - MYSQL_DATABASE=halo
+
+networks:
+  halo_network:</code></pre>
+  </div>
+</div>
+<h4 id="halo-postgresql" class="markdown-heading"> <a href="#halo-postgresql" class="heading-anchor" aria-hidden="true">#</a> halo + postgresql
+</h4>
+<div class="code-block-wrapper" data-raw="dmVyc2lvbjogIjMiCgpzZXJ2aWNlczoKICBoYWxvOgogICAgaW1hZ2U6IHJlZ2lzdHJ5LmZpdDJjbG91ZC5jb20vaGFsby9oYWxvOjIuMjAKICAgIHJlc3RhcnQ6IG9uLWZhaWx1cmU6MwogICAgZGVwZW5kc19vbjoKICAgICAgaGFsb2RiOgogICAgICAgIGNvbmRpdGlvbjogc2VydmljZV9oZWFsdGh5CiAgICBuZXR3b3JrczoKICAgICAgaGFsb19uZXR3b3JrOgogICAgdm9sdW1lczoKICAgICAgLSAuL2hhbG8yOi9yb290Ly5oYWxvMgogICAgcG9ydHM6CiAgICAgIC0gIjgwOTA6ODA5MCIKICAgIGhlYWx0aGNoZWNrOgogICAgICB0ZXN0OiBbIkNNRCIsICJjdXJsIiwgIi1mIiwgImh0dHA6Ly9sb2NhbGhvc3Q6ODA5MC9hY3R1YXRvci9oZWFsdGgvcmVhZGluZXNzIl0KICAgICAgaW50ZXJ2YWw6IDMwcwogICAgICB0aW1lb3V0OiA1cwogICAgICByZXRyaWVzOiA1CiAgICAgIHN0YXJ0X3BlcmlvZDogMzBzCiAgICBlbnZpcm9ubWVudDoKICAgICAgIyBKVk0g5Y+C5pWw77yM6buY6K6k5Li6IC1YbXgyNTZtIC1YbXMyNTZt77yM5Y+v5Lul5qC55o2u5a6e6ZmF5oOF5Ya15YGa6LCD5pW077yM572u56m66KGo56S65LiN5re75YqgIEpWTSDlj4LmlbAKICAgICAgLSBKVk1fT1BUUz0tWG14MjU2bSAtWG1zMjU2bQogICAgY29tbWFuZDoKICAgICAgLSAtLXNwcmluZy5yMmRiYy51cmw9cjJkYmM6cG9vbDpteXNxbDovL2hhbG9kYjozMzA2L2hhbG8KICAgICAgLSAtLXNwcmluZy5yMmRiYy51c2VybmFtZT1yb290CiAgICAgICMgTXlTUUwg55qE5a+G56CB77yM6K+35L+d6K+B5LiO5LiL5pa5IE1ZU1FMX1JPT1RfUEFTU1dPUkQg55qE5Y+Y6YeP5YC85LiA6Ie044CCCiAgICAgIC0gLS1zcHJpbmcucjJkYmMucGFzc3dvcmQ9byNEd04mSlNhNTYKICAgICAgLSAtLXNwcmluZy5zcWwuaW5pdC5wbGF0Zm9ybT1teXNxbAogICAgICAjIOWklumDqOiuv+mXruWcsOWdgO+8jOivt+agueaNruWunumZhemcgOimgeS/ruaUuQogICAgICAtIC0taGFsby5leHRlcm5hbC11cmw9aHR0cDovL2xvY2FsaG9zdDo4MDkwLwoKICBoYWxvZGI6CiAgICBpbWFnZTogbXlzcWw6OC4xLjAKICAgIHJlc3RhcnQ6IG9uLWZhaWx1cmU6MwogICAgbmV0d29ya3M6CiAgICAgIGhhbG9fbmV0d29yazoKICAgIGNvbW1hbmQ6IAogICAgICAtIC0tZGVmYXVsdC1hdXRoZW50aWNhdGlvbi1wbHVnaW49Y2FjaGluZ19zaGEyX3Bhc3N3b3JkCiAgICAgIC0gLS1jaGFyYWN0ZXItc2V0LXNlcnZlcj11dGY4bWI0CiAgICAgIC0gLS1jb2xsYXRpb24tc2VydmVyPXV0ZjhtYjRfZ2VuZXJhbF9jaQogICAgICAtIC0tZXhwbGljaXRfZGVmYXVsdHNfZm9yX3RpbWVzdGFtcD10cnVlCiAgICB2b2x1bWVzOgogICAgICAtIC4vbXlzcWw6L3Zhci9saWIvbXlzcWwKICAgICAgLSAuL215c3FsQmFja3VwOi9kYXRhL215c3FsQmFja3VwCiAgICBoZWFsdGhjaGVjazoKICAgICAgdGVzdDogWyJDTUQiLCAibXlzcWxhZG1pbiIsICJwaW5nIiwgIi1oIiwgIjEyNy4wLjAuMSIsICItLXNpbGVudCJdCiAgICAgIGludGVydmFsOiAzcwogICAgICByZXRyaWVzOiA1CiAgICAgIHN0YXJ0X3BlcmlvZDogMzBzCiAgICBlbnZpcm9ubWVudDoKICAgICAgIyDor7fkv67mlLnmraTlr4bnoIHvvIzlubblr7nlupTkv67mlLnkuIrmlrkgSGFsbyDmnI3liqHnmoQgU1BSSU5HX1IyREJDX1BBU1NXT1JEIOWPmOmHj+WAvAogICAgICAtIE1ZU1FMX1JPT1RfUEFTU1dPUkQ9byNEd04mSlNhNTYKICAgICAgLSBNWVNRTF9EQVRBQkFTRT1oYWxvCgpuZXR3b3JrczoKICBoYWxvX25ldHdvcms6">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">version: &quot;3&quot;
+
+services:
+  halo:
+    image: registry.fit2cloud.com/halo/halo:2.20
+    restart: on-failure:3
+    depends_on:
+      halodb:
+        condition: service_healthy
+    networks:
+      halo_network:
+    volumes:
+      - ./halo2:/root/.halo2
+    ports:
+      - &quot;8090:8090&quot;
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http://localhost:8090/actuator/health/readiness&quot;]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    environment:
+      # JVM 参数，默认为 -Xmx256m -Xms256m，可以根据实际情况做调整，置空表示不添加 JVM 参数
+      - JVM_OPTS=-Xmx256m -Xms256m
+    command:
+      - --spring.r2dbc.url=r2dbc:pool:mysql://halodb:3306/halo
+      - --spring.r2dbc.username=root
+      # MySQL 的密码，请保证与下方 MYSQL_ROOT_PASSWORD 的变量值一致。
+      - --spring.r2dbc.password=o#DwN&amp;JSa56
+      - --spring.sql.init.platform=mysql
+      # 外部访问地址，请根据实际需要修改
+      - --halo.external-url=http://localhost:8090/
+
+  halodb:
+    image: mysql:8.1.0
+    restart: on-failure:3
+    networks:
+      halo_network:
+    command: 
+      - --default-authentication-plugin=caching_sha2_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --explicit_defaults_for_timestamp=true
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./mysqlBackup:/data/mysqlBackup
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;mysqladmin&quot;, &quot;ping&quot;, &quot;-h&quot;, &quot;127.0.0.1&quot;, &quot;--silent&quot;]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    environment:
+      # 请修改此密码，并对应修改上方 Halo 服务的 SPRING_R2DBC_PASSWORD 变量值
+      - MYSQL_ROOT_PASSWORD=o#DwN&amp;JSa56
+      - MYSQL_DATABASE=halo
+
+networks:
+  halo_network:</code></pre>
+  </div>
+</div>
+<h4 id="halo-h2" class="markdown-heading"> <a href="#halo-h2" class="heading-anchor" aria-hidden="true">#</a> halo + h2
+</h4><p>数据容易损坏, 不推荐</p> <div class="code-block-wrapper" data-raw="dmVyc2lvbjogIjMiCgpzZXJ2aWNlczoKICBoYWxvOgogICAgaW1hZ2U6IHJlZ2lzdHJ5LmZpdDJjbG91ZC5jb20vaGFsby9oYWxvOjIuMjAKICAgIHJlc3RhcnQ6IG9uLWZhaWx1cmU6MwogICAgdm9sdW1lczoKICAgICAgLSAuL2hhbG8yOi9yb290Ly5oYWxvMgogICAgcG9ydHM6CiAgICAgIC0gIjgwOTA6ODA5MCIKICAgIGhlYWx0aGNoZWNrOgogICAgICB0ZXN0OiBbIkNNRCIsICJjdXJsIiwgIi1mIiwgImh0dHA6Ly9sb2NhbGhvc3Q6ODA5MC9hY3R1YXRvci9oZWFsdGgvcmVhZGluZXNzIl0KICAgICAgaW50ZXJ2YWw6IDMwcwogICAgICB0aW1lb3V0OiA1cwogICAgICByZXRyaWVzOiA1CiAgICAgIHN0YXJ0X3BlcmlvZDogMzBzCiAgICBlbnZpcm9ubWVudDoKICAgICAgIyBKVk0g5Y+C5pWw77yM6buY6K6k5Li6IC1YbXgyNTZtIC1YbXMyNTZt77yM5Y+v5Lul5qC55o2u5a6e6ZmF5oOF5Ya15YGa6LCD5pW077yM572u56m66KGo56S65LiN5re75YqgIEpWTSDlj4LmlbAKICAgICAgLSBKVk1fT1BUUz0tWG14MjU2bSAtWG1zMjU2bQogICAgY29tbWFuZDoKICAgICAgIyDlpJbpg6jorr/pl67lnLDlnYDvvIzor7fmoLnmja7lrp7pmYXpnIDopoHkv67mlLkKICAgICAgLSAtLWhhbG8uZXh0ZXJuYWwtdXJsPWh0dHA6Ly9sb2NhbGhvc3Q6ODA5MC8=">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">version: &quot;3&quot;
+
+services:
+  halo:
+    image: registry.fit2cloud.com/halo/halo:2.20
+    restart: on-failure:3
+    volumes:
+      - ./halo2:/root/.halo2
+    ports:
+      - &quot;8090:8090&quot;
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http://localhost:8090/actuator/health/readiness&quot;]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    environment:
+      # JVM 参数，默认为 -Xmx256m -Xms256m，可以根据实际情况做调整，置空表示不添加 JVM 参数
+      - JVM_OPTS=-Xmx256m -Xms256m
+    command:
+      # 外部访问地址，请根据实际需要修改
+      - --halo.external-url=http://localhost:8090/</code></pre>
+  </div>
+</div>
+<h3 id="docker-部署" class="markdown-heading"> <a href="#docker-部署" class="heading-anchor" aria-hidden="true">#</a> docker 部署
+</h3><p>默认使用的是 h2 数据库, 不推荐</p> <div class="code-block-wrapper" data-raw="ZG9ja2VyIHJ1biAtaXQgLWQgLS1uYW1lIGhhbG8gLXAgODA5MDo4MDkwIC12IH4vLmhhbG8yOi9yb290Ly5oYWxvMiAtZSBKVk1fT1BUUz0iLVhteDI1Nm0gLVhtczI1Nm0iIHJlZ2lzdHJ5LmZpdDJjbG91ZC5jb20vaGFsby9oYWxvOjIuMjA=">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">docker run -it -d --name halo -p 8090:8090 -v ~/.halo2:/root/.halo2 -e JVM_OPTS=&quot;-Xmx256m -Xms256m&quot; registry.fit2cloud.com/halo/halo:2.20</code></pre>
+  </div>
+</div>
+<h3 id="1panel-部署" class="markdown-heading"> <a href="#1panel-部署" class="heading-anchor" aria-hidden="true">#</a> 1panel 部署
+</h3><p>基于 linux 上部署 <a href="https://1panel.cn/docs/installation/online_installation/">1panel</a> 服务器运维管理面板来部署 halo , 方便, 简单, ubuntu 部署, 跟着脚本部署, 全中文, 脚本中让切换镜像源, 不需要切换, docker 安装好, 应该也都有比较快速的国内镜像源</p> <div class="code-block-wrapper" data-raw="Y3VybCAtc1NMIGh0dHBzOi8vcmVzb3VyY2UuZml0MmNsb3VkLmNvbS8xcGFuZWwvcGFja2FnZS9xdWlja19zdGFydC5zaCAtbyBxdWlja19zdGFydC5zaCAmJiBzdWRvIGJhc2ggcXVpY2tfc3RhcnQuc2g=">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">curl -sSL https://resource.fit2cloud.com/1panel/package/quick_start.sh -o quick_start.sh &amp;&amp; sudo bash quick_start.sh</code></pre>
+  </div>
+</div><p>大概流程</p> <div class="code-block-wrapper" data-raw="cm9vdEBhdzp+IyBjdXJsIC1zU0wgaHR0cHM6Ly9yZXNvdXJjZS5maXQyY2xvdWQuY29tLzFwYW5lbC9wYWNrYWdlL3F1aWNrX3N0YXJ0LnNoIC1vIHF1aWNrX3N0YXJ0LnNoICYmIHN1ZG8gYmFzaCBxdWlja19zdGFydC5zaAoxcGFuZWwtdjEuMTAuMjktbHRzLWxpbnV4LWFtZDY0LzFwYW5lbC5zZXJ2aWNlCjFwYW5lbC12MS4xMC4yOS1sdHMtbGludXgtYW1kNjQvMXBjdGwKMXBhbmVsLXYxLjEwLjI5LWx0cy1saW51eC1hbWQ2NC9HZW9JUC5tbWRiCjFwYW5lbC12MS4xMC4yOS1sdHMtbGludXgtYW1kNjQvaW5zdGFsbC5zaAoxcGFuZWwtdjEuMTAuMjktbHRzLWxpbnV4LWFtZDY0L2xhbmcvZW4uc2gKMXBhbmVsLXYxLjEwLjI5LWx0cy1saW51eC1hbWQ2NC9sYW5nL2ZhLnNoCjFwYW5lbC12MS4xMC4yOS1sdHMtbGludXgtYW1kNjQvbGFuZy9wdC1CUi5zaAoxcGFuZWwtdjEuMTAuMjktbHRzLWxpbnV4LWFtZDY0L2xhbmcvcnUuc2gKMXBhbmVsLXYxLjEwLjI5LWx0cy1saW51eC1hbWQ2NC9sYW5nL3poLnNoCjFwYW5lbC12MS4xMC4yOS1sdHMtbGludXgtYW1kNjQvMXBhbmVsClNlbGVjdCBhIGxhbmd1YWdlOgoxLiBFbmdsaXNoCjIuIENoaW5lc2UgIOS4reaWhyjnroDkvZMpCjMuIFBlcnNpYW4KNC4gUG9ydHVndcOqcyAoQnJhc2lsKQo1LiDQoNGD0YHRgdC60LjQuQpFbnRlciB0aGUgbnVtYmVyIGNvcnJlc3BvbmRpbmcgdG8geW91ciBsYW5ndWFnZSBjaG9pY2U6IDIKCgog4paI4paI4pWXICAgIOKWiOKWiOKWiOKWiOKWiOKWiOKVlyAg4paI4paI4paI4paI4paI4pWXIOKWiOKWiOKWiOKVlyAgIOKWiOKWiOKVl+KWiOKWiOKWiOKWiOKWiOKWiOKWiOKVl+KWiOKWiOKVlwrilojilojilojilZEgICAg4paI4paI4pWU4pWQ4pWQ4paI4paI4pWX4paI4paI4pWU4pWQ4pWQ4paI4paI4pWX4paI4paI4paI4paI4pWXICDilojilojilZHilojilojilZTilZDilZDilZDilZDilZ3ilojilojilZEK4pWa4paI4paI4pWRICAgIOKWiOKWiOKWiOKWiOKWiOKWiOKVlOKVneKWiOKWiOKWiOKWiOKWiOKWiOKWiOKVkeKWiOKWiOKVlOKWiOKWiOKVlyDilojilojilZHilojilojilojilojilojilZcgIOKWiOKWiOKVkQog4paI4paI4pWRICAgIOKWiOKWiOKVlOKVkOKVkOKVkOKVnSDilojilojilZTilZDilZDilojilojilZHilojilojilZHilZrilojilojilZfilojilojilZHilojilojilZTilZDilZDilZ0gIOKWiOKWiOKVkQog4paI4paI4pWRICAgIOKWiOKWiOKVkSAgICAg4paI4paI4pWRICDilojilojilZHilojilojilZEg4pWa4paI4paI4paI4paI4pWR4paI4paI4paI4paI4paI4paI4paI4pWX4paI4paI4paI4paI4paI4paI4paI4pWXCiDilZrilZDilZ0gICAg4pWa4pWQ4pWdICAgICDilZrilZDilZ0gIOKVmuKVkOKVneKVmuKVkOKVnSAg4pWa4pWQ4pWQ4pWQ4pWd4pWa4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWd4pWa4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWdClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NDozMiBpbnN0YWxsIExvZ106ID09PT09PT09PT09PT09PT09PT09PT09IOW8gOWni+WuieijhSA9PT09PT09PT09PT09PT09PT09PT09PQrorr7nva4xUGFuZWzlronoo4Xnm67lvZUgKOm7mOiupOS4ui9vcHQpOiBvcHQvMVBhbmVsClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NDo0MiBpbnN0YWxsIExvZ106IOivt+aPkOS+m+ebruW9leeahOWujOaVtOi3r+W+hArorr7nva4xUGFuZWzlronoo4Xnm67lvZUgKOm7mOiupOS4ui9vcHQpOiAvb3B0LzFQYW5lbArmmK/lkKbopoHphY3nva7plZzlg4/liqDpgJ8gW3kvbl06ICBuClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NDo0OSBpbnN0YWxsIExvZ106IOacqumFjee9rumVnOWDj+WKoOmAn+OAggpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDQ6NTAgaW5zdGFsbCBMb2ddOiBEb2NrZXIgQ29tcG9zZeW3suWuieijhe+8jOi3s+i/h+WuieijheatpemqpArorr7nva4xUGFuZWznq6/lj6MgKOm7mOiupOaYryAyNjA5OCk6IDIwMDAKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ0OjUzIGluc3RhbGwgTG9nXTog5oKo6K6+572u55qE56uv5Y+j5pivOiAgMjAwMApbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDQ6NTMgaW5zdGFsbCBMb2ddOiDmraPlnKjmiZPlvIDpmLLngavlopnnq6/lj6MgMjAwMApTa2lwcGluZyBhZGRpbmcgZXhpc3RpbmcgcnVsZQpTa2lwcGluZyBhZGRpbmcgZXhpc3RpbmcgcnVsZSAodjYpCkZpcmV3YWxsIG5vdCBlbmFibGVkIChza2lwcGluZyByZWxvYWQpCuiuvue9rjFQYW5lbOWuieWFqOWFpeWPoyAo6buY6K6k5pivIGY1YTFmNWI1MDUpOiBzZWMKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjAwIGluc3RhbGwgTG9nXTog5oKo6K6+572u55qE6Z2i5p2/5a6J5YWo5YWl5Y+j5pivIHNlYwrorr7nva4xUGFuZWzpnaLmnb/nlKjmiLcgKOm7mOiupOaYryBlMmM0MzFiNGRjKTogYXdhdwpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDMgaW5zdGFsbCBMb2ddOiDmgqjorr7nva7nmoTpnaLmnb/nlKjmiLfmmK8gYXdhdwpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDMgaW5zdGFsbCBMb2ddOiDorr7nva4xUGFuZWzpnaLmnb/lr4bnoIHvvIzorr7nva7lkI7mjInlm57ovabplK7nu6fnu60gKOm7mOiupOaYryA2YWYxYTdkZTFiKToKKioqKioqKioKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA3IGluc3RhbGwgTG9nXTog5q2j5Zyo6YWN572uMVBhbmVs5pyN5YqhCkNyZWF0ZWQgc3ltbGluayAvZXRjL3N5c3RlbWQvc3lzdGVtL211bHRpLXVzZXIudGFyZ2V0LndhbnRzLzFwYW5lbC5zZXJ2aWNlIOKGkiAvZXRjL3N5c3RlbWQvc3lzdGVtLzFwYW5lbC5zZXJ2aWNlLgpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDcgaW5zdGFsbCBMb2ddOiDmraPlnKjlkK/liqgxUGFuZWzmnI3liqEKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXToKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXTogPT09PT09PT09PT09PT09PT3mhJ/osKLmgqjnmoTogJDlv4PnrYnlvoXvvIzlronoo4Xlt7LlrozmiJA9PT09PT09PT09PT09PT09PT0KWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXToKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXTog6K+35L2/55So5oKo55qE5rWP6KeI5Zmo6K6/6Zeu6Z2i5p2/OgpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDggaW5zdGFsbCBMb2ddOiDlpJbpg6jlnLDlnYA6ICBodHRwOi8vMTI0LjcwLjIxMC4xOTQ6MjAwMC9zZWMKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXTog5YaF6YOo5Zyw5Z2AOiAgaHR0cDovLzE5Mi4xNjguMy45NToyMDAwL3NlYwpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDggaW5zdGFsbCBMb2ddOiDpnaLmnb/nlKjmiLc6ICBhd2F3ClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NTowOCBpbnN0YWxsIExvZ106IOmdouadv+WvhueggTogIGFzZGZhc2RmClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NTowOCBpbnN0YWxsIExvZ106ClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NTowOCBpbnN0YWxsIExvZ106IOWumOaWuee9keermTogaHR0cHM6Ly8xcGFuZWwuY24KWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXTog6aG555uu5paH5qGjOiBodHRwczovLzFwYW5lbC5jbi9kb2NzClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NTowOCBpbnN0YWxsIExvZ106IOS7o+eggeS7k+W6kzogaHR0cHM6Ly9naXRodWIuY29tLzFQYW5lbC1kZXYvMVBhbmVsClsxUGFuZWwgMjAyNS0wNS0xNSAyMTo0NTowOCBpbnN0YWxsIExvZ106IOWJjeW+gCAxUGFuZWwg5a6Y5pa56K665Z2b6I635Y+W5biu5YqpOiBodHRwczovL2Jicy5maXQyY2xvdWQuY29tL2MvMXAvNwpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDggaW5zdGFsbCBMb2ddOgpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDggaW5zdGFsbCBMb2ddOiDlpoLmnpzmgqjkvb/nlKjnmoTmmK/kupHmnI3liqHlmajvvIzor7flnKjlronlhajnu4TkuK3miZPlvIDnq6/lj6MgMjAwMApbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDggaW5zdGFsbCBMb2ddOgpbMVBhbmVsIDIwMjUtMDUtMTUgMjE6NDU6MDggaW5zdGFsbCBMb2ddOiDkuLrkuobmgqjnmoTmnI3liqHlmajlronlhajvvIznprvlvIDmraTlsY/luZXlkI7mgqjlsIbml6Dms5Xlho3mrKHnnIvliLDmgqjnmoTlr4bnoIHvvIzor7forrDkvY/mgqjnmoTlr4bnoIHjgIIKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXToKWzFQYW5lbCAyMDI1LTA1LTE1IDIxOjQ1OjA4IGluc3RhbGwgTG9nXTogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ==">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">root@aw:~# curl -sSL https://resource.fit2cloud.com/1panel/package/quick_start.sh -o quick_start.sh &amp;&amp; sudo bash quick_start.sh
+1panel-v1.10.29-lts-linux-amd64/1panel.service
+1panel-v1.10.29-lts-linux-amd64/1pctl
+1panel-v1.10.29-lts-linux-amd64/GeoIP.mmdb
+1panel-v1.10.29-lts-linux-amd64/install.sh
+1panel-v1.10.29-lts-linux-amd64/lang/en.sh
+1panel-v1.10.29-lts-linux-amd64/lang/fa.sh
+1panel-v1.10.29-lts-linux-amd64/lang/pt-BR.sh
+1panel-v1.10.29-lts-linux-amd64/lang/ru.sh
+1panel-v1.10.29-lts-linux-amd64/lang/zh.sh
+1panel-v1.10.29-lts-linux-amd64/1panel
+Select a language:
+1. English
+2. Chinese  中文(简体)
+3. Persian
+4. Português (Brasil)
+5. Русский
+Enter the number corresponding to your language choice: 2
+
+
+ ██╗    ██████╗  █████╗ ███╗   ██╗███████╗██╗
+███║    ██╔══██╗██╔══██╗████╗  ██║██╔════╝██║
+╚██║    ██████╔╝███████║██╔██╗ ██║█████╗  ██║
+ ██║    ██╔═══╝ ██╔══██║██║╚██╗██║██╔══╝  ██║
+ ██║    ██║     ██║  ██║██║ ╚████║███████╗███████╗
+ ╚═╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
+[1Panel 2025-05-15 21:44:32 install Log]: ======================= 开始安装 =======================
+设置1Panel安装目录 (默认为/opt): opt/1Panel
+[1Panel 2025-05-15 21:44:42 install Log]: 请提供目录的完整路径
+设置1Panel安装目录 (默认为/opt): /opt/1Panel
+是否要配置镜像加速 [y/n]:  n
+[1Panel 2025-05-15 21:44:49 install Log]: 未配置镜像加速。
+[1Panel 2025-05-15 21:44:50 install Log]: Docker Compose已安装，跳过安装步骤
+设置1Panel端口 (默认是 26098): 2000
+[1Panel 2025-05-15 21:44:53 install Log]: 您设置的端口是:  2000
+[1Panel 2025-05-15 21:44:53 install Log]: 正在打开防火墙端口 2000
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+Firewall not enabled (skipping reload)
+设置1Panel安全入口 (默认是 f5a1f5b505): sec
+[1Panel 2025-05-15 21:45:00 install Log]: 您设置的面板安全入口是 sec
+设置1Panel面板用户 (默认是 e2c431b4dc): awaw
+[1Panel 2025-05-15 21:45:03 install Log]: 您设置的面板用户是 awaw
+[1Panel 2025-05-15 21:45:03 install Log]: 设置1Panel面板密码，设置后按回车键继续 (默认是 6af1a7de1b):
+********
+[1Panel 2025-05-15 21:45:07 install Log]: 正在配置1Panel服务
+Created symlink /etc/systemd/system/multi-user.target.wants/1panel.service → /etc/systemd/system/1panel.service.
+[1Panel 2025-05-15 21:45:07 install Log]: 正在启动1Panel服务
+[1Panel 2025-05-15 21:45:08 install Log]:
+[1Panel 2025-05-15 21:45:08 install Log]: =================感谢您的耐心等待，安装已完成==================
+[1Panel 2025-05-15 21:45:08 install Log]:
+[1Panel 2025-05-15 21:45:08 install Log]: 请使用您的浏览器访问面板:
+[1Panel 2025-05-15 21:45:08 install Log]: 外部地址:  http://124.70.210.194:2000/sec
+[1Panel 2025-05-15 21:45:08 install Log]: 内部地址:  http://192.168.3.95:2000/sec
+[1Panel 2025-05-15 21:45:08 install Log]: 面板用户:  awaw
+[1Panel 2025-05-15 21:45:08 install Log]: 面板密码:  asdfasdf
+[1Panel 2025-05-15 21:45:08 install Log]:
+[1Panel 2025-05-15 21:45:08 install Log]: 官方网站: https://1panel.cn
+[1Panel 2025-05-15 21:45:08 install Log]: 项目文档: https://1panel.cn/docs
+[1Panel 2025-05-15 21:45:08 install Log]: 代码仓库: https://github.com/1Panel-dev/1Panel
+[1Panel 2025-05-15 21:45:08 install Log]: 前往 1Panel 官方论坛获取帮助: https://bbs.fit2cloud.com/c/1p/7
+[1Panel 2025-05-15 21:45:08 install Log]:
+[1Panel 2025-05-15 21:45:08 install Log]: 如果您使用的是云服务器，请在安全组中打开端口 2000
+[1Panel 2025-05-15 21:45:08 install Log]:
+[1Panel 2025-05-15 21:45:08 install Log]: 为了您的服务器安全，离开此屏幕后您将无法再次看到您的密码，请记住您的密码。
+[1Panel 2025-05-15 21:45:08 install Log]:
+[1Panel 2025-05-15 21:45:08 install Log]: ================================================================</code></pre>
+  </div>
+</div>
+<h4 id="openresty" class="markdown-heading"> <a href="#openresty" class="heading-anchor" aria-hidden="true">#</a> OpenResty
+</h4><p>镜像</p> <div class="code-block-wrapper" data-raw="c2VydmljZXM6CiAgb3BlbnJlc3R5OgogICAgaW1hZ2U6IDFwYW5lbC9vcGVucmVzdHk6MS4yMS40LjMtMy0zLWZvY2FsCiAgICBjb250YWluZXJfbmFtZTogJHtDT05UQUlORVJfTkFNRX0KICAgIHJlc3RhcnQ6IGFsd2F5cwogICAgbmV0d29ya19tb2RlOiBob3N0CiAgICB2b2x1bWVzOgogICAgICAtIC4vY29uZi9uZ2lueC5jb25mOi91c3IvbG9jYWwvb3BlbnJlc3R5L25naW54L2NvbmYvbmdpbnguY29uZgogICAgICAtIC4vY29uZi9mYXN0Y2dpX3BhcmFtczovdXNyL2xvY2FsL29wZW5yZXN0eS9uZ2lueC9jb25mL2Zhc3RjZ2lfcGFyYW1zCiAgICAgIC0gLi9jb25mL2Zhc3RjZ2ktcGhwLmNvbmY6L3Vzci9sb2NhbC9vcGVucmVzdHkvbmdpbngvY29uZi9mYXN0Y2dpLXBocC5jb25mCiAgICAgIC0gLi9jb25mL21pbWUudHlwZXM6L3Vzci9sb2NhbC9vcGVucmVzdHkvbmdpbngvY29uZi9taW1lLnR5cGVzCiAgICAgIC0gLi9sb2c6L3Zhci9sb2cvbmdpbngKICAgICAgLSAuL2NvbmYvY29uZi5kOi91c3IvbG9jYWwvb3BlbnJlc3R5L25naW54L2NvbmYvY29uZi5kLwogICAgICAtIC4vd3d3Oi93d3cKICAgICAgLSAuL3Jvb3Q6L3Vzci9zaGFyZS9uZ2lueC9odG1sCiAgICAgIC0gL2V0Yy9sb2NhbHRpbWU6L2V0Yy9sb2NhbHRpbWUKICAgICAgLSAuLzFwd2FmL2RhdGE6L3Vzci9sb2NhbC9vcGVucmVzdHkvMXB3YWYvZGF0YQogICAgbGFiZWxzOgogICAgICBjcmVhdGVkQnk6ICJBcHBzIg==">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">services:
+  openresty:
+    image: 1panel/openresty:1.21.4.3-3-3-focal
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    network_mode: host
+    volumes:
+      - ./conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./conf/fastcgi_params:/usr/local/openresty/nginx/conf/fastcgi_params
+      - ./conf/fastcgi-php.conf:/usr/local/openresty/nginx/conf/fastcgi-php.conf
+      - ./conf/mime.types:/usr/local/openresty/nginx/conf/mime.types
+      - ./log:/var/log/nginx
+      - ./conf/conf.d:/usr/local/openresty/nginx/conf/conf.d/
+      - ./www:/www
+      - ./root:/usr/share/nginx/html
+      - /etc/localtime:/etc/localtime
+      - ./1pwaf/data:/usr/local/openresty/1pwaf/data
+    labels:
+      createdBy: &quot;Apps&quot;</code></pre>
+  </div>
+</div><p>默认的端口是 80 和 443, 这是第一次部署的时候截下来的图, 后面部署改成了 81 和 444, 这个没用到, 直接 halo 配合 mysql 就可以运行, halo 也可以单独用镜像配置, 不需要数据库, 记得要时常在 halo 控制台备份数据 <figure class="markdown-image"> <img src="/posts/建站/file/Pasted%20image%2020250515214847.png" alt="" loading="lazy" decoding="async" data-src="/posts/建站/file/Pasted%20image%2020250515214847.png" onclick="openLightbox(this)" /> </figure></p> <h4 id="mysql" class="markdown-heading"> <a href="#mysql" class="heading-anchor" aria-hidden="true">#</a> MySql
+</h4><p>镜像</p> <div class="code-block-wrapper" data-raw="c2VydmljZXM6CiAgbXlzcWw6CiAgICBpbWFnZTogbXlzcWw6OC40LjUKICAgIGNvbnRhaW5lcl9uYW1lOiAke0NPTlRBSU5FUl9OQU1FfQogICAgcmVzdGFydDogYWx3YXlzCiAgICBlbnZpcm9ubWVudDoKICAgICAgTVlTUUxfUk9PVF9QQVNTV09SRDogJHtQQU5FTF9EQl9ST09UX1BBU1NXT1JEfQogICAgbmV0d29ya3M6CiAgICAgIC0gMXBhbmVsLW5ldHdvcmsKICAgIHBvcnRzOgogICAgICAtICR7UEFORUxfQVBQX1BPUlRfSFRUUH06MzMwNgogICAgdm9sdW1lczoKICAgICAgLSAuL2RhdGEvOi92YXIvbGliL215c3FsCiAgICAgIC0gLi9jb25mL215LmNuZjovZXRjL215LmNuZgogICAgICAtIC4vbG9nOi92YXIvbG9nL215c3FsCiAgICAgIC0gL2V0Yy90aW1lem9uZTovZXRjL3RpbWV6b25lOnJvCiAgICAgIC0gL2V0Yy9sb2NhbHRpbWU6L2V0Yy9sb2NhbHRpbWU6cm8KICAgIGxhYmVsczoKICAgICAgY3JlYXRlZEJ5OiAiQXBwcyIKICAgIGNvbW1hbmQ6CiAgICAgIC0gLS1teXNxbC1uYXRpdmUtcGFzc3dvcmQ9b24KbmV0d29ya3M6CiAgMXBhbmVsLW5ldHdvcms6CiAgICBleHRlcm5hbDogdHJ1ZQ==">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">services:
+  mysql:
+    image: mysql:8.4.5
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PANEL_DB_ROOT_PASSWORD}
+    networks:
+      - 1panel-network
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:3306
+    volumes:
+      - ./data/:/var/lib/mysql
+      - ./conf/my.cnf:/etc/my.cnf
+      - ./log:/var/log/mysql
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      createdBy: &quot;Apps&quot;
+    command:
+      - --mysql-native-password=on
+networks:
+  1panel-network:
+    external: true</code></pre>
+  </div>
+</div><p> <figure class="markdown-image"> <img src="/posts/建站/file/Pasted%20image%2020250515215153.png" alt="" loading="lazy" decoding="async" data-src="/posts/建站/file/Pasted%20image%2020250515215153.png" onclick="openLightbox(this)" /> </figure></p> <h4 id="halo" class="markdown-heading"> <a href="#halo" class="heading-anchor" aria-hidden="true">#</a> halo
+</h4><p>镜像</p> <div class="code-block-wrapper" data-raw="c2VydmljZXM6CiAgaGFsbzoKICAgIGltYWdlOiBoYWxvaHViL2hhbG8tcHJvOjIuMjAuMjAKICAgIGNvbnRhaW5lcl9uYW1lOiAke0NPTlRBSU5FUl9OQU1FfQogICAgcmVzdGFydDogYWx3YXlzCiAgICBuZXR3b3JrczoKICAgICAgLSAxcGFuZWwtbmV0d29yawogICAgdm9sdW1lczoKICAgICAgLSAuL2RhdGE6L3Jvb3QvLmhhbG8yCiAgICBwb3J0czoKICAgICAgLSAke1BBTkVMX0FQUF9QT1JUX0hUVFB9OjgwOTAKICAgIGhlYWx0aGNoZWNrOgogICAgICB0ZXN0OiBbICJDTUQiLCAiY3VybCIsICItZiIsICJodHRwOi8vbG9jYWxob3N0OjgwOTAvYWN0dWF0b3IvaGVhbHRoL3JlYWRpbmVzcyIgXQogICAgICBpbnRlcnZhbDogMzBzCiAgICAgIHRpbWVvdXQ6IDVzCiAgICAgIHJldHJpZXM6IDUKICAgICAgc3RhcnRfcGVyaW9kOiAzMHMKICAgIGNvbW1hbmQ6CiAgICAgIC0gLS1zcHJpbmcucjJkYmMudXJsPXIyZGJjOnBvb2w6JHtQQU5FTF9EQl9UWVBFfTovLyR7UEFORUxfREJfSE9TVH06JHtQQU5FTF9EQl9QT1JUfS8ke1BBTkVMX0RCX05BTUV9CiAgICAgIC0gLS1zcHJpbmcucjJkYmMudXNlcm5hbWU9JHtQQU5FTF9EQl9VU0VSfQogICAgICAtIC0tc3ByaW5nLnIyZGJjLnBhc3N3b3JkPSR7UEFORUxfREJfVVNFUl9QQVNTV09SRH0KICAgICAgLSAtLXNwcmluZy5zcWwuaW5pdC5wbGF0Zm9ybT0ke1BBTkVMX0RCX1RZUEV9CiAgICAgIC0gLS1oYWxvLmV4dGVybmFsLXVybD0ke0hBTE9fRVhURVJOQUxfVVJMfQogICAgZW52aXJvbm1lbnQ6CiAgICAgIC0gSlZNX09QVFM9CiAgICBsYWJlbHM6CiAgICAgIGNyZWF0ZWRCeTogIkFwcHMiCm5ldHdvcmtzOgogIDFwYW5lbC1uZXR3b3JrOgogICAgZXh0ZXJuYWw6IHRydWU=">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">services:
+  halo:
+    image: halohub/halo-pro:2.20.20
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    volumes:
+      - ./data:/root/.halo2
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:8090
+    healthcheck:
+      test: [ &quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http://localhost:8090/actuator/health/readiness&quot; ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    command:
+      - --spring.r2dbc.url=r2dbc:pool:${PANEL_DB_TYPE}://${PANEL_DB_HOST}:${PANEL_DB_PORT}/${PANEL_DB_NAME}
+      - --spring.r2dbc.username=${PANEL_DB_USER}
+      - --spring.r2dbc.password=${PANEL_DB_USER_PASSWORD}
+      - --spring.sql.init.platform=${PANEL_DB_TYPE}
+      - --halo.external-url=${HALO_EXTERNAL_URL}
+    environment:
+      - JVM_OPTS=
+    labels:
+      createdBy: &quot;Apps&quot;
+networks:
+  1panel-network:
+    external: true</code></pre>
+  </div>
+</div><p>这种直接在应用商店安装的不是 h2 数据库部署的, 是可选的数据库, 端口默认 8090, 设置成了 80, 端口外部访问也要打开, 构建容器运行状态</p> <div class="code-block-wrapper" data-raw="MDU4Nzk0MTcxMjVlICAgaGFsb2h1Yi9oYWxvLXBybzoyLjIwLjIxICAgICAgICAgICAgICAic2ggLWMgJ2phdmEgLURyZWFjdOKApiIgICAyIG1pbnV0ZXMgYWdvICAgIFVwIDIgbWludXRlcyAoaGVhbHRoeSkgICAgICAwLjAuMC4wOjgwLT44MDkwL3RjcCwgOjo6ODAtPjgwOTAvdGNwICAgMVBhbmVsLWhhbG8tVmJVZwo=">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">05879417125e   halohub/halo-pro:2.20.21              &quot;sh -c 'java -Dreact…&quot;   2 minutes ago    Up 2 minutes (healthy)      0.0.0.0:80-&gt;8090/tcp, :::80-&gt;8090/tcp   1Panel-halo-VbUg
+</code></pre>
+  </div>
+</div><p> <figure class="markdown-image"> <img src="/posts/建站/file/Pasted%20image%2020250516172156.png" alt="" loading="lazy" decoding="async" data-src="/posts/建站/file/Pasted%20image%2020250516172156.png" onclick="openLightbox(this)" /> </figure></p> <p>注意不要在<code>网站</code>这个模块里面安装 halo 构建的站点, 这里构建的 halo 容器只有 127.0.0.1 可以访问 <figure class="markdown-image"> <img src="/posts/建站/file/Pasted%20image%2020250516171502.png" alt="" loading="lazy" decoding="async" data-src="/posts/建站/file/Pasted%20image%2020250516171502.png" onclick="openLightbox(this)" /> </figure></p> <h3 id="其他" class="markdown-heading"> <a href="#其他" class="heading-anchor" aria-hidden="true">#</a> 其他
+</h3> <h4 id="dvwa" class="markdown-heading"> <a href="#dvwa" class="heading-anchor" aria-hidden="true">#</a> dvwa
+</h4>
+<div class="code-block-wrapper" data-raw="c2VydmljZXM6CiAgZHZ3YToKICAgIGltYWdlOiBnaGNyLmlvL2RpZ2luaW5qYS9kdndhOmxhdGVzdAogICAgY29udGFpbmVyX25hbWU6ICR7Q09OVEFJTkVSX05BTUV9CiAgICByZXN0YXJ0OiBhbHdheXMKICAgIG5ldHdvcmtzOgogICAgICAtIDFwYW5lbC1uZXR3b3JrCiAgICBwb3J0czoKICAgICAgLSAke1BBTkVMX0FQUF9QT1JUX0hUVFB9OjgwCiAgICBlbnZpcm9ubWVudDoKICAgICAgLSBEQl9TRVJWRVI9JHtQQU5FTF9EQl9IT1NUfQogICAgICAtIERCX1BPUlQ9JHtQQU5FTF9EQl9QT1JUfQogICAgICAtIERCX0RBVEFCQVNFPSR7UEFORUxfREJfTkFNRX0KICAgICAgLSBEQl9VU0VSPSR7UEFORUxfREJfVVNFUn0KICAgICAgLSBEQl9QQVNTV09SRD0ke1BBTkVMX0RCX1VTRVJfUEFTU1dPUkR9CiAgICAgIC0gREVGQVVMVF9TRUNVUklUWV9MRVZFTD0ke0RWV0FfU0VDVVJJVFlfTEVWRUx9CiAgICAgIC0gUkVDQVBUQ0hBX1BVQkxJQ19LRVk9JHtEVldBX1JFQ0FQVENIQV9QVUJMSUNfS0VZfQogICAgICAtIFJFQ0FQVENIQV9QUklWQVRFX0tFWT0ke0RWV0FfUkVDQVBUQ0hBX1BSSVZBVEVfS0VZfQogICAgICAtIERFRkFVTFRfTE9DQUxFPSR7RFZXQV9ERUZBVUxUX0xPQ0FMRX0KICAgIGxhYmVsczoKICAgICAgY3JlYXRlZEJ5OiAiQXBwcyIKbmV0d29ya3M6CiAgMXBhbmVsLW5ldHdvcms6CiAgICBleHRlcm5hbDogdHJ1ZQ==">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">services:
+  dvwa:
+    image: ghcr.io/digininja/dvwa:latest
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - ${PANEL_APP_PORT_HTTP}:80
+    environment:
+      - DB_SERVER=${PANEL_DB_HOST}
+      - DB_PORT=${PANEL_DB_PORT}
+      - DB_DATABASE=${PANEL_DB_NAME}
+      - DB_USER=${PANEL_DB_USER}
+      - DB_PASSWORD=${PANEL_DB_USER_PASSWORD}
+      - DEFAULT_SECURITY_LEVEL=${DVWA_SECURITY_LEVEL}
+      - RECAPTCHA_PUBLIC_KEY=${DVWA_RECAPTCHA_PUBLIC_KEY}
+      - RECAPTCHA_PRIVATE_KEY=${DVWA_RECAPTCHA_PRIVATE_KEY}
+      - DEFAULT_LOCALE=${DVWA_DEFAULT_LOCALE}
+    labels:
+      createdBy: &quot;Apps&quot;
+networks:
+  1panel-network:
+    external: true</code></pre>
+  </div>
+</div>
+<h4 id="wordpress" class="markdown-heading"> <a href="#wordpress" class="heading-anchor" aria-hidden="true">#</a> wordpress
+</h4>
+<div class="code-block-wrapper" data-raw="c2VydmljZXM6CiAgd29yZHByZXNzOgogICAgaW1hZ2U6IHdvcmRwcmVzczo2LjguMQogICAgY29udGFpbmVyX25hbWU6ICR7Q09OVEFJTkVSX05BTUV9CiAgICBwb3J0czoKICAgICAgLSAgJHtQQU5FTF9BUFBfUE9SVF9IVFRQfTo4MAogICAgcmVzdGFydDogYWx3YXlzCiAgICBuZXR3b3JrczoKICAgICAgLSAxcGFuZWwtbmV0d29yawogICAgdm9sdW1lczoKICAgICAgLSAuL2RhdGE6L3Zhci93d3cvaHRtbAogICAgICAtIC4vY29uZi91cGxvYWRzLmluaTovdXNyL2xvY2FsL2V0Yy9waHAvY29uZi5kL3VwbG9hZHMuaW5pCiAgICBlbnZpcm9ubWVudDoKICAgICAgV09SRFBSRVNTX0RCX0hPU1Q6ICR7UEFORUxfREJfSE9TVH06JHtQQU5FTF9EQl9QT1JUfQogICAgICBXT1JEUFJFU1NfREJfTkFNRTogJHtQQU5FTF9EQl9OQU1FfQogICAgICBXT1JEUFJFU1NfREJfVVNFUjogJHtQQU5FTF9EQl9VU0VSfQogICAgICBXT1JEUFJFU1NfREJfUEFTU1dPUkQ6ICR7UEFORUxfREJfVVNFUl9QQVNTV09SRH0KICAgICAgV09SRFBSRVNTX0RFQlVHOiAwCiAgICBsYWJlbHM6CiAgICAgIGNyZWF0ZWRCeTogIkFwcHMiCm5ldHdvcmtzOgogIDFwYW5lbC1uZXR3b3JrOgogICAgZXh0ZXJuYWw6IHRydWU=">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">services:
+  wordpress:
+    image: wordpress:6.8.1
+    container_name: ${CONTAINER_NAME}
+    ports:
+      -  ${PANEL_APP_PORT_HTTP}:80
+    restart: always
+    networks:
+      - 1panel-network
+    volumes:
+      - ./data:/var/www/html
+      - ./conf/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    environment:
+      WORDPRESS_DB_HOST: ${PANEL_DB_HOST}:${PANEL_DB_PORT}
+      WORDPRESS_DB_NAME: ${PANEL_DB_NAME}
+      WORDPRESS_DB_USER: ${PANEL_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${PANEL_DB_USER_PASSWORD}
+      WORDPRESS_DEBUG: 0
+    labels:
+      createdBy: &quot;Apps&quot;
+networks:
+  1panel-network:
+    external: true</code></pre>
+  </div>
+</div>
+<h4 id="adminer" class="markdown-heading"> <a href="#adminer" class="heading-anchor" aria-hidden="true">#</a> adminer
+</h4>
+<div class="code-block-wrapper" data-raw="c2VydmljZXM6ICAKICBhZG1pbmVyOiAgCiAgICBpbWFnZTogYWRtaW5lcjo1LjIuMS1zdGFuZGFsb25lIAogICAgY29udGFpbmVyX25hbWU6ICR7Q09OVEFJTkVSX05BTUV9CiAgICByZXN0YXJ0OiBhbHdheXMgIAogICAgbmV0d29ya3M6ICAKICAgICAgLSAxcGFuZWwtbmV0d29yawogICAgcG9ydHM6ICAKICAgICAgLSAke1BBTkVMX0FQUF9QT1JUX0hUVFB9OjgwODAgIAogICAgbGFiZWxzOiAgCiAgICAgIGNyZWF0ZWRCeTogIkFwcHMiICAKbmV0d29ya3M6ICAKICAxcGFuZWwtbmV0d29yazogIAogICAgZXh0ZXJuYWw6IHRydWU=">
+  <div class="code-block-header">
+    <span class="code-language">bash</span>
+    <button class="code-copy-btn" onclick="copyCode(this)" title="复制代码">
+      <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+      </svg>
+      <span class="copy-text">复制</span>
+    </button>
+  </div>
+  <div class="code-block-body">
+    <pre><code class="language-bash">services:  
+  adminer:  
+    image: adminer:5.2.1-standalone 
+    container_name: ${CONTAINER_NAME}
+    restart: always  
+    networks:  
+      - 1panel-network
+    ports:  
+      - ${PANEL_APP_PORT_HTTP}:8080  
+    labels:  
+      createdBy: &quot;Apps&quot;  
+networks:  
+  1panel-network:  
+    external: true</code></pre>
+  </div>
+</div> </div> <aside id="toc-desktop" class="hidden xl:block fixed right-6 top-1/2 -translate-y-1/2 w-60 z-30"> <nav class="glass-card p-4 relative overflow-hidden"> <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: var(--bg-glass-border)"> <div id="toc-progress-bar" class="h-full transition-all duration-200 ease-out" style="background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); width: 0%;"></div> </div> <h4 class="text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2" style="color: var(--text-tertiary)"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg> 目录 <span id="toc-reading-pct" class="ml-auto text-xs font-normal" style="color: var(--text-tertiary)">0%</span> </h4> <div class="toc-container max-h-[55vh] overflow-y-auto pr-1" style="scrollbar-width: thin; scrollbar-color: var(--bg-glass-border) transparent" id="toc-scroll-container"> <nav class="toc-nav" id="table-of-contents"> <ul class="toc-list"> <li class="toc-item toc-level-3" data-id="docker-compose-部署"> <a href="#docker-compose-部署" class="toc-link"># docker-compose 部署</a> </li> <li class="toc-item toc-level-4" data-id="halo-mysql"> <a href="#halo-mysql" class="toc-link"># halo + mysql</a> </li> <li class="toc-item toc-level-4" data-id="halo-postgresql"> <a href="#halo-postgresql" class="toc-link"># halo + postgresql</a> </li> <li class="toc-item toc-level-4" data-id="halo-h2"> <a href="#halo-h2" class="toc-link"># halo + h2</a> </li> <li class="toc-item toc-level-3" data-id="docker-部署"> <a href="#docker-部署" class="toc-link"># docker 部署</a> </li> <li class="toc-item toc-level-3" data-id="1panel-部署"> <a href="#1panel-部署" class="toc-link"># 1panel 部署</a> </li> <li class="toc-item toc-level-4" data-id="openresty"> <a href="#openresty" class="toc-link"># OpenResty</a> </li> <li class="toc-item toc-level-4" data-id="mysql"> <a href="#mysql" class="toc-link"># MySql</a> </li> <li class="toc-item toc-level-4" data-id="halo"> <a href="#halo" class="toc-link"># halo</a> </li> <li class="toc-item toc-level-3" data-id="其他"> <a href="#其他" class="toc-link"># 其他</a> </li> <li class="toc-item toc-level-4" data-id="dvwa"> <a href="#dvwa" class="toc-link"># dvwa</a> </li> <li class="toc-item toc-level-4" data-id="wordpress"> <a href="#wordpress" class="toc-link"># wordpress</a> </li> <li class="toc-item toc-level-4" data-id="adminer"> <a href="#adminer" class="toc-link"># adminer</a> </li> </ul> </nav> </div> </nav> </aside> <div class="xl:hidden sticky top-[calc(var(--navbar-height)+12px)] z-20 mb-4"> <button onclick="toggleTOCMobile()" class="w-full glass-btn text-sm font-medium"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-1.5"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg> 文章目录 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ml-auto transition-transform duration-200" id="toc-chevron"><path d="m6 9 6 6 6-6"/></svg> </button> <div id="toc-mobile" class="glass-card mt-2 p-4 hidden animate-scale-in origin-top"> <div class="toc-container"> <nav class="toc-nav" id="table-of-contents"> <ul class="toc-list"> <li class="toc-item toc-level-3" data-id="docker-compose-部署"> <a href="#docker-compose-部署" class="toc-link"># docker-compose 部署</a> </li> <li class="toc-item toc-level-4" data-id="halo-mysql"> <a href="#halo-mysql" class="toc-link"># halo + mysql</a> </li> <li class="toc-item toc-level-4" data-id="halo-postgresql"> <a href="#halo-postgresql" class="toc-link"># halo + postgresql</a> </li> <li class="toc-item toc-level-4" data-id="halo-h2"> <a href="#halo-h2" class="toc-link"># halo + h2</a> </li> <li class="toc-item toc-level-3" data-id="docker-部署"> <a href="#docker-部署" class="toc-link"># docker 部署</a> </li> <li class="toc-item toc-level-3" data-id="1panel-部署"> <a href="#1panel-部署" class="toc-link"># 1panel 部署</a> </li> <li class="toc-item toc-level-4" data-id="openresty"> <a href="#openresty" class="toc-link"># OpenResty</a> </li> <li class="toc-item toc-level-4" data-id="mysql"> <a href="#mysql" class="toc-link"># MySql</a> </li> <li class="toc-item toc-level-4" data-id="halo"> <a href="#halo" class="toc-link"># halo</a> </li> <li class="toc-item toc-level-3" data-id="其他"> <a href="#其他" class="toc-link"># 其他</a> </li> <li class="toc-item toc-level-4" data-id="dvwa"> <a href="#dvwa" class="toc-link"># dvwa</a> </li> <li class="toc-item toc-level-4" data-id="wordpress"> <a href="#wordpress" class="toc-link"># wordpress</a> </li> <li class="toc-item toc-level-4" data-id="adminer"> <a href="#adminer" class="toc-link"># adminer</a> </li> </ul> </nav> </div> </div> </div> <style> /* TOC 样式 */ .toc-list { list-style: none; padding: 0; margin: 0; } .toc-item { position: relative; padding-left: 0; margin-bottom: 0; } .toc-item:not(:last-child) { margin-bottom: 2px; } .toc-link { display: block; padding: 4px 8px 4px 14px; font-size: 0.8125rem; line-height: 1.5; color: var(--text-secondary); border-left: 2px solid var(--bg-glass-border); border-radius: 0 4px 4px 0; transition: all var(--transition-fast); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; } .toc-link:hover { color: var(--color-primary); background: rgba(139, 92, 246, 0.06); border-left-color: var(--color-primary-light); } .toc-item.active > .toc-link { color: var(--color-primary); background: rgba(139, 92, 246, 0.08); border-left-color: var(--color-primary); font-weight: 500; } /* 已读过的目录项标记 */ .toc-item.read > .toc-link { color: var(--text-tertiary); } .toc-item.active.read > .toc-link { color: var(--color-primary); } /* 缩进层级 */ .toc-level-3 .toc-link { padding-left: 26px; font-size: 0.78rem; } .toc-level-4 .toc-link, .toc-level-5 .toc-link, .toc-level-6 .toc-link { padding-left: 38px; font-size: 0.75rem; color: var(--text-tertiary); }
+</style> <script>
+function toggleTOCMobile() { const panel = document.getElementById('toc-mobile'); const chevron = document.getElementById('toc-chevron'); if (panel.classList.contains('hidden')) { panel.classList.remove('hidden'); chevron.style.transform = 'rotate(180deg)'; } else { panel.classList.add('hidden'); chevron.style.transform = 'rotate(0deg)'; }
+}
+</script> </div> <section id="comments" class="mt-14"> <div class="flex items-center gap-4 mb-8"> <button id="like-btn" onclick="toggleLike()" class="glass-btn flex items-center gap-2 group"> <svg id="like-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-colors duration-200"> <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/> </svg> <span id="like-count" class="text-sm font-medium">0</span> <span class="text-sm" style="color: var(--text-secondary)">喜欢</span> </button> <span class="text-xs" style="color: var(--text-tertiary)">点赞数据存储在本地浏览器中</span> </div> <div class="glass-card p-6 sm:p-8"> <h3 class="text-lg font-bold font-heading mb-4 flex items-center gap-2" style="color: var(--text-primary)"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 评论 </h3> <p class="text-sm mb-4" style="color: var(--text-secondary)"> 评论基于 GitHub Discussions，需要 GitHub 账号。在设置中配置 Giscus 仓库后即可启用。 </p> <div id="giscus-container"></div> </div> </section> <nav class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4"> <a href="#" class="glass-card p-5 group hover:-translate-y-0.5 transition-transform duration-200" id="nav-prev"> <span class="text-xs font-medium uppercase tracking-wider block mb-2" style="color: var(--text-tertiary)">&larr; 上一篇</span> <span class="font-semibold line-clamp-1 group-hover:text-primary transition-colors" style="color: var(--text-primary)">没有更早的文章了</span> </a> <a href="#" class="glass-card p-5 group hover:-translate-y-0.5 transition-transform duration-200 text-right sm:text-left" id="nav-next"> <span class="text-xs font-medium uppercase tracking-wider block mb-2" style="color: var(--text-tertiary)">下一篇 &rarr;</span> <span class="font-semibold line-clamp-1 group-hover:text-primary transition-colors" style="color: var(--text-primary)">没有更新的文章了</span> </a> </nav> <div class="mt-8 text-center"> <a href="/" class="glass-btn--primary glass-btn inline-flex items-center gap-2"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg> 返回主页 </a> </div> </article> <div id="lightbox-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-lg z-[120] hidden" style="display:none" onclick="closeLightbox()"> <button onclick="closeLightbox()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-colors z-[121] flex items-center justify-center" aria-label="关闭"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> </button> <img id="lightbox-img" src="" alt="" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl" style="cursor:zoom-in" onclick="event.stopPropagation()" onmousedown="lightboxDragStart(event)"> </div> <script>
+// ==================== 阅读进度条 ====================
+(function() { const progressBar = document.getElementById('reading-progress'); if (!progressBar) return; let ticking = false; window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(() => { const article = document.querySelector('.markdown-body'); if (!article) return; const articleTop = article.offsetTop - window.innerHeight * 0.3; const articleBottom = article.offsetTop + article.offsetHeight; const scrollPos = window.scrollY; const progress = Math.min(Math.max((scrollPos - articleTop) / (articleBottom - articleTop), 0), 1); progressBar.style.transform = `scaleX(${progress})`; ticking = false; }); ticking = true; } });
+})(); // ==================== 分享功能 ====================
+function sharePost(platform) { const url = location.href; const title = document.querySelector('article h1')?.textContent || ''; switch (platform) { case 'twitter': window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank'); break; case 'link': navigator.clipboard.writeText(url).then(() => showToast('链接已复制！')); break; }
+} function showToast(msg) { // 简易 toast 提示 const el = document.createElement('div'); el.textContent = msg; el.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 glass-card px-5 py-2.5 text-sm font-medium z-[130] animate-scale-in'; document.body.appendChild(el); setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 2000);
+} // ==================== Lightbox 图片灯箱 ====================
+let _lightboxScale = 1;
+let _lightboxDragging = false;
+let _lightboxStartX = 0, _lightboxStartY = 0;
+let _lightboxOffsetX = 0, _lightboxOffsetY = 0; function openLightbox(imgEl) { const overlay = document.getElementById('lightbox-overlay'); const img = document.getElementById('lightbox-img'); if (!overlay || !img) return; // 使用高清源（优先 data-src） img.src = imgEl.dataset.src || imgEl.src || ''; img.alt = imgEl.alt || ''; // 重置缩放和偏移 _lightboxScale = 1; _lightboxOffsetX = 0; _lightboxOffsetY = 0; img.style.transform = 'translate(-50%, -50%) scale(1)'; img.style.cursor = 'zoom-in'; overlay.style.display = 'block'; overlay.classList.remove('hidden'); document.body.style.overflow = 'hidden';
+} function closeLightbox() { const overlay = document.getElementById('lightbox-overlay'); if (!overlay) return; overlay.style.display = 'none'; overlay.classList.add('hidden'); document.body.style.overflow = '';
+} // 点击图片本身可缩放
+document.addEventListener('click', function(e) { const overlay = document.getElementById('lightbox-overlay'); if (!overlay || overlay.classList.contains('hidden')) return; const img = document.getElementById('lightbox-img'); if (!img || e.target !== img) return; // 点击图片切换缩放 if (_lightboxScale > 1) { _lightboxScale = 1; _lightboxOffsetX = 0; _lightboxOffsetY = 0; img.style.transform = 'translate(-50%, -50%) scale(1)'; img.style.cursor = 'zoom-in'; } else { _lightboxScale = 2; img.style.transform = 'translate(-50%, -50%) scale(2)'; img.style.cursor = 'zoom-out'; } e.stopPropagation();
+}); // 滚轮缩放
+document.addEventListener('wheel', function(e) { const overlay = document.getElementById('lightbox-overlay'); if (!overlay || overlay.classList.contains('hidden')) return; const img = document.getElementById('lightbox-img'); if (!img) return; e.preventDefault(); const delta = e.deltaY > 0 ? 0.9 : 1.1; _lightboxScale = Math.max(0.3, Math.min(5, _lightboxScale * delta)); img.style.transform = `translate(calc(-50% + ${_lightboxOffsetX}px), calc(-50% + ${_lightboxOffsetY}px)) scale(${_lightboxScale})`;
+}, { passive: false }); // 拖拽移动
+function lightboxDragStart(e) { if (_lightboxScale <= 1) return; _lightboxDragging = true; _lightboxStartX = e.clientX - _lightboxOffsetX; _lightboxStartY = e.clientY - _lightboxOffsetY; e.target.style.cursor = 'grabbing';
+} document.addEventListener('mousemove', function(e) { if (!_lightboxDragging) return; _lightboxOffsetX = e.clientX - _lightboxStartX; _lightboxOffsetY = e.clientY - _lightboxStartY; const img = document.getElementById('lightbox-img'); if (img) img.style.transform = `translate(calc(-50% + ${_lightboxOffsetX}px), calc(-50% + ${_lightboxOffsetY}px)) scale(${_lightboxScale})`;
+}); document.addEventListener('mouseup', function() { if (_lightboxDragging) { _lightboxDragging = false; const img = document.getElementById('lightbox-img'); if (img) img.style.cursor = _lightboxScale > 1 ? 'grab' : 'grab'; }
+}); // ESC 关闭灯箱
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); }); // ==================== 点赞功能 (localStorage) ====================
+function getLikeKey() { return 'gp-like-' + window.location.pathname;
+} function toggleLike() { const key = getLikeKey(); const liked = localStorage.getItem(key); const btn = document.getElementById('like-btn'); const icon = document.getElementById('like-icon'); const countEl = document.getElementById('like-count'); if (liked) { localStorage.removeItem(key); btn.classList.remove('liked'); icon.setAttribute('fill', 'none'); icon.style.color = ''; } else { localStorage.setItem(key, '1'); btn.classList.add('liked'); icon.setAttribute('fill', 'currentColor'); icon.style.color = '#ec4899'; // 弹跳动画 btn.style.transform = 'scale(1.15)'; setTimeout(() => { btn.style.transform = ''; }, 200); } // 统计当前文章点赞数（自己） const isLiked = !liked; countEl.textContent = isLiked ? '1' : '0';
+} // 初始化点赞状态
+(function() { const key = getLikeKey(); const liked = localStorage.getItem(key); const icon = document.getElementById('like-icon'); const countEl = document.getElementById('like-count'); const btn = document.getElementById('like-btn'); if (liked && icon && countEl && btn) { icon.setAttribute('fill', 'currentColor'); icon.style.color = '#ec4899'; countEl.textContent = '1'; btn.classList.add('liked'); }
+})(); // ==================== Giscus 评论加载 ====================
+(function() { // 从设置中读取 Giscus 仓库配置 const repo = localStorage.getItem('gp-ai-provider'); // 暂用通用字段 // TODO: 专用 giscus-repo 配置项后启用 // 如果有 giscus 配置，动态加载脚本 const giscusRepo = localStorage.getItem('gp-giscus-repo'); if (giscusRepo) { const container = document.getElementById('giscus-container'); if (container) { const script = document.createElement('script'); script.src = 'https://giscus.app/client.js'; script.setAttribute('data-repo', giscusRepo); script.setAttribute('data-repo-id', localStorage.getItem('gp-giscus-repo-id') || ''); script.setAttribute('data-category', localStorage.getItem('gp-giscus-category') || 'General'); script.setAttribute('data-category-id', localStorage.getItem('gp-giscus-category-id') || ''); script.setAttribute('data-mapping', 'pathname'); script.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') || 'light'); script.setAttribute('data-lang', 'zh-CN'); script.crossOrigin = 'anonymous'; script.async = true; container.appendChild(script); } }
+})(); // ==================== 代码块复制功能 ====================
+function copyCode(btn) { const codeBlock = btn.closest('.code-block-wrapper'); if (!codeBlock) return; // 优先从 data-raw 获取 base64 编码的原始代码，保证格式不变 let code = ''; const rawB64 = codeBlock.dataset.raw; if (rawB64) { try { code = decodeURIComponent(escape(atob(rawB64))); } catch(e) { try { code = atob(rawB64); } catch(e2) { code = codeBlock.querySelector('code')?.textContent || ''; } } } else { code = codeBlock.querySelector('code')?.textContent || ''; } // 复制到剪贴板（兼容非 HTTPS 环境的 fallback） const doCopy = (text) => { if (navigator.clipboard && navigator.clipboard.writeText) { return navigator.clipboard.writeText(text); } // Fallback: 使用 textarea 方式 return new Promise((resolve) => { const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;left:-9999px;opacity:0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); resolve(); }); }; doCopy(code).then(() => { btn.classList.add('copied'); const iconEl = btn.querySelector('.copy-icon'); const textEl = btn.querySelector('.copy-text'); if (iconEl) iconEl.innerHTML = '<polyline points="20,6 9,17 4,12"/>'; if (textEl) textEl.textContent = '已复制'; setTimeout(() => { btn.classList.remove('copied'); if (iconEl) iconEl.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>'; if (textEl) textEl.textContent = '复制'; }, 2000); });
+} // ==================== 上下篇导航数据注入（由构建脚本填充）==========
+(function() { // 此处数据由 Builder 在 transformHTML 钩子中动态注入 // 或通过 BlogAPI 从 manifest.json 获取当前文章相邻文章
+})();
+</script> </main> <footer class="relative mt-20 border-t" style="border-color: var(--bg-glass-border)"> <div class="py-8 text-center"> <p class="text-xs" style="color: var(--text-tertiary)"> &copy; 2026 GlazePress Author &middot; Powered by <a href="#" class="underline hover:text-primary transition-colors" target="_blank">GlazePress</a> </p> </div> </footer> <script> // 抑制 Tailwind CDN 的生产环境警告（开发/CDN 模式下正常提示） (function(){ const _warn = console.warn; console.warn = function(...args) { if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return; _warn.apply(console, args); }; window._gp_restoreWarn = function() { console.warn = _warn; }; })(); </script> <script src="https://cdn.tailwindcss.com"></script> <script> // Tailwind 自定义配置 tailwind.config = { theme: { extend: { colors: { primary: { DEFAULT: '#6366f1', light: '#818cf8', dark: '#4f46e5' } }, fontFamily: { heading: ['Inter,Noto Sans SC,sans-serif'], body: ['Inter,Noto Sans SC,sans-serif'], code: ['JetBrains Mono,Fira Code,monospace'] }, animation: { 'fade-in-up': 'fadeInUp 400ms ease-out both', 'scale-in': 'scaleIn 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both' } } } }; </script> <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js" defer></script> <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script> <link rel="stylesheet" href="https://unpkg.com/prismjs@1/themes/prism-tomorrow.min.css"> <script src="https://unpkg.com/prismjs@1/prism.min.js" defer></script> <script src="https://unpkg.com/prismjs@1/plugins/autoloader/prism-autoloader.min.js" defer></script> <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" defer></script> <script src="/assets/js/config.js"></script> <script src="/assets/js/utils.js"></script> <script src="/assets/js/blog-api.js"></script> <script src="/assets/js/app.js" defer></script> <script> document.addEventListener('DOMContentLoaded', function() { document.body.classList.add('loaded'); // 初始化 Lucide 图标 if (typeof lucide !== 'undefined') lucide.createIcons(); // 初始化 Prism 高亮 if (typeof Prism !== 'undefined') Prism.highlightAll(); }); </script> </body> </html>

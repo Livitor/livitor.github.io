@@ -1,0 +1,499 @@
+{
+  "version": "1.0",
+  "site": {
+    "title": "GlazePress",
+    "description": "基于 Vue 3 的现代化静态博客，采用 Glassmorphism 设计",
+    "author": {
+      "name": "GlazePress Author",
+      "avatar": "./assets/images/avatar.jpg",
+      "bio": "热爱技术，追求极致。专注于前端架构与性能优化。",
+      "social": {
+        "github": "https://github.com/Livitor",
+        "gitee": "https://gitee.com/livitor",
+        "bilibili": "https://space.bilibili.com/454802241?spm_id_from=333.1007.0.0",
+        "email": "mailto:2162431295@qq.com"
+      }
+    },
+    "baseUrl": "",
+    "nav": [
+      {
+        "label": "首页",
+        "url": "/"
+      },
+      {
+        "label": "归档",
+        "url": "/archive/"
+      },
+      {
+        "label": "分类",
+        "url": "/categories/"
+      },
+      {
+        "label": "标签",
+        "url": "/tags/"
+      },
+      {
+        "label": "友链",
+        "url": "/friends/"
+      },
+      {
+        "label": "关于",
+        "url": "/about/"
+      }
+    ]
+  },
+  "posts": [
+    {
+      "title": "Halo 博客部署",
+      "date": "2026-04-25",
+      "slug": "建站/halo",
+      "url": "/posts/建站/halo/",
+      "description": "",
+      "cover": "",
+      "tags": [
+        "Halo",
+        "Docker",
+        "博客"
+      ],
+      "categories": [
+        "建站",
+        "运维"
+      ],
+      "author": "",
+      "readingTime": 1
+    },
+    {
+      "title": "Web 性能优化实战：从 60 分到 Lighthouse 100",
+      "date": "2026-04-10",
+      "slug": "performance-optimization",
+      "url": "/posts/performance-optimization/",
+      "description": "系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。",
+      "cover": "",
+      "tags": [
+        "性能",
+        "优化",
+        "Core Web Vitals"
+      ],
+      "categories": [
+        "前端开发",
+        "性能"
+      ],
+      "author": "",
+      "readingTime": 2
+    },
+    {
+      "title": "Glassmorphism 设计系统完全指南",
+      "date": "2026-04-15",
+      "slug": "glassmorphism-design",
+      "url": "/posts/glassmorphism-design/",
+      "description": "深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。",
+      "cover": "",
+      "tags": [
+        "设计",
+        "CSS",
+        "UI/UX"
+      ],
+      "categories": [
+        "设计",
+        "前端开发"
+      ],
+      "author": "",
+      "readingTime": 2
+    },
+    {
+      "title": "Vue 3 Composition API 深度解析",
+      "date": "2026-04-18",
+      "slug": "vue3-composition-api",
+      "url": "/posts/vue3-composition-api/",
+      "description": "深入理解 Vue 3 的 Composition API，包括 ref、reactive、computed、watch 等核心概念，以及如何在实际项目中优雅地组织代码。",
+      "cover": "",
+      "tags": [
+        "Vue",
+        "前端",
+        "JavaScript"
+      ],
+      "categories": [
+        "前端开发"
+      ],
+      "author": "",
+      "readingTime": 2
+    },
+    {
+      "title": "快速开始指南",
+      "date": "2026-04-21",
+      "slug": "getting-started",
+      "url": "/posts/getting-started/",
+      "description": "从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。",
+      "cover": "",
+      "tags": [
+        "入门",
+        "教程",
+        "配置"
+      ],
+      "categories": [
+        "博客",
+        "教程"
+      ],
+      "author": "",
+      "readingTime": 2
+    },
+    {
+      "title": "欢迎来到 GlazePress",
+      "date": "2026-04-20",
+      "slug": "hello-world",
+      "url": "/posts/hello-world/",
+      "description": "这是 GlazePress 的第一篇文章，带你了解这个现代化静态博客生成器的核心特性与设计理念。",
+      "cover": "",
+      "tags": [
+        "入门",
+        "GlazePress"
+      ],
+      "categories": [
+        "博客"
+      ],
+      "author": "GlazePress",
+      "readingTime": 1
+    },
+    {
+      "title": "test",
+      "date": "2026-04-25",
+      "slug": "test",
+      "url": "/posts/test/",
+      "description": "",
+      "cover": "",
+      "tags": [],
+      "categories": [],
+      "author": "",
+      "readingTime": 1
+    },
+    {
+      "title": "精简风",
+      "date": "2026-04-25",
+      "slug": "hexo主题预览",
+      "url": "/posts/hexo主题预览/",
+      "description": "",
+      "cover": "",
+      "tags": [],
+      "categories": [],
+      "author": "",
+      "readingTime": 1
+    },
+    {
+      "title": "npm 部署 hexo",
+      "date": "2026-04-25",
+      "slug": "hexo",
+      "url": "/posts/hexo/",
+      "description": "",
+      "cover": "",
+      "tags": [],
+      "categories": [],
+      "author": "",
+      "readingTime": 3
+    }
+  ],
+  "tags": {
+    "Halo": [
+      {
+        "title": "Halo 博客部署",
+        "url": "/posts/建站/halo/",
+        "date": "2026-04-25",
+        "description": ""
+      }
+    ],
+    "Docker": [
+      {
+        "title": "Halo 博客部署",
+        "url": "/posts/建站/halo/",
+        "date": "2026-04-25",
+        "description": ""
+      }
+    ],
+    "博客": [
+      {
+        "title": "Halo 博客部署",
+        "url": "/posts/建站/halo/",
+        "date": "2026-04-25",
+        "description": ""
+      }
+    ],
+    "性能": [
+      {
+        "title": "Web 性能优化实战：从 60 分到 Lighthouse 100",
+        "url": "/posts/performance-optimization/",
+        "date": "2026-04-10",
+        "description": "系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。"
+      }
+    ],
+    "优化": [
+      {
+        "title": "Web 性能优化实战：从 60 分到 Lighthouse 100",
+        "url": "/posts/performance-optimization/",
+        "date": "2026-04-10",
+        "description": "系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。"
+      }
+    ],
+    "Core Web Vitals": [
+      {
+        "title": "Web 性能优化实战：从 60 分到 Lighthouse 100",
+        "url": "/posts/performance-optimization/",
+        "date": "2026-04-10",
+        "description": "系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。"
+      }
+    ],
+    "设计": [
+      {
+        "title": "Glassmorphism 设计系统完全指南",
+        "url": "/posts/glassmorphism-design/",
+        "date": "2026-04-15",
+        "description": "深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。"
+      }
+    ],
+    "CSS": [
+      {
+        "title": "Glassmorphism 设计系统完全指南",
+        "url": "/posts/glassmorphism-design/",
+        "date": "2026-04-15",
+        "description": "深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。"
+      }
+    ],
+    "UI/UX": [
+      {
+        "title": "Glassmorphism 设计系统完全指南",
+        "url": "/posts/glassmorphism-design/",
+        "date": "2026-04-15",
+        "description": "深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。"
+      }
+    ],
+    "Vue": [
+      {
+        "title": "Vue 3 Composition API 深度解析",
+        "url": "/posts/vue3-composition-api/",
+        "date": "2026-04-18",
+        "description": "深入理解 Vue 3 的 Composition API，包括 ref、reactive、computed、watch 等核心概念，以及如何在实际项目中优雅地组织代码。"
+      }
+    ],
+    "前端": [
+      {
+        "title": "Vue 3 Composition API 深度解析",
+        "url": "/posts/vue3-composition-api/",
+        "date": "2026-04-18",
+        "description": "深入理解 Vue 3 的 Composition API，包括 ref、reactive、computed、watch 等核心概念，以及如何在实际项目中优雅地组织代码。"
+      }
+    ],
+    "JavaScript": [
+      {
+        "title": "Vue 3 Composition API 深度解析",
+        "url": "/posts/vue3-composition-api/",
+        "date": "2026-04-18",
+        "description": "深入理解 Vue 3 的 Composition API，包括 ref、reactive、computed、watch 等核心概念，以及如何在实际项目中优雅地组织代码。"
+      }
+    ],
+    "入门": [
+      {
+        "title": "快速开始指南",
+        "url": "/posts/getting-started/",
+        "date": "2026-04-21",
+        "description": "从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。"
+      },
+      {
+        "title": "欢迎来到 GlazePress",
+        "url": "/posts/hello-world/",
+        "date": "2026-04-20",
+        "description": "这是 GlazePress 的第一篇文章，带你了解这个现代化静态博客生成器的核心特性与设计理念。"
+      }
+    ],
+    "教程": [
+      {
+        "title": "快速开始指南",
+        "url": "/posts/getting-started/",
+        "date": "2026-04-21",
+        "description": "从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。"
+      }
+    ],
+    "配置": [
+      {
+        "title": "快速开始指南",
+        "url": "/posts/getting-started/",
+        "date": "2026-04-21",
+        "description": "从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。"
+      }
+    ],
+    "GlazePress": [
+      {
+        "title": "欢迎来到 GlazePress",
+        "url": "/posts/hello-world/",
+        "date": "2026-04-20",
+        "description": "这是 GlazePress 的第一篇文章，带你了解这个现代化静态博客生成器的核心特性与设计理念。"
+      }
+    ]
+  },
+  "categories": {
+    "建站": [
+      {
+        "title": "Halo 博客部署",
+        "url": "/posts/建站/halo/",
+        "date": "2026-04-25",
+        "description": ""
+      }
+    ],
+    "运维": [
+      {
+        "title": "Halo 博客部署",
+        "url": "/posts/建站/halo/",
+        "date": "2026-04-25",
+        "description": ""
+      }
+    ],
+    "前端开发": [
+      {
+        "title": "Web 性能优化实战：从 60 分到 Lighthouse 100",
+        "url": "/posts/performance-optimization/",
+        "date": "2026-04-10",
+        "description": "系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。"
+      },
+      {
+        "title": "Glassmorphism 设计系统完全指南",
+        "url": "/posts/glassmorphism-design/",
+        "date": "2026-04-15",
+        "description": "深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。"
+      },
+      {
+        "title": "Vue 3 Composition API 深度解析",
+        "url": "/posts/vue3-composition-api/",
+        "date": "2026-04-18",
+        "description": "深入理解 Vue 3 的 Composition API，包括 ref、reactive、computed、watch 等核心概念，以及如何在实际项目中优雅地组织代码。"
+      }
+    ],
+    "性能": [
+      {
+        "title": "Web 性能优化实战：从 60 分到 Lighthouse 100",
+        "url": "/posts/performance-optimization/",
+        "date": "2026-04-10",
+        "description": "系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。"
+      }
+    ],
+    "设计": [
+      {
+        "title": "Glassmorphism 设计系统完全指南",
+        "url": "/posts/glassmorphism-design/",
+        "date": "2026-04-15",
+        "description": "深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。"
+      }
+    ],
+    "博客": [
+      {
+        "title": "快速开始指南",
+        "url": "/posts/getting-started/",
+        "date": "2026-04-21",
+        "description": "从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。"
+      },
+      {
+        "title": "欢迎来到 GlazePress",
+        "url": "/posts/hello-world/",
+        "date": "2026-04-20",
+        "description": "这是 GlazePress 的第一篇文章，带你了解这个现代化静态博客生成器的核心特性与设计理念。"
+      }
+    ],
+    "教程": [
+      {
+        "title": "快速开始指南",
+        "url": "/posts/getting-started/",
+        "date": "2026-04-21",
+        "description": "从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。"
+      }
+    ]
+  },
+  "archive": {
+    "2026": [
+      {
+        "title": "Halo 博客部署",
+        "url": "/posts/建站/halo/",
+        "date": "2026-04-25",
+        "description": ""
+      },
+      {
+        "title": "Web 性能优化实战：从 60 分到 Lighthouse 100",
+        "url": "/posts/performance-optimization/",
+        "date": "2026-04-10",
+        "description": "系统性的 Web 性能优化方法论，涵盖 Core Web Vitals 指标解读、资源加载策略、渲染性能优化，以及 GlazePress 项目中的具体实践。"
+      },
+      {
+        "title": "Glassmorphism 设计系统完全指南",
+        "url": "/posts/glassmorphism-design/",
+        "date": "2026-04-15",
+        "description": "深入探索 Glassmorphism（毛玻璃）设计系统的实现原理、最佳实践，以及在 GlazePress 项目中的具体应用方案。"
+      },
+      {
+        "title": "Vue 3 Composition API 深度解析",
+        "url": "/posts/vue3-composition-api/",
+        "date": "2026-04-18",
+        "description": "深入理解 Vue 3 的 Composition API，包括 ref、reactive、computed、watch 等核心概念，以及如何在实际项目中优雅地组织代码。"
+      },
+      {
+        "title": "快速开始指南",
+        "url": "/posts/getting-started/",
+        "date": "2026-04-21",
+        "description": "从零开始搭建你的 GlazePress 博客，包括安装、配置、写作和部署的完整流程。"
+      },
+      {
+        "title": "欢迎来到 GlazePress",
+        "url": "/posts/hello-world/",
+        "date": "2026-04-20",
+        "description": "这是 GlazePress 的第一篇文章，带你了解这个现代化静态博客生成器的核心特性与设计理念。"
+      },
+      {
+        "title": "test",
+        "url": "/posts/test/",
+        "date": "2026-04-25",
+        "description": ""
+      },
+      {
+        "title": "精简风",
+        "url": "/posts/hexo主题预览/",
+        "date": "2026-04-25",
+        "description": ""
+      },
+      {
+        "title": "npm 部署 hexo",
+        "url": "/posts/hexo/",
+        "date": "2026-04-25",
+        "description": ""
+      }
+    ]
+  },
+  "tagList": [
+    "Halo",
+    "Docker",
+    "博客",
+    "性能",
+    "优化",
+    "Core Web Vitals",
+    "设计",
+    "CSS",
+    "UI/UX",
+    "Vue",
+    "前端",
+    "JavaScript",
+    "入门",
+    "教程",
+    "配置",
+    "GlazePress"
+  ],
+  "categoryList": [
+    "建站",
+    "运维",
+    "前端开发",
+    "性能",
+    "设计",
+    "博客",
+    "教程"
+  ],
+  "stats": {
+    "totalPosts": 9,
+    "totalTags": 16,
+    "totalCategories": 7,
+    "firstPostDate": "2026-04-25",
+    "lastPostDate": "2026-04-25",
+    "generatedAt": "2026-04-25T05:27:28.754Z"
+  }
+}
